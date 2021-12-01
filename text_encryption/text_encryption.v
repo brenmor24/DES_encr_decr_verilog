@@ -4,13 +4,16 @@ input rst,
 input send_data,						// want to have an input en? Prob not?
 input [15:0]user_input,				// may not need this - this is currently unused
 input encr_go,							// button for user to press which starts the encryption
-input [1:0]select_disp,					// for users to select between viewing each group of 16 bits in the key/value on the 7-seg display		
+input [1:0]select_disp,				// for users to select between viewing each group of 16 bits in the key/value on the 7-seg display		
 output reg [63:0]msg,
+output reg temp,
 
+/*
 input [3:0]most,
 input [3:0]most_2,
 input [3:0]least_2,
 input [3:0]least,
+*/
 
 output [6:0]seg7_most,
 output [6:0]seg7_most_2,
@@ -49,16 +52,15 @@ Design:
 */
 
 /*
-reg [3:0]most_r;
-reg [3:0]most_2_r;
-reg [3:0]least_2_r;
-reg [3:0]least_r;
-*/
-
 seven_segment hex1(most, seg7_most);
 seven_segment hex2(most_2, seg7_most_2);
 seven_segment hex3(least_2, seg7_least_2);
 seven_segment hex4(least, seg7_least);
+*/
+
+reg [15:0]disp;
+
+four_hex_vals my_disp(disp, seg7_most, seg7_most_2, seg7_least_2, seg7_least);
 
 // FSM
 reg [4:0]S;
@@ -68,9 +70,9 @@ parameter START = 5'd0,
 			 IN_KEY = 5'd1,
 			 DISP_KEY = 5'd2,
 			 IN_VALUE = 5'd3,
-			 DISP_KEY_VAL = 5'd4,
-			 ENCR = 5'd5,
-			 DISP_MSG = 5'd6,
+			 DISP_VALUE = 5'd4,
+			 WAITING = 5'd5,
+			 ENCR = 5'd6,
 			 DONE = 5'd7,
 			 ERROR = 5'b11111;
 			 
@@ -81,8 +83,7 @@ always @(*)
 begin
 	
 	case(S)
-		START: NS = DISP_INIT;
-		DISP_INIT: NS = IN_KEY;
+		START: NS = IN_KEY;
 	
 		IN_KEY:
 		begin
@@ -91,27 +92,40 @@ begin
 			else
 				NS = IN_KEY;
 		end
-	
-		DISP_KEY: NS = IN_VALUE;
+		
+		DISP_KEY:
+		begin
+			if (send_data == 1'b0)
+				NS = IN_VALUE;
+			else
+				NS = DISP_KEY;
+		end
 	
 		IN_VALUE:
 		begin
 			if (button_count >= 3'd5)
-				NS = DISP_KEY_VAL;
+				NS = DISP_VALUE;
 			else
 				NS = IN_VALUE;
 		end
+		
+		DISP_VALUE:
+		begin
+			if (send_data == 1'b0)
+				NS = WAITING;
+			else
+				NS = DISP_VALUE;
+		end
 	
-		DISP_KEY_VAL:
+		WAITING:
 		begin
 			if (encr_go == 1'b1)
 				NS = ENCR;
 			else
-				NS = DISP_KEY_VAL;
+				NS = WAITING;
 		end
 	
-		ENCR: NS = DISP_MSG;
-		DISP_MSG: NS = DONE;
+		ENCR: NS = DONE;
 		DONE: NS = DONE;
 		default: NS = ERROR;
 		
@@ -122,38 +136,61 @@ end
 // What happens in each state
 always @(posedge clk or negedge rst)
 begin
-	case(S)
+
+	if (rst == 1'b0) begin
+		//disp <= 16'd0;
+		temp <= 1'b0;
+	end
 	
-		START:
-		begin
-			// set EVERYTHING to 0 (key, value, msg, button_count, encr_go, inputs for hex and LCD displays, etc)
-		end
+	else begin
+		case(S)
+	
+			START:
+			begin
+				disp <= user_input;
+				// set EVERYTHING to 0 (key, value, msg, button_count, encr_go, inputs for hex and LCD displays, etc)
+			end
 		
-		DISP_INIT:
-		begin
-			//
-		end
-		
-		IN_KEY:
-		begin
-			if (send_data == 1'b0)
-				button_count <= button_count + 3'd1;
+			IN_KEY:
+			begin
+				disp <= user_input;
+				
+				if (send_data == 1'b0)
+					button_count <= button_count + 3'd1;
 			
-			if (button_count == 3'd1)
-				key[15:0] <= user_input;
+				if (button_count == 3'd1)
+					key[15:0] <= user_input;
 				
-			if (button_count == 3'd2)
-				key[31:16] <= user_input;
+				if (button_count == 3'd2)
+					key[31:16] <= user_input;
 				
-			if (button_count == 3'd3)
-				key[47:32] <= user_input;
+				if (button_count == 3'd3)
+					key[47:32] <= user_input;
 				
-			if (button_count == 3'd4)
-				key[63:48] <= user_input;
+				if (button_count == 3'd4)
+					key[63:48] <= user_input;
 				
-		end
+			end
 		
-	endcase
+			DISP_KEY:
+			begin
+				case(select_disp)
+					2'd0: disp <= key[15:0];
+					2'd1: disp <= key[31:16];
+					2'd2: disp <= key[47:32];
+					2'd3: disp <= key[63:48];
+				endcase
+			end
+		
+			IN_VALUE:
+			begin
+				disp <= user_input;
+				temp <= 1'b1;
+			end
+		
+		endcase
+	end
+	
 end
 
 // FSM init
@@ -164,5 +201,16 @@ begin
 	else
 		S <= NS;
 end
+
+/*
+always @(*)
+begin
+	case(select_disp)
+		2'd0: disp = key[15:0];
+		2'd1: disp = key[31:16];
+		2'd2: disp = key[47:32];
+		2'd3: disp = key[63:48];
+	endcase
+end*/
 
 endmodule

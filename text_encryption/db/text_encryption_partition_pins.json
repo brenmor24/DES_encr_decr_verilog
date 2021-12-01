@@ -4,6 +4,10 @@
 			"name" : "Top",
 			"pins" : [
 				{
+					"name" : "temp",
+					"strict" : false
+				},
+				{
 					"name" : "seg7_most[0]",
 					"strict" : false
 				},
@@ -116,67 +120,87 @@
 					"strict" : false
 				},
 				{
-					"name" : "most[0]",
+					"name" : "clk",
 					"strict" : false
 				},
 				{
-					"name" : "most[1]",
+					"name" : "rst",
 					"strict" : false
 				},
 				{
-					"name" : "most[2]",
+					"name" : "select_disp[1]",
 					"strict" : false
 				},
 				{
-					"name" : "most[3]",
+					"name" : "select_disp[0]",
 					"strict" : false
 				},
 				{
-					"name" : "most_2[0]",
+					"name" : "user_input[12]",
 					"strict" : false
 				},
 				{
-					"name" : "most_2[1]",
+					"name" : "user_input[13]",
 					"strict" : false
 				},
 				{
-					"name" : "most_2[2]",
+					"name" : "user_input[14]",
 					"strict" : false
 				},
 				{
-					"name" : "most_2[3]",
+					"name" : "user_input[15]",
 					"strict" : false
 				},
 				{
-					"name" : "least_2[0]",
+					"name" : "user_input[8]",
 					"strict" : false
 				},
 				{
-					"name" : "least_2[1]",
+					"name" : "user_input[9]",
 					"strict" : false
 				},
 				{
-					"name" : "least_2[2]",
+					"name" : "user_input[10]",
 					"strict" : false
 				},
 				{
-					"name" : "least_2[3]",
+					"name" : "user_input[11]",
 					"strict" : false
 				},
 				{
-					"name" : "least[0]",
+					"name" : "user_input[4]",
 					"strict" : false
 				},
 				{
-					"name" : "least[1]",
+					"name" : "user_input[5]",
 					"strict" : false
 				},
 				{
-					"name" : "least[2]",
+					"name" : "user_input[6]",
 					"strict" : false
 				},
 				{
-					"name" : "least[3]",
+					"name" : "user_input[7]",
+					"strict" : false
+				},
+				{
+					"name" : "user_input[0]",
+					"strict" : false
+				},
+				{
+					"name" : "user_input[1]",
+					"strict" : false
+				},
+				{
+					"name" : "user_input[2]",
+					"strict" : false
+				},
+				{
+					"name" : "user_input[3]",
+					"strict" : false
+				},
+				{
+					"name" : "send_data",
 					"strict" : false
 				}
 			]
