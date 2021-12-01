@@ -1,0 +1,466 @@
+Analysis & Synthesis report for text_encryption
+Mon Nov 29 20:05:37 2021
+Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. State Machine - |text_encryption|S
+  9. Registers Removed During Synthesis
+ 10. Removed Registers Triggering Further Register Optimizations
+ 11. General Register Statistics
+ 12. Parameter Settings for User Entity Instance: Top-level Entity: |text_encryption
+ 13. Post-Synthesis Netlist Statistics for Top Partition
+ 14. Elapsed Time Per Partition
+ 15. Analysis & Synthesis Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2016  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel MegaCore Function License Agreement, or other 
+applicable license agreement, including, without limitation, 
+that your use is for the sole purpose of programming logic 
+devices manufactured by Intel and sold by Intel or its 
+authorized distributors.  Please refer to the applicable 
+agreement for further details.
+
+
+
++----------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                     ;
++------------------------------------+---------------------------------------------+
+; Analysis & Synthesis Status        ; Successful - Mon Nov 29 20:05:37 2021       ;
+; Quartus Prime Version              ; 16.1.0 Build 196 10/24/2016 SJ Lite Edition ;
+; Revision Name                      ; text_encryption                             ;
+; Top-level Entity Name              ; text_encryption                             ;
+; Family                             ; Cyclone IV E                                ;
+; Total logic elements               ; 28                                          ;
+;     Total combinational functions  ; 28                                          ;
+;     Dedicated logic registers      ; 0                                           ;
+; Total registers                    ; 0                                           ;
+; Total pins                         ; 130                                         ;
+; Total virtual pins                 ; 0                                           ;
+; Total memory bits                  ; 0                                           ;
+; Embedded Multiplier 9-bit elements ; 0                                           ;
+; Total PLLs                         ; 0                                           ;
++------------------------------------+---------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                                        ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                                     ; Setting            ; Default Value      ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+; Device                                                                     ; EP4CE115F29C7      ;                    ;
+; Top-level entity name                                                      ; text_encryption    ; text_encryption    ;
+; Family name                                                                ; Cyclone IV E       ; Cyclone V          ;
+; Use smart compilation                                                      ; Off                ; Off                ;
+; Enable parallel Assembler and TimeQuest Timing Analyzer during compilation ; On                 ; On                 ;
+; Enable compact report table                                                ; Off                ; Off                ;
+; Restructure Multiplexers                                                   ; Auto               ; Auto               ;
+; Create Debugging Nodes for IP Cores                                        ; Off                ; Off                ;
+; Preserve fewer node names                                                  ; On                 ; On                 ;
+; OpenCore Plus hardware evaluation                                          ; Enable             ; Enable             ;
+; Verilog Version                                                            ; Verilog_2001       ; Verilog_2001       ;
+; VHDL Version                                                               ; VHDL_1993          ; VHDL_1993          ;
+; State Machine Processing                                                   ; Auto               ; Auto               ;
+; Safe State Machine                                                         ; Off                ; Off                ;
+; Extract Verilog State Machines                                             ; On                 ; On                 ;
+; Extract VHDL State Machines                                                ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                          ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                                 ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                             ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                                    ; On                 ; On                 ;
+; Infer RAMs from Raw Logic                                                  ; On                 ; On                 ;
+; Parallel Synthesis                                                         ; On                 ; On                 ;
+; DSP Block Balancing                                                        ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                                         ; On                 ; On                 ;
+; Power-Up Don't Care                                                        ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                               ; Off                ; Off                ;
+; Remove Duplicate Registers                                                 ; On                 ; On                 ;
+; Ignore CARRY Buffers                                                       ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                                     ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                                      ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                                  ; Off                ; Off                ;
+; Ignore LCELL Buffers                                                       ; Off                ; Off                ;
+; Ignore SOFT Buffers                                                        ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                             ; Off                ; Off                ;
+; Optimization Technique                                                     ; Balanced           ; Balanced           ;
+; Carry Chain Length                                                         ; 70                 ; 70                 ;
+; Auto Carry Chains                                                          ; On                 ; On                 ;
+; Auto Open-Drain Pins                                                       ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                                      ; Off                ; Off                ;
+; Auto ROM Replacement                                                       ; On                 ; On                 ;
+; Auto RAM Replacement                                                       ; On                 ; On                 ;
+; Auto DSP Block Replacement                                                 ; On                 ; On                 ;
+; Auto Shift Register Replacement                                            ; Auto               ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                            ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                              ; On                 ; On                 ;
+; Strict RAM Replacement                                                     ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                          ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                                     ; Off                ; Off                ;
+; Auto RAM Block Balancing                                                   ; On                 ; On                 ;
+; Auto RAM to Logic Cell Conversion                                          ; Off                ; Off                ;
+; Auto Resource Sharing                                                      ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                                         ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                                         ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                              ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing                        ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                          ; Off                ; Off                ;
+; Timing-Driven Synthesis                                                    ; On                 ; On                 ;
+; Report Parameter Settings                                                  ; On                 ; On                 ;
+; Report Source Assignments                                                  ; On                 ; On                 ;
+; Report Connectivity Checks                                                 ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                                         ; Off                ; Off                ;
+; Synchronization Register Chain Length                                      ; 2                  ; 2                  ;
+; PowerPlay Power Optimization During Synthesis                              ; Normal compilation ; Normal compilation ;
+; HDL message level                                                          ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                            ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report                   ; 5000               ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report                         ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report                  ; 100                ; 100                ;
+; Clock MUX Protection                                                       ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                                ; Off                ; Off                ;
+; Block Design Naming                                                        ; Auto               ; Auto               ;
+; SDC constraint protection                                                  ; Off                ; Off                ;
+; Synthesis Effort                                                           ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal               ; On                 ; On                 ;
+; Pre-Mapping Resynthesis Optimization                                       ; Off                ; Off                ;
+; Analysis & Synthesis Message Level                                         ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                                ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                                     ; On                 ; On                 ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 8           ;
+; Maximum allowed            ; 4           ;
+;                            ;             ;
+; Average used               ; 1.00        ;
+; Maximum used               ; 1           ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
++----------------------------+-------------+
+
+
++------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                       ;
++----------------------------------+-----------------+------------------------+--------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type              ; File Name with Absolute Path         ; Library ;
++----------------------------------+-----------------+------------------------+--------------------------------------+---------+
+; text_encryption.v                ; yes             ; User Verilog HDL File  ; M:/text_encryption/text_encryption.v ;         ;
+; seven_segment.v                  ; yes             ; User Verilog HDL File  ; M:/text_encryption/seven_segment.v   ;         ;
++----------------------------------+-----------------+------------------------+--------------------------------------+---------+
+
+
++-------------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary                 ;
++---------------------------------------------+---------------+
+; Resource                                    ; Usage         ;
++---------------------------------------------+---------------+
+; Estimated Total logic elements              ; 28            ;
+;                                             ;               ;
+; Total combinational functions               ; 28            ;
+; Logic element usage by number of LUT inputs ;               ;
+;     -- 4 input functions                    ; 28            ;
+;     -- 3 input functions                    ; 0             ;
+;     -- <=2 input functions                  ; 0             ;
+;                                             ;               ;
+; Logic elements by mode                      ;               ;
+;     -- normal mode                          ; 28            ;
+;     -- arithmetic mode                      ; 0             ;
+;                                             ;               ;
+; Total registers                             ; 0             ;
+;     -- Dedicated logic registers            ; 0             ;
+;     -- I/O registers                        ; 0             ;
+;                                             ;               ;
+; I/O pins                                    ; 130           ;
+;                                             ;               ;
+; Embedded Multiplier 9-bit elements          ; 0             ;
+;                                             ;               ;
+; Maximum fan-out node                        ; most[0]~input ;
+; Maximum fan-out                             ; 7             ;
+; Total fan-out                               ; 270           ;
+; Average fan-out                             ; 0.94          ;
++---------------------------------------------+---------------+
+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                          ;
++----------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+-------------------------------------+-----------------+--------------+
+; Compilation Hierarchy Node ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                 ; Entity Name     ; Library Name ;
++----------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+-------------------------------------+-----------------+--------------+
+; |text_encryption           ; 28 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 130  ; 0            ; |text_encryption                    ; text_encryption ; work         ;
+;    |seven_segment:hex1|    ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |text_encryption|seven_segment:hex1 ; seven_segment   ; work         ;
+;    |seven_segment:hex2|    ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |text_encryption|seven_segment:hex2 ; seven_segment   ; work         ;
+;    |seven_segment:hex3|    ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |text_encryption|seven_segment:hex3 ; seven_segment   ; work         ;
+;    |seven_segment:hex4|    ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |text_encryption|seven_segment:hex4 ; seven_segment   ; work         ;
++----------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+-------------------------------------+-----------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
+Encoding Type:  One-Hot
++---------------------------------------------------------------------------------------------------------------------------------------+
+; State Machine - |text_encryption|S                                                                                                    ;
++----------------+--------+------------+--------+----------------+------------+------------+----------+-------------+---------+---------+
+; Name           ; S.DONE ; S.DISP_MSG ; S.ENCR ; S.DISP_KEY_VAL ; S.IN_VALUE ; S.DISP_KEY ; S.IN_KEY ; S.DISP_INIT ; S.START ; S.ERROR ;
++----------------+--------+------------+--------+----------------+------------+------------+----------+-------------+---------+---------+
+; S.START        ; 0      ; 0          ; 0      ; 0              ; 0          ; 0          ; 0        ; 0           ; 0       ; 0       ;
+; S.DISP_INIT    ; 0      ; 0          ; 0      ; 0              ; 0          ; 0          ; 0        ; 1           ; 1       ; 0       ;
+; S.IN_KEY       ; 0      ; 0          ; 0      ; 0              ; 0          ; 0          ; 1        ; 0           ; 1       ; 0       ;
+; S.DISP_KEY     ; 0      ; 0          ; 0      ; 0              ; 0          ; 1          ; 0        ; 0           ; 1       ; 0       ;
+; S.IN_VALUE     ; 0      ; 0          ; 0      ; 0              ; 1          ; 0          ; 0        ; 0           ; 1       ; 0       ;
+; S.DISP_KEY_VAL ; 0      ; 0          ; 0      ; 1              ; 0          ; 0          ; 0        ; 0           ; 1       ; 0       ;
+; S.ENCR         ; 0      ; 0          ; 1      ; 0              ; 0          ; 0          ; 0        ; 0           ; 1       ; 0       ;
+; S.DISP_MSG     ; 0      ; 1          ; 0      ; 0              ; 0          ; 0          ; 0        ; 0           ; 1       ; 0       ;
+; S.DONE         ; 1      ; 0          ; 0      ; 0              ; 0          ; 0          ; 0        ; 0           ; 1       ; 0       ;
+; S.ERROR        ; 0      ; 0          ; 0      ; 0              ; 0          ; 0          ; 0        ; 0           ; 1       ; 1       ;
++----------------+--------+------------+--------+----------------+------------+------------+----------+-------------+---------+---------+
+
+
++-------------------------------------------------------------+
+; Registers Removed During Synthesis                          ;
++----------------------------------------+--------------------+
+; Register name                          ; Reason for Removal ;
++----------------------------------------+--------------------+
+; S~4                                    ; Lost fanout        ;
+; S~5                                    ; Lost fanout        ;
+; S~6                                    ; Lost fanout        ;
+; S~7                                    ; Lost fanout        ;
+; S.ERROR                                ; Lost fanout        ;
+; S.START                                ; Lost fanout        ;
+; S.DISP_INIT                            ; Lost fanout        ;
+; S.IN_KEY                               ; Lost fanout        ;
+; S.DISP_KEY                             ; Lost fanout        ;
+; S.IN_VALUE                             ; Lost fanout        ;
+; S.DISP_KEY_VAL                         ; Lost fanout        ;
+; S.ENCR                                 ; Lost fanout        ;
+; S.DISP_MSG                             ; Lost fanout        ;
+; S.DONE                                 ; Lost fanout        ;
+; Total Number of Removed Registers = 14 ;                    ;
++----------------------------------------+--------------------+
+
+
++-------------------------------------------------------------------------------------------+
+; Removed Registers Triggering Further Register Optimizations                               ;
++---------------+--------------------+------------------------------------------------------+
+; Register name ; Reason for Removal ; Registers Removed due to This Register               ;
++---------------+--------------------+------------------------------------------------------+
+; S~4           ; Lost Fanouts       ; S.ERROR, S.START, S.IN_VALUE, S.DISP_KEY_VAL, S.ENCR ;
+; S~7           ; Lost Fanouts       ; S.DISP_MSG, S.DONE                                   ;
+; S~5           ; Lost Fanouts       ; S.DISP_INIT                                          ;
+; S~6           ; Lost Fanouts       ; S.DISP_KEY                                           ;
++---------------+--------------------+------------------------------------------------------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 0     ;
+; Number of registers using Synchronous Clear  ; 0     ;
+; Number of registers using Synchronous Load   ; 0     ;
+; Number of registers using Asynchronous Clear ; 0     ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 0     ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++---------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: Top-level Entity: |text_encryption ;
++----------------+-------+--------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                   ;
++----------------+-------+--------------------------------------------------------+
+; START          ; 00000 ; Unsigned Binary                                        ;
+; DISP_INIT      ; 00001 ; Unsigned Binary                                        ;
+; IN_KEY         ; 00010 ; Unsigned Binary                                        ;
+; DISP_KEY       ; 00011 ; Unsigned Binary                                        ;
+; IN_VALUE       ; 00100 ; Unsigned Binary                                        ;
+; DISP_KEY_VAL   ; 00101 ; Unsigned Binary                                        ;
+; ENCR           ; 00110 ; Unsigned Binary                                        ;
+; DISP_MSG       ; 00111 ; Unsigned Binary                                        ;
+; DONE           ; 01000 ; Unsigned Binary                                        ;
+; ERROR          ; 11111 ; Unsigned Binary                                        ;
++----------------+-------+--------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------+
+; Post-Synthesis Netlist Statistics for Top Partition ;
++-----------------------+-----------------------------+
+; Type                  ; Count                       ;
++-----------------------+-----------------------------+
+; boundary_port         ; 130                         ;
+; cycloneiii_lcell_comb ; 33                          ;
+;     normal            ; 33                          ;
+;         0 data inputs ; 1                           ;
+;         1 data inputs ; 4                           ;
+;         4 data inputs ; 28                          ;
+;                       ;                             ;
+; Max LUT depth         ; 2.00                        ;
+; Average LUT depth     ; 1.47                        ;
++-----------------------+-----------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:00:00     ;
++----------------+--------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Analysis & Synthesis
+    Info: Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
+    Info: Processing started: Mon Nov 29 20:05:26 2021
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off text_encryption -c text_encryption
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
+Info (12021): Found 1 design units, including 1 entities, in source file text_encryption.v
+    Info (12023): Found entity 1: text_encryption File: M:/text_encryption/text_encryption.v Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file seven_segment.v
+    Info (12023): Found entity 1: seven_segment File: M:/text_encryption/seven_segment.v Line: 1
+Info (12127): Elaborating entity "text_encryption" for the top level hierarchy
+Warning (10036): Verilog HDL or VHDL warning at text_encryption.v(21): object "key" assigned a value but never read File: M:/text_encryption/text_encryption.v Line: 21
+Info (10264): Verilog HDL Case Statement information at text_encryption.v(84): all case item expressions in this case statement are onehot File: M:/text_encryption/text_encryption.v Line: 84
+Warning (10270): Verilog HDL Case Statement warning at text_encryption.v(126): incomplete case statement has no default case item File: M:/text_encryption/text_encryption.v Line: 126
+Info (10264): Verilog HDL Case Statement information at text_encryption.v(126): all case item expressions in this case statement are onehot File: M:/text_encryption/text_encryption.v Line: 126
+Warning (10240): Verilog HDL Always Construct warning at text_encryption.v(124): inferring latch(es) for variable "button_count", which holds its previous value in one or more paths through the always construct File: M:/text_encryption/text_encryption.v Line: 124
+Warning (10034): Output port "msg" at text_encryption.v(8) has no driver File: M:/text_encryption/text_encryption.v Line: 8
+Info (10041): Inferred latch for "button_count[0]" at text_encryption.v(124) File: M:/text_encryption/text_encryption.v Line: 124
+Info (10041): Inferred latch for "button_count[1]" at text_encryption.v(124) File: M:/text_encryption/text_encryption.v Line: 124
+Info (10041): Inferred latch for "button_count[2]" at text_encryption.v(124) File: M:/text_encryption/text_encryption.v Line: 124
+Info (12128): Elaborating entity "seven_segment" for hierarchy "seven_segment:hex1" File: M:/text_encryption/text_encryption.v Line: 58
+Warning (13024): Output pins are stuck at VCC or GND
+    Warning (13410): Pin "msg[0]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[1]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[2]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[3]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[4]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[5]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[6]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[7]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[8]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[9]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[10]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[11]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[12]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[13]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[14]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[15]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[16]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[17]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[18]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[19]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[20]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[21]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[22]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[23]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[24]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[25]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[26]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[27]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[28]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[29]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[30]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[31]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[32]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[33]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[34]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[35]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[36]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[37]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[38]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[39]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[40]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[41]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[42]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[43]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[44]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[45]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[46]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[47]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[48]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[49]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[50]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[51]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[52]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[53]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[54]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[55]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[56]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[57]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[58]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[59]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[60]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[61]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[62]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+    Warning (13410): Pin "msg[63]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+Info (286030): Timing-Driven Synthesis is running
+Info (17049): 14 registers lost all their fanouts during netlist optimizations.
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Warning (21074): Design contains 22 input pin(s) that do not drive logic
+    Warning (15610): No output dependent on input pin "user_input[0]" File: M:/text_encryption/text_encryption.v Line: 5
+    Warning (15610): No output dependent on input pin "user_input[1]" File: M:/text_encryption/text_encryption.v Line: 5
+    Warning (15610): No output dependent on input pin "user_input[2]" File: M:/text_encryption/text_encryption.v Line: 5
+    Warning (15610): No output dependent on input pin "user_input[3]" File: M:/text_encryption/text_encryption.v Line: 5
+    Warning (15610): No output dependent on input pin "user_input[4]" File: M:/text_encryption/text_encryption.v Line: 5
+    Warning (15610): No output dependent on input pin "user_input[5]" File: M:/text_encryption/text_encryption.v Line: 5
+    Warning (15610): No output dependent on input pin "user_input[6]" File: M:/text_encryption/text_encryption.v Line: 5
+    Warning (15610): No output dependent on input pin "user_input[7]" File: M:/text_encryption/text_encryption.v Line: 5
+    Warning (15610): No output dependent on input pin "user_input[8]" File: M:/text_encryption/text_encryption.v Line: 5
+    Warning (15610): No output dependent on input pin "user_input[9]" File: M:/text_encryption/text_encryption.v Line: 5
+    Warning (15610): No output dependent on input pin "user_input[10]" File: M:/text_encryption/text_encryption.v Line: 5
+    Warning (15610): No output dependent on input pin "user_input[11]" File: M:/text_encryption/text_encryption.v Line: 5
+    Warning (15610): No output dependent on input pin "user_input[12]" File: M:/text_encryption/text_encryption.v Line: 5
+    Warning (15610): No output dependent on input pin "user_input[13]" File: M:/text_encryption/text_encryption.v Line: 5
+    Warning (15610): No output dependent on input pin "user_input[14]" File: M:/text_encryption/text_encryption.v Line: 5
+    Warning (15610): No output dependent on input pin "user_input[15]" File: M:/text_encryption/text_encryption.v Line: 5
+    Warning (15610): No output dependent on input pin "select_disp[0]" File: M:/text_encryption/text_encryption.v Line: 7
+    Warning (15610): No output dependent on input pin "select_disp[1]" File: M:/text_encryption/text_encryption.v Line: 7
+    Warning (15610): No output dependent on input pin "encr_go" File: M:/text_encryption/text_encryption.v Line: 6
+    Warning (15610): No output dependent on input pin "clk" File: M:/text_encryption/text_encryption.v Line: 2
+    Warning (15610): No output dependent on input pin "rst" File: M:/text_encryption/text_encryption.v Line: 3
+    Warning (15610): No output dependent on input pin "send_data" File: M:/text_encryption/text_encryption.v Line: 4
+Info (21057): Implemented 158 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 38 input pins
+    Info (21059): Implemented 92 output pins
+    Info (21061): Implemented 28 logic cells
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 93 warnings
+    Info: Peak virtual memory: 4759 megabytes
+    Info: Processing ended: Mon Nov 29 20:05:37 2021
+    Info: Elapsed time: 00:00:11
+    Info: Total CPU time (on all processors): 00:00:21
+
+
