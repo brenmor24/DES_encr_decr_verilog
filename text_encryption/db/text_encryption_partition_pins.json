@@ -8,6 +8,10 @@
 					"strict" : false
 				},
 				{
+					"name" : "temp1",
+					"strict" : false
+				},
+				{
 					"name" : "seg7_most[0]",
 					"strict" : false
 				},
@@ -200,7 +204,15 @@
 					"strict" : false
 				},
 				{
+					"name" : "change_state",
+					"strict" : false
+				},
+				{
 					"name" : "send_data",
+					"strict" : false
+				},
+				{
+					"name" : "encr_go",
 					"strict" : false
 				}
 			]

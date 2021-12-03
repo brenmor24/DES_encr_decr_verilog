@@ -1,5 +1,5 @@
 Analysis & Synthesis report for text_encryption
-Tue Nov 30 21:39:52 2021
+Fri Dec 03 17:32:27 2021
 Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
 
 
@@ -15,10 +15,10 @@ Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
   7. Analysis & Synthesis Resource Utilization by Entity
   8. State Machine - |text_encryption|S
   9. Registers Removed During Synthesis
- 10. Removed Registers Triggering Further Register Optimizations
- 11. General Register Statistics
- 12. Multiplexer Restructuring Statistics (Restructuring Performed)
- 13. Parameter Settings for User Entity Instance: Top-level Entity: |text_encryption
+ 10. General Register Statistics
+ 11. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 12. Parameter Settings for User Entity Instance: Top-level Entity: |text_encryption
+ 13. Port Connectivity Checks: "encrypt_value:my_encr_value"
  14. Post-Synthesis Netlist Statistics for Top Partition
  15. Elapsed Time Per Partition
  16. Analysis & Synthesis Messages
@@ -48,16 +48,16 @@ agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +------------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Tue Nov 30 21:39:52 2021       ;
+; Analysis & Synthesis Status        ; Successful - Fri Dec 03 17:32:27 2021       ;
 ; Quartus Prime Version              ; 16.1.0 Build 196 10/24/2016 SJ Lite Edition ;
 ; Revision Name                      ; text_encryption                             ;
 ; Top-level Entity Name              ; text_encryption                             ;
 ; Family                             ; Cyclone IV E                                ;
-; Total logic elements               ; 141                                         ;
-;     Total combinational functions  ; 76                                          ;
-;     Dedicated logic registers      ; 88                                          ;
-; Total registers                    ; 88                                          ;
-; Total pins                         ; 115                                         ;
+; Total logic elements               ; 299                                         ;
+;     Total combinational functions  ; 298                                         ;
+;     Dedicated logic registers      ; 168                                         ;
+; Total registers                    ; 168                                         ;
+; Total pins                         ; 53                                          ;
 ; Total virtual pins                 ; 0                                           ;
 ; Total memory bits                  ; 0                                           ;
 ; Embedded Multiplier 9-bit elements ; 0                                           ;
@@ -168,15 +168,16 @@ agreement for further details.
 +----------------------------+-------------+
 
 
-+------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Source Files Read                                                                                             ;
-+----------------------------------+-----------------+------------------------------+--------------------------------------+---------+
-; File Name with User-Entered Path ; Used in Netlist ; File Type                    ; File Name with Absolute Path         ; Library ;
-+----------------------------------+-----------------+------------------------------+--------------------------------------+---------+
-; text_encryption.v                ; yes             ; User Verilog HDL File        ; M:/text_encryption/text_encryption.v ;         ;
-; seven_segment.v                  ; yes             ; User Verilog HDL File        ; M:/text_encryption/seven_segment.v   ;         ;
-; four_hex_vals.v                  ; yes             ; Auto-Found Verilog HDL File  ; M:/text_encryption/four_hex_vals.v   ;         ;
-+----------------------------------+-----------------+------------------------------+--------------------------------------+---------+
++-----------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                  ;
++----------------------------------+-----------------+------------------------+-------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type              ; File Name with Absolute Path                    ; Library ;
++----------------------------------+-----------------+------------------------+-------------------------------------------------+---------+
+; text_encryption.v                ; yes             ; User Verilog HDL File  ; M:/text_encryption/text_encryption.v            ;         ;
+; seven_segment.v                  ; yes             ; User Verilog HDL File  ; M:/text_encryption/seven_segment.v              ;         ;
+; four_hex_vals.v                  ; yes             ; User Verilog HDL File  ; M:/text_encryption/four_hex_vals.v              ;         ;
+; output_files/encrypt_value.v     ; yes             ; User Verilog HDL File  ; M:/text_encryption/output_files/encrypt_value.v ;         ;
++----------------------------------+-----------------+------------------------+-------------------------------------------------+---------+
 
 
 +---------------------------------------------------------+
@@ -184,30 +185,30 @@ agreement for further details.
 +---------------------------------------------+-----------+
 ; Resource                                    ; Usage     ;
 +---------------------------------------------+-----------+
-; Estimated Total logic elements              ; 141       ;
+; Estimated Total logic elements              ; 299       ;
 ;                                             ;           ;
-; Total combinational functions               ; 76        ;
+; Total combinational functions               ; 298       ;
 ; Logic element usage by number of LUT inputs ;           ;
-;     -- 4 input functions                    ; 69        ;
-;     -- 3 input functions                    ; 4         ;
-;     -- <=2 input functions                  ; 3         ;
+;     -- 4 input functions                    ; 258       ;
+;     -- 3 input functions                    ; 28        ;
+;     -- <=2 input functions                  ; 12        ;
 ;                                             ;           ;
 ; Logic elements by mode                      ;           ;
-;     -- normal mode                          ; 76        ;
+;     -- normal mode                          ; 298       ;
 ;     -- arithmetic mode                      ; 0         ;
 ;                                             ;           ;
-; Total registers                             ; 88        ;
-;     -- Dedicated logic registers            ; 88        ;
+; Total registers                             ; 168       ;
+;     -- Dedicated logic registers            ; 168       ;
 ;     -- I/O registers                        ; 0         ;
 ;                                             ;           ;
-; I/O pins                                    ; 115       ;
+; I/O pins                                    ; 53        ;
 ;                                             ;           ;
 ; Embedded Multiplier 9-bit elements          ; 0         ;
 ;                                             ;           ;
 ; Maximum fan-out node                        ; clk~input ;
-; Maximum fan-out                             ; 88        ;
-; Total fan-out                               ; 730       ;
-; Average fan-out                             ; 1.85      ;
+; Maximum fan-out                             ; 168       ;
+; Total fan-out                               ; 1748      ;
+; Average fan-out                             ; 3.06      ;
 +---------------------------------------------+-----------+
 
 
@@ -216,7 +217,7 @@ agreement for further details.
 +---------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+----------------------------------------------------------------+-----------------+--------------+
 ; Compilation Hierarchy Node      ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                            ; Entity Name     ; Library Name ;
 +---------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+----------------------------------------------------------------+-----------------+--------------+
-; |text_encryption                ; 76 (48)             ; 88 (88)                   ; 0           ; 0            ; 0       ; 0         ; 115  ; 0            ; |text_encryption                                               ; text_encryption ; work         ;
+; |text_encryption                ; 298 (270)           ; 168 (168)                 ; 0           ; 0            ; 0       ; 0         ; 53   ; 0            ; |text_encryption                                               ; text_encryption ; work         ;
 ;    |four_hex_vals:my_disp|      ; 28 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |text_encryption|four_hex_vals:my_disp                         ; four_hex_vals   ; work         ;
 ;       |seven_segment:left_2|    ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |text_encryption|four_hex_vals:my_disp|seven_segment:left_2    ; seven_segment   ; work         ;
 ;       |seven_segment:leftmost|  ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |text_encryption|four_hex_vals:my_disp|seven_segment:leftmost  ; seven_segment   ; work         ;
@@ -227,49 +228,50 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 
 
 Encoding Type:  One-Hot
-+--------------------------------------------------------------------------------------------------------------------+
-; State Machine - |text_encryption|S                                                                                 ;
-+--------------+--------+--------+-----------+--------------+------------+------------+----------+---------+---------+
-; Name         ; S.DONE ; S.ENCR ; S.WAITING ; S.DISP_VALUE ; S.IN_VALUE ; S.DISP_KEY ; S.IN_KEY ; S.START ; S.ERROR ;
-+--------------+--------+--------+-----------+--------------+------------+------------+----------+---------+---------+
-; S.START      ; 0      ; 0      ; 0         ; 0            ; 0          ; 0          ; 0        ; 0       ; 0       ;
-; S.IN_KEY     ; 0      ; 0      ; 0         ; 0            ; 0          ; 0          ; 1        ; 1       ; 0       ;
-; S.DISP_KEY   ; 0      ; 0      ; 0         ; 0            ; 0          ; 1          ; 0        ; 1       ; 0       ;
-; S.IN_VALUE   ; 0      ; 0      ; 0         ; 0            ; 1          ; 0          ; 0        ; 1       ; 0       ;
-; S.DISP_VALUE ; 0      ; 0      ; 0         ; 1            ; 0          ; 0          ; 0        ; 1       ; 0       ;
-; S.WAITING    ; 0      ; 0      ; 1         ; 0            ; 0          ; 0          ; 0        ; 1       ; 0       ;
-; S.ENCR       ; 0      ; 1      ; 0         ; 0            ; 0          ; 0          ; 0        ; 1       ; 0       ;
-; S.DONE       ; 1      ; 0      ; 0         ; 0            ; 0          ; 0          ; 0        ; 1       ; 0       ;
-; S.ERROR      ; 0      ; 0      ; 0         ; 0            ; 0          ; 0          ; 0        ; 1       ; 1       ;
-+--------------+--------+--------+-----------+--------------+------------+------------+----------+---------+---------+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; State Machine - |text_encryption|S                                                                                                                                                                                                                                                                                         ;
++--------------+---------+--------+--------+-----------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+------------+-------------+------------+-------------+------------+-------------+------------+-------------+------------+---------+
+; Name         ; S.ERROR ; S.DONE ; S.ENCR ; S.WAITING ; S.DISP_VALUE ; S.WAITING_8 ; S.IN_VALUE_4 ; S.WAITING_7 ; S.IN_VALUE_3 ; S.WAITING_6 ; S.IN_VALUE_2 ; S.WAITING_5 ; S.IN_VALUE_1 ; S.DISP_KEY ; S.WAITING_4 ; S.IN_KEY_4 ; S.WAITING_3 ; S.IN_KEY_3 ; S.WAITING_2 ; S.IN_KEY_2 ; S.WAITING_1 ; S.IN_KEY_1 ; S.START ;
++--------------+---------+--------+--------+-----------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+------------+-------------+------------+-------------+------------+-------------+------------+-------------+------------+---------+
+; S.START      ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0       ;
+; S.IN_KEY_1   ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 1          ; 1       ;
+; S.WAITING_1  ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1           ; 0          ; 1       ;
+; S.IN_KEY_2   ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 1          ; 0           ; 0          ; 1       ;
+; S.WAITING_2  ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 1           ; 0          ; 0           ; 0          ; 1       ;
+; S.IN_KEY_3   ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 1          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.WAITING_3  ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 1           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.IN_KEY_4   ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 1          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.WAITING_4  ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 1           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.DISP_KEY   ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 1          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.IN_VALUE_1 ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 1            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.WAITING_5  ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 1           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.IN_VALUE_2 ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 1            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.WAITING_6  ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 1           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.IN_VALUE_3 ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 1            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.WAITING_7  ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 1           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.IN_VALUE_4 ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 1            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.WAITING_8  ; 0       ; 0      ; 0      ; 0         ; 0            ; 1           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.DISP_VALUE ; 0       ; 0      ; 0      ; 0         ; 1            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.WAITING    ; 0       ; 0      ; 0      ; 1         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.ENCR       ; 0       ; 0      ; 1      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.DONE       ; 0       ; 1      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.ERROR      ; 1       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
++--------------+---------+--------+--------+-----------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+------------+-------------+------------+-------------+------------+-------------+------------+-------------+------------+---------+
 
 
-+------------------------------------------------------------+
-; Registers Removed During Synthesis                         ;
-+---------------------------------------+--------------------+
-; Register name                         ; Reason for Removal ;
-+---------------------------------------+--------------------+
-; S~4                                   ; Lost fanout        ;
-; S~5                                   ; Lost fanout        ;
-; S~6                                   ; Lost fanout        ;
-; S~8                                   ; Lost fanout        ;
-; S.ERROR                               ; Lost fanout        ;
-; S.DISP_VALUE                          ; Lost fanout        ;
-; S.WAITING                             ; Lost fanout        ;
-; S.ENCR                                ; Lost fanout        ;
-; S.DONE                                ; Lost fanout        ;
-; Total Number of Removed Registers = 9 ;                    ;
-+---------------------------------------+--------------------+
-
-
-+-----------------------------------------------------------------------------+
-; Removed Registers Triggering Further Register Optimizations                 ;
-+---------------+--------------------+----------------------------------------+
-; Register name ; Reason for Removal ; Registers Removed due to This Register ;
-+---------------+--------------------+----------------------------------------+
-; S~4           ; Lost Fanouts       ; S.DISP_VALUE, S.WAITING                ;
-; S~8           ; Lost Fanouts       ; S.ERROR                                ;
-+---------------+--------------------+----------------------------------------+
++--------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                             ;
++---------------------------------------+----------------------------------------+
+; Register name                         ; Reason for Removal                     ;
++---------------------------------------+----------------------------------------+
+; S~4                                   ; Lost fanout                            ;
+; S~5                                   ; Lost fanout                            ;
+; S~6                                   ; Lost fanout                            ;
+; S~7                                   ; Lost fanout                            ;
+; S~8                                   ; Lost fanout                            ;
+; S.ERROR                               ; Stuck at GND due to stuck port data_in ;
+; Total Number of Removed Registers = 6 ;                                        ;
++---------------------------------------+----------------------------------------+
 
 
 +------------------------------------------------------+
@@ -277,12 +279,12 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 88    ;
-; Number of registers using Synchronous Clear  ; 0     ;
-; Number of registers using Synchronous Load   ; 16    ;
-; Number of registers using Asynchronous Clear ; 5     ;
+; Total registers                              ; 168   ;
+; Number of registers using Synchronous Clear  ; 6     ;
+; Number of registers using Synchronous Load   ; 0     ;
+; Number of registers using Asynchronous Clear ; 168   ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 80    ;
+; Number of registers using Clock Enable       ; 16    ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
@@ -292,7 +294,7 @@ Encoding Type:  One-Hot
 +--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------+
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------+
-; 6:1                ; 16 bits   ; 64 LEs        ; 48 LEs               ; 16 LEs                 ; Yes        ; |text_encryption|disp[15]  ;
+; 11:1               ; 16 bits   ; 112 LEs       ; 96 LEs               ; 16 LEs                 ; Yes        ; |text_encryption|disp[15]  ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------+
 
 
@@ -302,16 +304,39 @@ Encoding Type:  One-Hot
 ; Parameter Name ; Value ; Type                                                   ;
 +----------------+-------+--------------------------------------------------------+
 ; START          ; 00000 ; Unsigned Binary                                        ;
-; IN_KEY         ; 00001 ; Unsigned Binary                                        ;
-; DISP_KEY       ; 00010 ; Unsigned Binary                                        ;
-; IN_VALUE       ; 00011 ; Unsigned Binary                                        ;
-; DISP_VALUE     ; 00100 ; Unsigned Binary                                        ;
-; WAITING        ; 00101 ; Unsigned Binary                                        ;
-; ENCR           ; 00110 ; Unsigned Binary                                        ;
-; DONE           ; 00111 ; Unsigned Binary                                        ;
+; IN_KEY_1       ; 00001 ; Unsigned Binary                                        ;
+; WAITING_1      ; 00010 ; Unsigned Binary                                        ;
+; IN_KEY_2       ; 00011 ; Unsigned Binary                                        ;
+; WAITING_2      ; 00100 ; Unsigned Binary                                        ;
+; IN_KEY_3       ; 00101 ; Unsigned Binary                                        ;
+; WAITING_3      ; 00110 ; Unsigned Binary                                        ;
+; IN_KEY_4       ; 00111 ; Unsigned Binary                                        ;
+; WAITING_4      ; 01000 ; Unsigned Binary                                        ;
+; DISP_KEY       ; 01001 ; Unsigned Binary                                        ;
+; IN_VALUE_1     ; 01010 ; Unsigned Binary                                        ;
+; WAITING_5      ; 01011 ; Unsigned Binary                                        ;
+; IN_VALUE_2     ; 01100 ; Unsigned Binary                                        ;
+; WAITING_6      ; 01101 ; Unsigned Binary                                        ;
+; IN_VALUE_3     ; 01110 ; Unsigned Binary                                        ;
+; WAITING_7      ; 01111 ; Unsigned Binary                                        ;
+; IN_VALUE_4     ; 10000 ; Unsigned Binary                                        ;
+; WAITING_8      ; 10001 ; Unsigned Binary                                        ;
+; DISP_VALUE     ; 10010 ; Unsigned Binary                                        ;
+; WAITING        ; 10011 ; Unsigned Binary                                        ;
+; ENCR           ; 10100 ; Unsigned Binary                                        ;
+; DONE           ; 10101 ; Unsigned Binary                                        ;
 ; ERROR          ; 11111 ; Unsigned Binary                                        ;
 +----------------+-------+--------------------------------------------------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "encrypt_value:my_encr_value"                                                        ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; Port ; Type   ; Severity ; Details                                                                             ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; msg  ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++------+--------+----------+-------------------------------------------------------------------------------------+
 
 
 +-----------------------------------------------------+
@@ -319,22 +344,20 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; boundary_port         ; 115                         ;
-; cycloneiii_ff         ; 88                          ;
-;     CLR               ; 5                           ;
-;     ENA               ; 64                          ;
-;     ENA SLD           ; 16                          ;
-;     plain             ; 3                           ;
-; cycloneiii_lcell_comb ; 81                          ;
-;     normal            ; 81                          ;
-;         0 data inputs ; 1                           ;
+; boundary_port         ; 53                          ;
+; cycloneiii_ff         ; 168                         ;
+;     CLR               ; 146                         ;
+;     CLR SCLR          ; 6                           ;
+;     ENA CLR           ; 16                          ;
+; cycloneiii_lcell_comb ; 302                         ;
+;     normal            ; 302                         ;
 ;         1 data inputs ; 4                           ;
-;         2 data inputs ; 3                           ;
-;         3 data inputs ; 4                           ;
-;         4 data inputs ; 69                          ;
+;         2 data inputs ; 12                          ;
+;         3 data inputs ; 28                          ;
+;         4 data inputs ; 258                         ;
 ;                       ;                             ;
-; Max LUT depth         ; 2.00                        ;
-; Average LUT depth     ; 1.49                        ;
+; Max LUT depth         ; 5.00                        ;
+; Average LUT depth     ; 3.55                        ;
 +-----------------------+-----------------------------+
 
 
@@ -353,7 +376,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
-    Info: Processing started: Tue Nov 30 21:39:42 2021
+    Info: Processing started: Fri Dec 03 17:32:16 2021
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off text_encryption -c text_encryption
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
@@ -361,93 +384,30 @@ Info (12021): Found 1 design units, including 1 entities, in source file text_en
     Info (12023): Found entity 1: text_encryption File: M:/text_encryption/text_encryption.v Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file seven_segment.v
     Info (12023): Found entity 1: seven_segment File: M:/text_encryption/seven_segment.v Line: 1
-Info (12127): Elaborating entity "text_encryption" for the top level hierarchy
-Info (10264): Verilog HDL Case Statement information at text_encryption.v(85): all case item expressions in this case statement are onehot File: M:/text_encryption/text_encryption.v Line: 85
-Info (10264): Verilog HDL Case Statement information at text_encryption.v(146): all case item expressions in this case statement are onehot File: M:/text_encryption/text_encryption.v Line: 146
-Warning (10034): Output port "msg" at text_encryption.v(8) has no driver File: M:/text_encryption/text_encryption.v Line: 8
-Warning (12125): Using design file four_hex_vals.v, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
+Info (12021): Found 1 design units, including 1 entities, in source file four_hex_vals.v
     Info (12023): Found entity 1: four_hex_vals File: M:/text_encryption/four_hex_vals.v Line: 1
-Info (12128): Elaborating entity "four_hex_vals" for hierarchy "four_hex_vals:my_disp" File: M:/text_encryption/text_encryption.v Line: 63
+Info (12021): Found 1 design units, including 1 entities, in source file output_files/encrypt_value.v
+    Info (12023): Found entity 1: encrypt_value File: M:/text_encryption/output_files/encrypt_value.v Line: 1
+Info (12127): Elaborating entity "text_encryption" for the top level hierarchy
+Warning (10036): Verilog HDL or VHDL warning at text_encryption.v(24): object "encr_en" assigned a value but never read File: M:/text_encryption/text_encryption.v Line: 24
+Info (10264): Verilog HDL Case Statement information at text_encryption.v(100): all case item expressions in this case statement are onehot File: M:/text_encryption/text_encryption.v Line: 100
+Info (10264): Verilog HDL Case Statement information at text_encryption.v(291): all case item expressions in this case statement are onehot File: M:/text_encryption/text_encryption.v Line: 291
+Info (12128): Elaborating entity "four_hex_vals" for hierarchy "four_hex_vals:my_disp" File: M:/text_encryption/text_encryption.v Line: 57
 Info (12128): Elaborating entity "seven_segment" for hierarchy "four_hex_vals:my_disp|seven_segment:leftmost" File: M:/text_encryption/four_hex_vals.v Line: 9
-Warning (13024): Output pins are stuck at VCC or GND
-    Warning (13410): Pin "msg[0]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[1]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[2]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[3]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[4]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[5]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[6]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[7]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[8]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[9]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[10]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[11]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[12]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[13]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[14]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[15]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[16]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[17]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[18]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[19]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[20]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[21]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[22]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[23]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[24]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[25]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[26]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[27]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[28]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[29]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[30]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[31]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[32]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[33]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[34]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[35]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[36]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[37]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[38]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[39]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[40]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[41]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[42]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[43]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[44]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[45]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[46]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[47]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[48]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[49]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[50]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[51]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[52]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[53]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[54]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[55]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[56]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[57]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[58]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[59]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[60]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[61]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[62]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
-    Warning (13410): Pin "msg[63]" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 8
+Info (12128): Elaborating entity "encrypt_value" for hierarchy "encrypt_value:my_encr_value" File: M:/text_encryption/text_encryption.v Line: 59
+Warning (10034): Output port "msg" at encrypt_value.v(5) has no driver File: M:/text_encryption/output_files/encrypt_value.v Line: 5
 Info (286030): Timing-Driven Synthesis is running
-Info (17049): 9 registers lost all their fanouts during netlist optimizations.
+Info (17049): 5 registers lost all their fanouts during netlist optimizations.
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Warning (21074): Design contains 1 input pin(s) that do not drive logic
-    Warning (15610): No output dependent on input pin "encr_go" File: M:/text_encryption/text_encryption.v Line: 6
-Info (21057): Implemented 256 device resources after synthesis - the final resource count might be different
-    Info (21058): Implemented 22 input pins
-    Info (21059): Implemented 93 output pins
-    Info (21061): Implemented 141 logic cells
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 70 warnings
-    Info: Peak virtual memory: 4774 megabytes
-    Info: Processing ended: Tue Nov 30 21:39:52 2021
-    Info: Elapsed time: 00:00:10
-    Info: Total CPU time (on all processors): 00:00:19
+Info (21057): Implemented 352 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 23 input pins
+    Info (21059): Implemented 30 output pins
+    Info (21061): Implemented 299 logic cells
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 3 warnings
+    Info: Peak virtual memory: 4775 megabytes
+    Info: Processing ended: Fri Dec 03 17:32:27 2021
+    Info: Elapsed time: 00:00:11
+    Info: Total CPU time (on all processors): 00:00:20
 
 
