@@ -1,5 +1,5 @@
 Analysis & Synthesis report for text_encryption
-Fri Dec 03 17:32:27 2021
+Mon Dec 06 23:32:40 2021
 Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
 
 
@@ -14,14 +14,21 @@ Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
   6. Analysis & Synthesis Resource Usage Summary
   7. Analysis & Synthesis Resource Utilization by Entity
   8. State Machine - |text_encryption|S
-  9. Registers Removed During Synthesis
- 10. General Register Statistics
- 11. Multiplexer Restructuring Statistics (Restructuring Performed)
- 12. Parameter Settings for User Entity Instance: Top-level Entity: |text_encryption
- 13. Port Connectivity Checks: "encrypt_value:my_encr_value"
- 14. Post-Synthesis Netlist Statistics for Top Partition
- 15. Elapsed Time Per Partition
- 16. Analysis & Synthesis Messages
+  9. State Machine - |text_encryption|lcd_driver:show_text|S
+ 10. State Machine - |text_encryption|lcd_driver:show_text|NS
+ 11. State Machine - |text_encryption|lcd_driver:show_text|lcd_control:lcd|state
+ 12. Registers Removed During Synthesis
+ 13. Removed Registers Triggering Further Register Optimizations
+ 14. General Register Statistics
+ 15. Inverted Register Statistics
+ 16. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 17. Parameter Settings for User Entity Instance: Top-level Entity: |text_encryption
+ 18. Parameter Settings for User Entity Instance: lcd_driver:show_text
+ 19. Parameter Settings for User Entity Instance: lcd_driver:show_text|lcd_control:lcd
+ 20. Port Connectivity Checks: "encrypt_value:my_encr_value"
+ 21. Post-Synthesis Netlist Statistics for Top Partition
+ 22. Elapsed Time Per Partition
+ 23. Analysis & Synthesis Messages
 
 
 
@@ -48,16 +55,16 @@ agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +------------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Fri Dec 03 17:32:27 2021       ;
+; Analysis & Synthesis Status        ; Successful - Mon Dec 06 23:32:39 2021       ;
 ; Quartus Prime Version              ; 16.1.0 Build 196 10/24/2016 SJ Lite Edition ;
 ; Revision Name                      ; text_encryption                             ;
 ; Top-level Entity Name              ; text_encryption                             ;
 ; Family                             ; Cyclone IV E                                ;
-; Total logic elements               ; 299                                         ;
-;     Total combinational functions  ; 298                                         ;
-;     Dedicated logic registers      ; 168                                         ;
-; Total registers                    ; 168                                         ;
-; Total pins                         ; 53                                          ;
+; Total logic elements               ; 503                                         ;
+;     Total combinational functions  ; 485                                         ;
+;     Dedicated logic registers      ; 230                                         ;
+; Total registers                    ; 230                                         ;
+; Total pins                         ; 67                                          ;
 ; Total virtual pins                 ; 0                                           ;
 ; Total memory bits                  ; 0                                           ;
 ; Embedded Multiplier 9-bit elements ; 0                                           ;
@@ -168,16 +175,18 @@ agreement for further details.
 +----------------------------+-------------+
 
 
-+-----------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Source Files Read                                                                                                  ;
-+----------------------------------+-----------------+------------------------+-------------------------------------------------+---------+
-; File Name with User-Entered Path ; Used in Netlist ; File Type              ; File Name with Absolute Path                    ; Library ;
-+----------------------------------+-----------------+------------------------+-------------------------------------------------+---------+
-; text_encryption.v                ; yes             ; User Verilog HDL File  ; M:/text_encryption/text_encryption.v            ;         ;
-; seven_segment.v                  ; yes             ; User Verilog HDL File  ; M:/text_encryption/seven_segment.v              ;         ;
-; four_hex_vals.v                  ; yes             ; User Verilog HDL File  ; M:/text_encryption/four_hex_vals.v              ;         ;
-; output_files/encrypt_value.v     ; yes             ; User Verilog HDL File  ; M:/text_encryption/output_files/encrypt_value.v ;         ;
-+----------------------------------+-----------------+------------------------+-------------------------------------------------+---------+
++------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                       ;
++----------------------------------+-----------------+------------------------+--------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type              ; File Name with Absolute Path         ; Library ;
++----------------------------------+-----------------+------------------------+--------------------------------------+---------+
+; text_encryption.v                ; yes             ; User Verilog HDL File  ; M:/text_encryption/text_encryption.v ;         ;
+; seven_segment.v                  ; yes             ; User Verilog HDL File  ; M:/text_encryption/seven_segment.v   ;         ;
+; four_hex_vals.v                  ; yes             ; User Verilog HDL File  ; M:/text_encryption/four_hex_vals.v   ;         ;
+; lcd_control.v                    ; yes             ; User Verilog HDL File  ; M:/text_encryption/lcd_control.v     ;         ;
+; encrypt_value.v                  ; yes             ; User Verilog HDL File  ; M:/text_encryption/encrypt_value.v   ;         ;
+; lcd_driver.v                     ; yes             ; User Verilog HDL File  ; M:/text_encryption/lcd_driver.v      ;         ;
++----------------------------------+-----------------+------------------------+--------------------------------------+---------+
 
 
 +---------------------------------------------------------+
@@ -185,30 +194,30 @@ agreement for further details.
 +---------------------------------------------+-----------+
 ; Resource                                    ; Usage     ;
 +---------------------------------------------+-----------+
-; Estimated Total logic elements              ; 299       ;
+; Estimated Total logic elements              ; 503       ;
 ;                                             ;           ;
-; Total combinational functions               ; 298       ;
+; Total combinational functions               ; 485       ;
 ; Logic element usage by number of LUT inputs ;           ;
-;     -- 4 input functions                    ; 258       ;
-;     -- 3 input functions                    ; 28        ;
-;     -- <=2 input functions                  ; 12        ;
+;     -- 4 input functions                    ; 364       ;
+;     -- 3 input functions                    ; 54        ;
+;     -- <=2 input functions                  ; 67        ;
 ;                                             ;           ;
 ; Logic elements by mode                      ;           ;
-;     -- normal mode                          ; 298       ;
-;     -- arithmetic mode                      ; 0         ;
+;     -- normal mode                          ; 465       ;
+;     -- arithmetic mode                      ; 20        ;
 ;                                             ;           ;
-; Total registers                             ; 168       ;
-;     -- Dedicated logic registers            ; 168       ;
+; Total registers                             ; 230       ;
+;     -- Dedicated logic registers            ; 230       ;
 ;     -- I/O registers                        ; 0         ;
 ;                                             ;           ;
-; I/O pins                                    ; 53        ;
+; I/O pins                                    ; 67        ;
 ;                                             ;           ;
 ; Embedded Multiplier 9-bit elements          ; 0         ;
 ;                                             ;           ;
 ; Maximum fan-out node                        ; clk~input ;
-; Maximum fan-out                             ; 168       ;
-; Total fan-out                               ; 1748      ;
-; Average fan-out                             ; 3.06      ;
+; Maximum fan-out                             ; 213       ;
+; Total fan-out                               ; 2565      ;
+; Average fan-out                             ; 3.02      ;
 +---------------------------------------------+-----------+
 
 
@@ -217,12 +226,14 @@ agreement for further details.
 +---------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+----------------------------------------------------------------+-----------------+--------------+
 ; Compilation Hierarchy Node      ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                            ; Entity Name     ; Library Name ;
 +---------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+----------------------------------------------------------------+-----------------+--------------+
-; |text_encryption                ; 298 (270)           ; 168 (168)                 ; 0           ; 0            ; 0       ; 0         ; 53   ; 0            ; |text_encryption                                               ; text_encryption ; work         ;
+; |text_encryption                ; 485 (269)           ; 230 (168)                 ; 0           ; 0            ; 0       ; 0         ; 67   ; 0            ; |text_encryption                                               ; text_encryption ; work         ;
 ;    |four_hex_vals:my_disp|      ; 28 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |text_encryption|four_hex_vals:my_disp                         ; four_hex_vals   ; work         ;
 ;       |seven_segment:left_2|    ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |text_encryption|four_hex_vals:my_disp|seven_segment:left_2    ; seven_segment   ; work         ;
 ;       |seven_segment:leftmost|  ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |text_encryption|four_hex_vals:my_disp|seven_segment:leftmost  ; seven_segment   ; work         ;
 ;       |seven_segment:right_2|   ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |text_encryption|four_hex_vals:my_disp|seven_segment:right_2   ; seven_segment   ; work         ;
 ;       |seven_segment:rightmost| ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |text_encryption|four_hex_vals:my_disp|seven_segment:rightmost ; seven_segment   ; work         ;
+;    |lcd_driver:show_text|       ; 188 (21)            ; 62 (35)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |text_encryption|lcd_driver:show_text                          ; lcd_driver      ; work         ;
+;       |lcd_control:lcd|         ; 167 (167)           ; 27 (27)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |text_encryption|lcd_driver:show_text|lcd_control:lcd          ; lcd_control     ; work         ;
 +---------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+----------------------------------------------------------------+-----------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
@@ -259,19 +270,247 @@ Encoding Type:  One-Hot
 +--------------+---------+--------+--------+-----------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+------------+-------------+------------+-------------+------------+-------------+------------+-------------+------------+---------+
 
 
-+--------------------------------------------------------------------------------+
-; Registers Removed During Synthesis                                             ;
-+---------------------------------------+----------------------------------------+
-; Register name                         ; Reason for Removal                     ;
-+---------------------------------------+----------------------------------------+
-; S~4                                   ; Lost fanout                            ;
-; S~5                                   ; Lost fanout                            ;
-; S~6                                   ; Lost fanout                            ;
-; S~7                                   ; Lost fanout                            ;
-; S~8                                   ; Lost fanout                            ;
-; S.ERROR                               ; Stuck at GND due to stuck port data_in ;
-; Total Number of Removed Registers = 6 ;                                        ;
-+---------------------------------------+----------------------------------------+
+Encoding Type:  One-Hot
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; State Machine - |text_encryption|lcd_driver:show_text|S                                                                                                                                                                                                                                                                    ;
++--------------+---------+--------+--------+-----------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+------------+-------------+------------+-------------+------------+-------------+------------+-------------+------------+---------+
+; Name         ; S.ERROR ; S.DONE ; S.ENCR ; S.WAITING ; S.DISP_VALUE ; S.WAITING_8 ; S.IN_VALUE_4 ; S.WAITING_7 ; S.IN_VALUE_3 ; S.WAITING_6 ; S.IN_VALUE_2 ; S.WAITING_5 ; S.IN_VALUE_1 ; S.DISP_KEY ; S.WAITING_4 ; S.IN_KEY_4 ; S.WAITING_3 ; S.IN_KEY_3 ; S.WAITING_2 ; S.IN_KEY_2 ; S.WAITING_1 ; S.IN_KEY_1 ; S.START ;
++--------------+---------+--------+--------+-----------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+------------+-------------+------------+-------------+------------+-------------+------------+-------------+------------+---------+
+; S.START      ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0       ;
+; S.IN_KEY_1   ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 1          ; 1       ;
+; S.WAITING_1  ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1           ; 0          ; 1       ;
+; S.IN_KEY_2   ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 1          ; 0           ; 0          ; 1       ;
+; S.WAITING_2  ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 1           ; 0          ; 0           ; 0          ; 1       ;
+; S.IN_KEY_3   ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 1          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.WAITING_3  ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 1           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.IN_KEY_4   ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 1          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.WAITING_4  ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 1           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.DISP_KEY   ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 1          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.IN_VALUE_1 ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 1            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.WAITING_5  ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 1           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.IN_VALUE_2 ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 1            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.WAITING_6  ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 1           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.IN_VALUE_3 ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 1            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.WAITING_7  ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 1           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.IN_VALUE_4 ; 0       ; 0      ; 0      ; 0         ; 0            ; 0           ; 1            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.WAITING_8  ; 0       ; 0      ; 0      ; 0         ; 0            ; 1           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.DISP_VALUE ; 0       ; 0      ; 0      ; 0         ; 1            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.WAITING    ; 0       ; 0      ; 0      ; 1         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.ENCR       ; 0       ; 0      ; 1      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.DONE       ; 0       ; 1      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
+; S.ERROR      ; 1       ; 0      ; 0      ; 0         ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ;
++--------------+---------+--------+--------+-----------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+------------+-------------+------------+-------------+------------+-------------+------------+-------------+------------+---------+
+
+
+Encoding Type:  One-Hot
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; State Machine - |text_encryption|lcd_driver:show_text|NS                                                                                                                                                                                                                                                                                ;
++---------------+----------+---------+---------+------------+---------------+--------------+---------------+--------------+---------------+--------------+---------------+--------------+---------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+
+; Name          ; NS.ERROR ; NS.DONE ; NS.ENCR ; NS.WAITING ; NS.DISP_VALUE ; NS.WAITING_8 ; NS.IN_VALUE_4 ; NS.WAITING_7 ; NS.IN_VALUE_3 ; NS.WAITING_6 ; NS.IN_VALUE_2 ; NS.WAITING_5 ; NS.IN_VALUE_1 ; NS.DISP_KEY ; NS.WAITING_4 ; NS.IN_KEY_4 ; NS.WAITING_3 ; NS.IN_KEY_3 ; NS.WAITING_2 ; NS.IN_KEY_2 ; NS.WAITING_1 ; NS.IN_KEY_1 ;
++---------------+----------+---------+---------+------------+---------------+--------------+---------------+--------------+---------------+--------------+---------------+--------------+---------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+
+; NS.IN_KEY_1   ; 0        ; 0       ; 0       ; 0          ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ;
+; NS.WAITING_1  ; 0        ; 0       ; 0       ; 0          ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 1            ; 1           ;
+; NS.IN_KEY_2   ; 0        ; 0       ; 0       ; 0          ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 1           ; 0            ; 1           ;
+; NS.WAITING_2  ; 0        ; 0       ; 0       ; 0          ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0           ; 0            ; 0           ; 0            ; 0           ; 1            ; 0           ; 0            ; 1           ;
+; NS.IN_KEY_3   ; 0        ; 0       ; 0       ; 0          ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0           ; 0            ; 0           ; 0            ; 1           ; 0            ; 0           ; 0            ; 1           ;
+; NS.WAITING_3  ; 0        ; 0       ; 0       ; 0          ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0           ; 0            ; 0           ; 1            ; 0           ; 0            ; 0           ; 0            ; 1           ;
+; NS.IN_KEY_4   ; 0        ; 0       ; 0       ; 0          ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0           ; 0            ; 1           ; 0            ; 0           ; 0            ; 0           ; 0            ; 1           ;
+; NS.WAITING_4  ; 0        ; 0       ; 0       ; 0          ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0           ; 1            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 1           ;
+; NS.DISP_KEY   ; 0        ; 0       ; 0       ; 0          ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 1           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 1           ;
+; NS.IN_VALUE_1 ; 0        ; 0       ; 0       ; 0          ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 1             ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 1           ;
+; NS.WAITING_5  ; 0        ; 0       ; 0       ; 0          ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 1            ; 0             ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 1           ;
+; NS.IN_VALUE_2 ; 0        ; 0       ; 0       ; 0          ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 1             ; 0            ; 0             ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 1           ;
+; NS.WAITING_6  ; 0        ; 0       ; 0       ; 0          ; 0             ; 0            ; 0             ; 0            ; 0             ; 1            ; 0             ; 0            ; 0             ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 1           ;
+; NS.IN_VALUE_3 ; 0        ; 0       ; 0       ; 0          ; 0             ; 0            ; 0             ; 0            ; 1             ; 0            ; 0             ; 0            ; 0             ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 1           ;
+; NS.WAITING_7  ; 0        ; 0       ; 0       ; 0          ; 0             ; 0            ; 0             ; 1            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 1           ;
+; NS.IN_VALUE_4 ; 0        ; 0       ; 0       ; 0          ; 0             ; 0            ; 1             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 1           ;
+; NS.WAITING_8  ; 0        ; 0       ; 0       ; 0          ; 0             ; 1            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 1           ;
+; NS.DISP_VALUE ; 0        ; 0       ; 0       ; 0          ; 1             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 1           ;
+; NS.WAITING    ; 0        ; 0       ; 0       ; 1          ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 1           ;
+; NS.ENCR       ; 0        ; 0       ; 1       ; 0          ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 1           ;
+; NS.DONE       ; 0        ; 1       ; 0       ; 0          ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 1           ;
+; NS.ERROR      ; 1        ; 0       ; 0       ; 0          ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0            ; 0             ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 1           ;
++---------------+----------+---------+---------+------------+---------------+--------------+---------------+--------------+---------------+--------------+---------------+--------------+---------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+
+
+
+Encoding Type:  One-Hot
++----------------------------------------------------------------------------------------------+
+; State Machine - |text_encryption|lcd_driver:show_text|lcd_control:lcd|state                  ;
++------------------+------------------+------------------+------------------+------------------+
+; Name             ; state.IDLE_STATE ; state.PUSH_STATE ; state.LOAD_STATE ; state.INIT_STATE ;
++------------------+------------------+------------------+------------------+------------------+
+; state.INIT_STATE ; 0                ; 0                ; 0                ; 0                ;
+; state.LOAD_STATE ; 0                ; 0                ; 1                ; 1                ;
+; state.PUSH_STATE ; 0                ; 1                ; 0                ; 1                ;
+; state.IDLE_STATE ; 1                ; 0                ; 0                ; 1                ;
++------------------+------------------+------------------+------------------+------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                                                                                                                                                                         ;
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------+
+; Register name                                                                                                                                                                 ; Reason for Removal                         ;
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------+
+; lcd_driver:show_text|name[0,247,251,255]                                                                                                                                      ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[246]                                                                                                                                                ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[244]                                                                                                                                                ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[242]                                                                                                                                                ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[239]                                                                                                                                                ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[237,238]                                                                                                                                            ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[231]                                                                                                                                                ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[229,230]                                                                                                                                            ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[223]                                                                                                                                                ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[221,222]                                                                                                                                            ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[215]                                                                                                                                                ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[213]                                                                                                                                                ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[191,199,207]                                                                                                                                        ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[189]                                                                                                                                                ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[183]                                                                                                                                                ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[181]                                                                                                                                                ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[175]                                                                                                                                                ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[173]                                                                                                                                                ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[167]                                                                                                                                                ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[165]                                                                                                                                                ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[159,160]                                                                                                                                            ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[158]                                                                                                                                                ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[151,153]                                                                                                                                            ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[149]                                                                                                                                                ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[143,148]                                                                                                                                            ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[141]                                                                                                                                                ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[135,137,139,140]                                                                                                                                    ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[132,134]                                                                                                                                            ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[127,129]                                                                                                                                            ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[125]                                                                                                                                                ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[119,121,123,124]                                                                                                                                    ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[117]                                                                                                                                                ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[111..114]                                                                                                                                           ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[109]                                                                                                                                                ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[102..105,107]                                                                                                                                       ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[101]                                                                                                                                                ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[87,89,91,92,95..100]                                                                                                                                ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[85]                                                                                                                                                 ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[79,80,84]                                                                                                                                           ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[77]                                                                                                                                                 ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[71,74..76]                                                                                                                                          ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[69]                                                                                                                                                 ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[63,64,66,67]                                                                                                                                        ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[61]                                                                                                                                                 ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[55,57,58]                                                                                                                                           ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[53]                                                                                                                                                 ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[47..51]                                                                                                                                             ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[45]                                                                                                                                                 ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[39..41,43]                                                                                                                                          ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[37]                                                                                                                                                 ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[31,36]                                                                                                                                              ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[29]                                                                                                                                                 ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[22..24,26,27]                                                                                                                                       ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[21]                                                                                                                                                 ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[14..20]                                                                                                                                             ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[13]                                                                                                                                                 ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[6..12]                                                                                                                                              ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[5]                                                                                                                                                  ; Stuck at VCC due to stuck port data_in     ;
+; lcd_driver:show_text|name[1..4]                                                                                                                                               ; Stuck at GND due to stuck port data_in     ;
+; lcd_driver:show_text|name[174]                                                                                                                                                ; Merged with lcd_driver:show_text|name[187] ;
+; lcd_driver:show_text|name[187]                                                                                                                                                ; Merged with lcd_driver:show_text|name[227] ;
+; lcd_driver:show_text|name[227]                                                                                                                                                ; Merged with lcd_driver:show_text|name[232] ;
+; lcd_driver:show_text|name[232]                                                                                                                                                ; Merged with lcd_driver:show_text|name[253] ;
+; lcd_driver:show_text|name[144]                                                                                                                                                ; Merged with lcd_driver:show_text|name[150] ;
+; lcd_driver:show_text|name[150]                                                                                                                                                ; Merged with lcd_driver:show_text|name[155] ;
+; lcd_driver:show_text|name[155]                                                                                                                                                ; Merged with lcd_driver:show_text|name[164] ;
+; lcd_driver:show_text|name[164]                                                                                                                                                ; Merged with lcd_driver:show_text|name[188] ;
+; lcd_driver:show_text|name[188]                                                                                                                                                ; Merged with lcd_driver:show_text|name[234] ;
+; lcd_driver:show_text|name[234]                                                                                                                                                ; Merged with lcd_driver:show_text|name[253] ;
+; lcd_driver:show_text|name[224,245,248,250,254]                                                                                                                                ; Merged with lcd_driver:show_text|name[197] ;
+; lcd_driver:show_text|name[178,235,240]                                                                                                                                        ; Merged with lcd_driver:show_text|name[176] ;
+; lcd_driver:show_text|name[214,216,218]                                                                                                                                        ; Merged with lcd_driver:show_text|name[205] ;
+; lcd_driver:show_text|name[25,28,30,32..35,38,42,44,46,52,54,56,59,60,62,65,68,70,72,73,78,81..83,86,88,90,94,108,110,115,116,118,120,122,126,130,157,166,190,208,210,219,225] ; Merged with lcd_driver:show_text|name[106] ;
+; lcd_driver:show_text|name[179,200,206,217]                                                                                                                                    ; Merged with lcd_driver:show_text|name[177] ;
+; lcd_driver:show_text|name[168]                                                                                                                                                ; Merged with lcd_driver:show_text|name[161] ;
+; lcd_driver:show_text|name[93,131,133,136,138,142,145,147,156,180]                                                                                                             ; Merged with lcd_driver:show_text|name[128] ;
+; lcd_driver:show_text|name[194]                                                                                                                                                ; Merged with lcd_driver:show_text|name[185] ;
+; lcd_driver:show_text|name[170]                                                                                                                                                ; Merged with lcd_driver:show_text|name[163] ;
+; lcd_driver:show_text|name[154,172,184,196,226]                                                                                                                                ; Merged with lcd_driver:show_text|name[152] ;
+; lcd_driver:show_text|name[182,202,211,249,252]                                                                                                                                ; Merged with lcd_driver:show_text|name[146] ;
+; lcd_driver:show_text|name[203,204,220,236,241]                                                                                                                                ; Merged with lcd_driver:show_text|name[201] ;
+; lcd_driver:show_text|name[233]                                                                                                                                                ; Merged with lcd_driver:show_text|name[198] ;
+; lcd_driver:show_text|name[195,209,212,228]                                                                                                                                    ; Merged with lcd_driver:show_text|name[171] ;
+; S~4                                                                                                                                                                           ; Lost fanout                                ;
+; S~5                                                                                                                                                                           ; Lost fanout                                ;
+; S~6                                                                                                                                                                           ; Lost fanout                                ;
+; S~7                                                                                                                                                                           ; Lost fanout                                ;
+; S~8                                                                                                                                                                           ; Lost fanout                                ;
+; lcd_driver:show_text|S~4                                                                                                                                                      ; Lost fanout                                ;
+; lcd_driver:show_text|S~5                                                                                                                                                      ; Lost fanout                                ;
+; lcd_driver:show_text|S~6                                                                                                                                                      ; Lost fanout                                ;
+; lcd_driver:show_text|S~7                                                                                                                                                      ; Lost fanout                                ;
+; lcd_driver:show_text|S~8                                                                                                                                                      ; Lost fanout                                ;
+; lcd_driver:show_text|NS~2                                                                                                                                                     ; Lost fanout                                ;
+; lcd_driver:show_text|NS~3                                                                                                                                                     ; Lost fanout                                ;
+; lcd_driver:show_text|NS~4                                                                                                                                                     ; Lost fanout                                ;
+; lcd_driver:show_text|NS~5                                                                                                                                                     ; Lost fanout                                ;
+; lcd_driver:show_text|NS~6                                                                                                                                                     ; Lost fanout                                ;
+; lcd_driver:show_text|lcd_control:lcd|state~4                                                                                                                                  ; Lost fanout                                ;
+; lcd_driver:show_text|lcd_control:lcd|state~5                                                                                                                                  ; Lost fanout                                ;
+; lcd_driver:show_text|lcd_control:lcd|state~6                                                                                                                                  ; Lost fanout                                ;
+; lcd_driver:show_text|S.WAITING_4                                                                                                                                              ; Lost fanout                                ;
+; lcd_driver:show_text|S.DISP_KEY                                                                                                                                               ; Lost fanout                                ;
+; lcd_driver:show_text|S.IN_VALUE_1                                                                                                                                             ; Lost fanout                                ;
+; lcd_driver:show_text|S.WAITING_5                                                                                                                                              ; Lost fanout                                ;
+; lcd_driver:show_text|S.IN_VALUE_2                                                                                                                                             ; Lost fanout                                ;
+; lcd_driver:show_text|S.WAITING_6                                                                                                                                              ; Lost fanout                                ;
+; lcd_driver:show_text|S.IN_VALUE_3                                                                                                                                             ; Lost fanout                                ;
+; lcd_driver:show_text|S.WAITING_7                                                                                                                                              ; Lost fanout                                ;
+; lcd_driver:show_text|S.IN_VALUE_4                                                                                                                                             ; Lost fanout                                ;
+; lcd_driver:show_text|S.WAITING_8                                                                                                                                              ; Lost fanout                                ;
+; lcd_driver:show_text|S.DISP_VALUE                                                                                                                                             ; Lost fanout                                ;
+; lcd_driver:show_text|S.WAITING                                                                                                                                                ; Lost fanout                                ;
+; lcd_driver:show_text|S.ENCR                                                                                                                                                   ; Lost fanout                                ;
+; lcd_driver:show_text|S.DONE                                                                                                                                                   ; Lost fanout                                ;
+; lcd_driver:show_text|S.ERROR                                                                                                                                                  ; Lost fanout                                ;
+; lcd_driver:show_text|NS.WAITING_4                                                                                                                                             ; Lost fanout                                ;
+; lcd_driver:show_text|NS.DISP_KEY                                                                                                                                              ; Lost fanout                                ;
+; lcd_driver:show_text|NS.IN_VALUE_1                                                                                                                                            ; Lost fanout                                ;
+; lcd_driver:show_text|NS.WAITING_5                                                                                                                                             ; Lost fanout                                ;
+; lcd_driver:show_text|NS.IN_VALUE_2                                                                                                                                            ; Lost fanout                                ;
+; lcd_driver:show_text|NS.WAITING_6                                                                                                                                             ; Lost fanout                                ;
+; lcd_driver:show_text|NS.IN_VALUE_3                                                                                                                                            ; Lost fanout                                ;
+; lcd_driver:show_text|NS.WAITING_7                                                                                                                                             ; Lost fanout                                ;
+; lcd_driver:show_text|NS.IN_VALUE_4                                                                                                                                            ; Lost fanout                                ;
+; lcd_driver:show_text|NS.WAITING_8                                                                                                                                             ; Lost fanout                                ;
+; lcd_driver:show_text|NS.DISP_VALUE                                                                                                                                            ; Lost fanout                                ;
+; lcd_driver:show_text|NS.WAITING                                                                                                                                               ; Lost fanout                                ;
+; lcd_driver:show_text|NS.ENCR                                                                                                                                                  ; Lost fanout                                ;
+; lcd_driver:show_text|NS.DONE                                                                                                                                                  ; Lost fanout                                ;
+; lcd_driver:show_text|NS.ERROR                                                                                                                                                 ; Lost fanout                                ;
+; lcd_driver:show_text|S.START                                                                                                                                                  ; Merged with S.START                        ;
+; S.ERROR                                                                                                                                                                       ; Stuck at GND due to stuck port data_in     ;
+; Total Number of Removed Registers = 285                                                                                                                                       ;                                            ;
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------+
+; Removed Registers Triggering Further Register Optimizations                                                                     ;
++----------------------------------+--------------------+-------------------------------------------------------------------------+
+; Register name                    ; Reason for Removal ; Registers Removed due to This Register                                  ;
++----------------------------------+--------------------+-------------------------------------------------------------------------+
+; lcd_driver:show_text|NS~2        ; Lost Fanouts       ; lcd_driver:show_text|S.DISP_KEY, lcd_driver:show_text|S.WAITING_5,      ;
+;                                  ;                    ; lcd_driver:show_text|S.WAITING_6, lcd_driver:show_text|S.WAITING_7,     ;
+;                                  ;                    ; lcd_driver:show_text|S.WAITING_8, lcd_driver:show_text|S.WAITING,       ;
+;                                  ;                    ; lcd_driver:show_text|NS.DISP_KEY                                        ;
+; lcd_driver:show_text|S~4         ; Lost Fanouts       ; lcd_driver:show_text|NS.IN_VALUE_1, lcd_driver:show_text|NS.IN_VALUE_2, ;
+;                                  ;                    ; lcd_driver:show_text|NS.IN_VALUE_3, lcd_driver:show_text|NS.IN_VALUE_4, ;
+;                                  ;                    ; lcd_driver:show_text|NS.DISP_VALUE, lcd_driver:show_text|NS.ENCR        ;
+; lcd_driver:show_text|S~5         ; Lost Fanouts       ; lcd_driver:show_text|NS.WAITING_5, lcd_driver:show_text|NS.WAITING_7,   ;
+;                                  ;                    ; lcd_driver:show_text|NS.WAITING, lcd_driver:show_text|NS.ERROR          ;
+; lcd_driver:show_text|NS~3        ; Lost Fanouts       ; lcd_driver:show_text|S.IN_VALUE_1, lcd_driver:show_text|S.IN_VALUE_3,   ;
+;                                  ;                    ; lcd_driver:show_text|S.DISP_VALUE, lcd_driver:show_text|S.ERROR         ;
+; lcd_driver:show_text|NS~4        ; Lost Fanouts       ; lcd_driver:show_text|S.IN_VALUE_2, lcd_driver:show_text|S.ENCR,         ;
+;                                  ;                    ; lcd_driver:show_text|S.DONE                                             ;
+; lcd_driver:show_text|S~6         ; Lost Fanouts       ; lcd_driver:show_text|NS.WAITING_6, lcd_driver:show_text|NS.DONE         ;
+; lcd_driver:show_text|S~8         ; Lost Fanouts       ; lcd_driver:show_text|NS.WAITING_8                                       ;
+; lcd_driver:show_text|NS~6        ; Lost Fanouts       ; lcd_driver:show_text|S.IN_VALUE_4                                       ;
+; lcd_driver:show_text|S.WAITING_4 ; Lost Fanouts       ; lcd_driver:show_text|NS.WAITING_4                                       ;
++----------------------------------+--------------------+-------------------------------------------------------------------------+
 
 
 +------------------------------------------------------+
@@ -279,14 +518,33 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 168   ;
+; Total registers                              ; 230   ;
 ; Number of registers using Synchronous Clear  ; 6     ;
 ; Number of registers using Synchronous Load   ; 0     ;
-; Number of registers using Asynchronous Clear ; 168   ;
+; Number of registers using Asynchronous Clear ; 223   ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 16    ;
+; Number of registers using Clock Enable       ; 29    ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
+
+
++---------------------------------------------------+
+; Inverted Register Statistics                      ;
++-----------------------------------------+---------+
+; Inverted Register                       ; Fan out ;
++-----------------------------------------+---------+
+; lcd_driver:show_text|name[106]          ; 12      ;
+; lcd_driver:show_text|name[253]          ; 8       ;
+; lcd_driver:show_text|name[197]          ; 5       ;
+; lcd_driver:show_text|name[205]          ; 2       ;
+; lcd_driver:show_text|name[152]          ; 5       ;
+; lcd_driver:show_text|name[185]          ; 3       ;
+; lcd_driver:show_text|name[198]          ; 2       ;
+; lcd_driver:show_text|name[186]          ; 2       ;
+; lcd_driver:show_text|name[163]          ; 2       ;
+; lcd_driver:show_text|name[243]          ; 1       ;
+; Total number of inverted registers = 10 ;         ;
++-----------------------------------------+---------+
 
 
 +------------------------------------------------------------------------------------------------------------------------------------------+
@@ -294,7 +552,7 @@ Encoding Type:  One-Hot
 +--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------+
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------+
-; 11:1               ; 16 bits   ; 112 LEs       ; 96 LEs               ; 16 LEs                 ; Yes        ; |text_encryption|disp[15]  ;
+; 11:1               ; 16 bits   ; 112 LEs       ; 96 LEs               ; 16 LEs                 ; Yes        ; |text_encryption|disp[2]   ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------+
 
 
@@ -330,6 +588,51 @@ Encoding Type:  One-Hot
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
++-------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: lcd_driver:show_text ;
++----------------+-------+------------------------------------------+
+; Parameter Name ; Value ; Type                                     ;
++----------------+-------+------------------------------------------+
+; START          ; 00000 ; Unsigned Binary                          ;
+; IN_KEY_1       ; 00001 ; Unsigned Binary                          ;
+; WAITING_1      ; 00010 ; Unsigned Binary                          ;
+; IN_KEY_2       ; 00011 ; Unsigned Binary                          ;
+; WAITING_2      ; 00100 ; Unsigned Binary                          ;
+; IN_KEY_3       ; 00101 ; Unsigned Binary                          ;
+; WAITING_3      ; 00110 ; Unsigned Binary                          ;
+; IN_KEY_4       ; 00111 ; Unsigned Binary                          ;
+; WAITING_4      ; 01000 ; Unsigned Binary                          ;
+; DISP_KEY       ; 01001 ; Unsigned Binary                          ;
+; IN_VALUE_1     ; 01010 ; Unsigned Binary                          ;
+; WAITING_5      ; 01011 ; Unsigned Binary                          ;
+; IN_VALUE_2     ; 01100 ; Unsigned Binary                          ;
+; WAITING_6      ; 01101 ; Unsigned Binary                          ;
+; IN_VALUE_3     ; 01110 ; Unsigned Binary                          ;
+; WAITING_7      ; 01111 ; Unsigned Binary                          ;
+; IN_VALUE_4     ; 10000 ; Unsigned Binary                          ;
+; WAITING_8      ; 10001 ; Unsigned Binary                          ;
+; DISP_VALUE     ; 10010 ; Unsigned Binary                          ;
+; WAITING        ; 10011 ; Unsigned Binary                          ;
+; ENCR           ; 10100 ; Unsigned Binary                          ;
+; DONE           ; 10101 ; Unsigned Binary                          ;
+; ERROR          ; 11111 ; Unsigned Binary                          ;
++----------------+-------+------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: lcd_driver:show_text|lcd_control:lcd ;
++----------------+-------+----------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                     ;
++----------------+-------+----------------------------------------------------------+
+; INIT_STATE     ; 0     ; Signed Integer                                           ;
+; LOAD_STATE     ; 1     ; Signed Integer                                           ;
+; PUSH_STATE     ; 2     ; Signed Integer                                           ;
+; IDLE_STATE     ; 3     ; Signed Integer                                           ;
++----------------+-------+----------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
 +----------------------------------------------------------------------------------------------------------------+
 ; Port Connectivity Checks: "encrypt_value:my_encr_value"                                                        ;
 +------+--------+----------+-------------------------------------------------------------------------------------+
@@ -344,20 +647,24 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; boundary_port         ; 53                          ;
-; cycloneiii_ff         ; 168                         ;
-;     CLR               ; 146                         ;
+; boundary_port         ; 67                          ;
+; cycloneiii_ff         ; 230                         ;
+;     CLR               ; 188                         ;
 ;     CLR SCLR          ; 6                           ;
-;     ENA CLR           ; 16                          ;
-; cycloneiii_lcell_comb ; 302                         ;
-;     normal            ; 302                         ;
-;         1 data inputs ; 4                           ;
-;         2 data inputs ; 12                          ;
-;         3 data inputs ; 28                          ;
-;         4 data inputs ; 258                         ;
+;     ENA CLR           ; 29                          ;
+;     plain             ; 7                           ;
+; cycloneiii_lcell_comb ; 491                         ;
+;     arith             ; 20                          ;
+;         2 data inputs ; 20                          ;
+;     normal            ; 471                         ;
+;         0 data inputs ; 2                           ;
+;         1 data inputs ; 13                          ;
+;         2 data inputs ; 38                          ;
+;         3 data inputs ; 54                          ;
+;         4 data inputs ; 364                         ;
 ;                       ;                             ;
-; Max LUT depth         ; 5.00                        ;
-; Average LUT depth     ; 3.55                        ;
+; Max LUT depth         ; 6.00                        ;
+; Average LUT depth     ; 3.73                        ;
 +-----------------------+-----------------------------+
 
 
@@ -366,7 +673,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:00     ;
+; Top            ; 00:00:01     ;
 +----------------+--------------+
 
 
@@ -376,7 +683,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
-    Info: Processing started: Fri Dec 03 17:32:16 2021
+    Info: Processing started: Mon Dec 06 23:32:08 2021
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off text_encryption -c text_encryption
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
@@ -386,28 +693,45 @@ Info (12021): Found 1 design units, including 1 entities, in source file seven_s
     Info (12023): Found entity 1: seven_segment File: M:/text_encryption/seven_segment.v Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file four_hex_vals.v
     Info (12023): Found entity 1: four_hex_vals File: M:/text_encryption/four_hex_vals.v Line: 1
-Info (12021): Found 1 design units, including 1 entities, in source file output_files/encrypt_value.v
-    Info (12023): Found entity 1: encrypt_value File: M:/text_encryption/output_files/encrypt_value.v Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file lcd_control.v
+    Info (12023): Found entity 1: lcd_control File: M:/text_encryption/lcd_control.v Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file encrypt_value.v
+    Info (12023): Found entity 1: encrypt_value File: M:/text_encryption/encrypt_value.v Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file lcd_driver.v
+    Info (12023): Found entity 1: lcd_driver File: M:/text_encryption/lcd_driver.v Line: 1
 Info (12127): Elaborating entity "text_encryption" for the top level hierarchy
-Warning (10036): Verilog HDL or VHDL warning at text_encryption.v(24): object "encr_en" assigned a value but never read File: M:/text_encryption/text_encryption.v Line: 24
-Info (10264): Verilog HDL Case Statement information at text_encryption.v(100): all case item expressions in this case statement are onehot File: M:/text_encryption/text_encryption.v Line: 100
-Info (10264): Verilog HDL Case Statement information at text_encryption.v(291): all case item expressions in this case statement are onehot File: M:/text_encryption/text_encryption.v Line: 291
-Info (12128): Elaborating entity "four_hex_vals" for hierarchy "four_hex_vals:my_disp" File: M:/text_encryption/text_encryption.v Line: 57
+Warning (10036): Verilog HDL or VHDL warning at text_encryption.v(34): object "encr_en" assigned a value but never read File: M:/text_encryption/text_encryption.v Line: 34
+Info (10264): Verilog HDL Case Statement information at text_encryption.v(110): all case item expressions in this case statement are onehot File: M:/text_encryption/text_encryption.v Line: 110
+Info (10264): Verilog HDL Case Statement information at text_encryption.v(301): all case item expressions in this case statement are onehot File: M:/text_encryption/text_encryption.v Line: 301
+Info (12128): Elaborating entity "lcd_driver" for hierarchy "lcd_driver:show_text" File: M:/text_encryption/text_encryption.v Line: 27
+Info (10264): Verilog HDL Case Statement information at lcd_driver.v(55): all case item expressions in this case statement are onehot File: M:/text_encryption/lcd_driver.v Line: 55
+Warning (10230): Verilog HDL assignment warning at lcd_driver.v(121): truncated value with size 264 to match size of target (256) File: M:/text_encryption/lcd_driver.v Line: 121
+Info (10264): Verilog HDL Case Statement information at lcd_driver.v(124): all case item expressions in this case statement are onehot File: M:/text_encryption/lcd_driver.v Line: 124
+Warning (10034): Output port "check" at lcd_driver.v(5) has no driver File: M:/text_encryption/lcd_driver.v Line: 5
+Info (12128): Elaborating entity "lcd_control" for hierarchy "lcd_driver:show_text|lcd_control:lcd" File: M:/text_encryption/lcd_driver.v Line: 173
+Warning (10230): Verilog HDL assignment warning at lcd_control.v(57): truncated value with size 32 to match size of target (6) File: M:/text_encryption/lcd_control.v Line: 57
+Info (12128): Elaborating entity "four_hex_vals" for hierarchy "four_hex_vals:my_disp" File: M:/text_encryption/text_encryption.v Line: 67
 Info (12128): Elaborating entity "seven_segment" for hierarchy "four_hex_vals:my_disp|seven_segment:leftmost" File: M:/text_encryption/four_hex_vals.v Line: 9
-Info (12128): Elaborating entity "encrypt_value" for hierarchy "encrypt_value:my_encr_value" File: M:/text_encryption/text_encryption.v Line: 59
-Warning (10034): Output port "msg" at encrypt_value.v(5) has no driver File: M:/text_encryption/output_files/encrypt_value.v Line: 5
+Info (12128): Elaborating entity "encrypt_value" for hierarchy "encrypt_value:my_encr_value" File: M:/text_encryption/text_encryption.v Line: 69
+Warning (10034): Output port "msg" at encrypt_value.v(5) has no driver File: M:/text_encryption/encrypt_value.v Line: 5
+Info (13000): Registers with preset signals will power-up high File: M:/text_encryption/lcd_driver.v Line: 124
+Info (13003): DEV_CLRn pin will set, and not reset, register with preset signal due to NOT Gate Push-Back
+Warning (13024): Output pins are stuck at VCC or GND
+    Warning (13410): Pin "check" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 19
+    Warning (13410): Pin "disp_rw" is stuck at GND File: M:/text_encryption/text_encryption.v Line: 21
+    Warning (13410): Pin "display_on" is stuck at VCC File: M:/text_encryption/text_encryption.v Line: 23
 Info (286030): Timing-Driven Synthesis is running
-Info (17049): 5 registers lost all their fanouts during netlist optimizations.
+Info (17049): 48 registers lost all their fanouts during netlist optimizations.
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 352 device resources after synthesis - the final resource count might be different
-    Info (21058): Implemented 23 input pins
-    Info (21059): Implemented 30 output pins
-    Info (21061): Implemented 299 logic cells
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 3 warnings
-    Info: Peak virtual memory: 4775 megabytes
-    Info: Processing ended: Fri Dec 03 17:32:27 2021
-    Info: Elapsed time: 00:00:11
+Info (21057): Implemented 589 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 24 input pins
+    Info (21059): Implemented 43 output pins
+    Info (21061): Implemented 522 logic cells
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 10 warnings
+    Info: Peak virtual memory: 4778 megabytes
+    Info: Processing ended: Mon Dec 06 23:32:40 2021
+    Info: Elapsed time: 00:00:32
     Info: Total CPU time (on all processors): 00:00:20
 
 

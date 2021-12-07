@@ -13,8 +13,18 @@ input change_state,					// to move to the next state from one of the DISP states
 output [6:0]seg7_most,				
 output [6:0]seg7_most_2,
 output [6:0]seg7_least_2,
-output [6:0]seg7_least
+output [6:0]seg7_least,
+
+input disp_async_rst,
+output check,
+output disp_rs,
+output disp_rw,
+output disp_en,
+output display_on,
+output [7:0]disp_data
 );
+
+lcd_driver show_text(clk, disp_async_rst, rst, check, disp_rs, disp_rw, disp_en, display_on, disp_data);
 
 reg [63:0]key;		// user-entered key for encryption
 reg [63:0]value;	// user-entered value to encrypt
@@ -307,25 +317,25 @@ begin
 			IN_KEY_1:
 			begin
 				disp <= user_input;
-				key[15:0] <= user_input;
+				key[63:48] <= user_input;
 			end
 			
 			IN_KEY_2:
 			begin
 				disp <= user_input;
-				key[31:16] <= user_input;
+				key[47:32] <= user_input;
 			end
 			
 			IN_KEY_3:
 			begin
 				disp <= user_input;
-				key[47:32] <= user_input;
+				key[31:16] <= user_input;
 			end
 			
 			IN_KEY_4:
 			begin
 				disp <= user_input;
-				key[63:48] <= user_input;
+				key[15:0] <= user_input;
 			end
 			
 			// Displaying user entered key:
@@ -345,25 +355,25 @@ begin
 			begin
 				temp <= 1'b0;
 				disp <= user_input;
-				value[15:0] <= user_input;
+				value[63:48] <= user_input;
 			end
 			
 			IN_VALUE_2:
 			begin
 				disp <= user_input;
-				value[31:16] <= user_input;
+				value[47:32] <= user_input;
 			end
 			
 			IN_VALUE_3:
 			begin
 				disp <= user_input;
-				value[47:32] <= user_input;
+				value[31:16] <= user_input;
 			end
 			
 			IN_VALUE_4:
 			begin
 				disp <= user_input;
-				value[63:48] <= user_input;
+				value[15:0] <= user_input;
 			end
 			
 			// Displaying user entered value:
