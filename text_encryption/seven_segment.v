@@ -35,6 +35,7 @@ module seven_segment (input [3:0]i, output reg [6:0]o);
 				o = 7'b0110000;
 			4'b1111:
 				o = 7'b0111000;
+			
 			default: o = 7'b1111111;
 		endcase
 	end
