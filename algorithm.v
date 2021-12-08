@@ -245,6 +245,41 @@ begin
         //                                            |-----msb-----| |-----lsb-----|
         sbox_out[i][31 - j*4:28 - j*4] = sbox[j][row][63 - column * 4:63 - column * 4];  
     end
+
+
+
+    // s-box-1
+    row = {keyXetran[i][47], keyXetran[i][42]};
+    column = keyXetran[i][46:43];
+    sbox_out[i][31:28] = sbox[j][row][63 - column * 4:63 - column * 4];
+    // s-box-2
+    row = {keyXetran[i][41], keyXetran[i][36]};
+    column = keyXetran[i][40:35];
+    sbox_out[i][27:24] = sbox[j][row][63 - column * 4:63 - column * 4];
+    // s-box-3
+    row = {keyXetran[i][35], keyXetran[i][30]};
+    column = keyXetran[i][34:31];
+    sbox_out[i][23:20] = sbox[j][row][63 - column * 4:63 - column * 4];
+    // s-box-4
+    row = {keyXetran[i][29], keyXetran[i][24]};
+    column = keyXetran[i][28:25];
+    sbox_out[i][19:16] = sbox[j][row][63 - column * 4:63 - column * 4];
+    // s-box-5
+    row = {keyXetran[i][23], keyXetran[i][18]};
+    column = keyXetran[i][21:19];
+    sbox_out[i][15:12] = sbox[j][row][63 - column * 4:63 - column * 4];
+    // s-box-6
+    row = {keyXetran[i][17], keyXetran[i][12]};
+    column = keyXetran[i][16:13];
+    sbox_out[i][11:8] = sbox[j][row][63 - column * 4:63 - column * 4];
+    // s-box-7
+    row = {keyXetran[i][11], keyXetran[i][6]};
+    column = keyXetran[i][10:7];
+    sbox_out[i][7:4] = sbox[j][row][63 - column * 4:63 - column * 4];
+    // s-box-8
+    row = {keyXetran[i][5], keyXetran[i][0]};
+    column = keyXetran[i][4:1];
+    sbox_out[i][3:0] = sbox[j][row][63 - column * 4:63 - column * 4];
     
 end
 
