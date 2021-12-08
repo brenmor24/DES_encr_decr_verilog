@@ -171,14 +171,14 @@ begin
     for (i = 1; i < 17; i = i + 1)
     begin
         left_boxed[i] = right_boxed[i - 1];
-        e_transform[i-1] = {R[i-1][58], R[i-1][50], R[i-1][42], R[i-1][34], R[i-1][26], R[i-1][18],
-                            R[i-1][60], R[i-1][52], R[i-1][44], R[i-1][36], R[i-1][28], R[i-1][20],
-                            R[i-1][62], R[i-1][54], R[i-1][46], R[i-1][38], R[i-1][30], R[i-1][22],
-                            R[i-1][64], R[i-1][56], R[i-1][48], R[i-1][40], R[i-1][32], R[i-1][24],
-                            R[i-1][57], R[i-1][49], R[i-1][41], R[i-1][33], R[i-1][25], R[i-1][17],
-                            R[i-1][59], R[i-1][51], R[i-1][43], R[i-1][35], R[i-1][27], R[i-1][19],
-                            R[i-1][61], R[i-1][53], R[i-1][45], R[i-1][37], R[i-1][29], R[i-1][21],
-                            R[i-1][63], R[i-1][55], R[i-1][47], R[i-1][39], R[i-1][31], R[i-1][23]};
+        e_transform[i] = {  right_boxed[i-1][32-32], right_boxed[i-1][32-1],  right_boxed[i-1][32-2],  right_boxed[i-1][32-3],  right_boxed[i-1][32-4],  right_boxed[i-1][32-5],
+                            right_boxed[i-1][32-4],  right_boxed[i-1][32-5],  right_boxed[i-1][32-6],  right_boxed[i-1][32-7],  right_boxed[i-1][32-8],  right_boxed[i-1][32-9],
+                            right_boxed[i-1][32-8],  right_boxed[i-1][32-9],  right_boxed[i-1][32-10], right_boxed[i-1][32-11], right_boxed[i-1][32-12], right_boxed[i-1][32-13],
+                            right_boxed[i-1][32-12], right_boxed[i-1][32-13], right_boxed[i-1][32-14], right_boxed[i-1][32-15], right_boxed[i-1][32-16], right_boxed[i-1][32-17],
+                            right_boxed[i-1][32-16], right_boxed[i-1][32-17], right_boxed[i-1][32-18], right_boxed[i-1][32-19], right_boxed[i-1][32-20], right_boxed[i-1][32-21],
+                            right_boxed[i-1][32-20], right_boxed[i-1][32-21], right_boxed[i-1][32-22], right_boxed[i-1][32-23], right_boxed[i-1][32-24], right_boxed[i-1][32-25],
+                            right_boxed[i-1][32-24], right_boxed[i-1][32-25], right_boxed[i-1][32-26], right_boxed[i-1][32-27], right_boxed[i-1][32-28], right_boxed[i-1][32-29],
+                            right_boxed[i-1][32-28], right_boxed[i-1][32-29], right_boxed[i-1][32-30], right_boxed[i-1][32-31], right_boxed[i-1][32-32], right_boxed[i-1][32-1]};
 
         keyXetran[i-1] = e_transform[i-1]^permutes[i-1];
         right_boxed[i] = left_boxed[i - 1]^();
