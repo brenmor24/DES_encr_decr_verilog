@@ -180,7 +180,7 @@ begin
                             right_boxed[i-1][32-24], right_boxed[i-1][32-25], right_boxed[i-1][32-26], right_boxed[i-1][32-27], right_boxed[i-1][32-28], right_boxed[i-1][32-29],
                             right_boxed[i-1][32-28], right_boxed[i-1][32-29], right_boxed[i-1][32-30], right_boxed[i-1][32-31], right_boxed[i-1][32-32], right_boxed[i-1][32-1]};
 
-        keyXetran[i-1] = e_transform[i-1]^permutes[i-1];
+        keyXetran[i] = e_transform[i]^permutes[i-1];
         right_boxed[i] = left_boxed[i - 1]^();
     end
     {keyXetran[i-1][47], keyXetran[i-1][42]} * 64 + {keyXetran[i-1][46], keyXetran[i-1][45], keyXetran[i-1][44], keyXetran[i-1][43]} * 4
@@ -200,8 +200,52 @@ begin
     lefts[0] = R0;
     function0 = ebit0^permutes[0];
     */
+    256 - {keyXtran[i][47], keyXtran[i][42]} * 64 - {keyXetran[i][46], keyXetran[i][45], keyXetran[i][44], keyXetran[i][43]} * 
+
+    row = {keyXetran[i][47], keyXetran[i][42]} // row index
+
+    column = keyXetran[i][46:43] // column index
+
+    sbox_index = 255 - 64 * row - 4 * column
+
+    sbox_outs[i] = sbox[0][] 
 
 
+
+
+
+
+
+
+
+    // ------------------------------------------------------------------------------------------------------
+    reg [63:0] sbox[7:0][3:0]; // s-boxes
+    reg [31:0] sbox_out[16:0]; // s-box out values
+    reg [1:0]row; // row
+    reg [3:0]column; // column
+
+    // example input keyXetran[1]
+    // 011000 010001 011110 111010 100001 100110 010100 100111
+    // ------
+
+    row = {keyXetran[i][47], keyXetran[i][42]}; // row index
+    column = keyXetran[i][46:43]; // column index
+
+    //                                |-----msb-----| |-----lsb-----|
+    sbox_out[i][31:28] = sbox[0][row][63 - column * 4:63 - column * 4];
+
+    // output
+    // 0101 1100 1000 0010 1011 0101 1001 0111
+    // ----
+
+    for (j = 0; j < 8; j = j + 1)
+    begin
+        row = {keyXetran[i][47 - j*6], keyXetran[i][42 - j*6]}; // row index
+        column = keyXetran[i][46 - j*6:43 - j*6]; // column index
+        //                                            |-----msb-----| |-----lsb-----|
+        sbox_out[i][31 - j*4:28 - j*4] = sbox[j][row][63 - column * 4:63 - column * 4];  
+    end
+    
 end
 
 endmodule
