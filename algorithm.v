@@ -153,14 +153,14 @@ begin
     // value section
 
     // sixth state
-    value_plus={value[58], value[50], value[42], value[34], value[26], value[18], value[10], value[2],
-                value[60], value[52], value[44], value[36], value[28], value[20], value[12], value[4],
-                value[62], value[54], value[46], value[38], value[30], value[22], value[14], value[6],
-                value[64], value[56], value[48], value[40], value[32], value[24], value[16], value[8],
-                value[57], value[49], value[41], value[33], value[25], value[17], value[9],  value[1],
-                value[59], value[51], value[43], value[35], value[27], value[19], value[11], value[3],
-                value[61], value[53], value[45], value[37], value[29], value[21], value[13], value[5],
-                value[63], value[55], value[47], value[39], value[31], value[23], value[15], value[7]};
+    value_plus={value[64-58], value[64-50], value[64-42], value[64-34], value[64-26], value[64-18], value[64-10], value[64-2],
+                value[64-60], value[64-52], value[64-44], value[64-36], value[64-28], value[64-20], value[64-12], value[64-4],
+                value[64-62], value[64-54], value[64-46], value[64-38], value[64-30], value[64-22], value[64-14], value[64-6],
+                value[64-64], value[64-56], value[64-48], value[64-40], value[64-32], value[64-24], value[64-16], value[64-8],
+                value[64-57], value[64-49], value[64-41], value[64-33], value[64-25], value[64-17], value[64-9],  value[64-1],
+                value[64-59], value[64-51], value[64-43], value[64-35], value[64-27], value[64-19], value[64-11], value[64-3],
+                value[64-61], value[64-53], value[64-45], value[64-37], value[64-29], value[64-21], value[64-13], value[64-5],
+                value[64-63], value[64-55], value[64-47], value[64-39], value[64-31], value[64-23], value[64-15], value[64-7]};
 
     L0 = value_plus[63:32];
     R0 = value_plus[31:0];
