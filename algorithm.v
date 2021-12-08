@@ -35,14 +35,14 @@ reg []
 always @(*)
 begin
     // first state
-    key_plus = {key[57], key[49], key[41], key[33], key[25], key[17], key[9],
-                key[1],  key[58], key[50], key[42], key[34], key[26], key[18],
-                key[10], key[2],  key[59], key[51], key[43], key[35], key[27],
-                key[19], key[11], key[3],  key[60], key[52], key[44], key[36],
-                key[63], key[55], key[47], key[39], key[31], key[23], key[15],
-                key[7],  key[62], key[54], key[46], key[38], key[30], key[22],
-                key[14], key[6],  key[61], key[53], key[45], key[37], key[29],
-                key[21], key[13], key[5],  key[28], key[20], key[12], key[4]};
+    key_plus = {key[64-57], key[64-49], key[64-41], key[64-33], key[64-25], key[64-17], key[64-9],
+                key[64-1],  key[64-58], key[64-50], key[64-42], key[64-34], key[64-26], key[64-18],
+                key[64-10], key[64-2],  key[64-59], key[64-51], key[64-43], key[64-35], key[64-27],
+                key[64-19], key[64-11], key[64-3],  key[64-60], key[64-52], key[64-44], key[64-36],
+                key[64-63], key[64-55], key[64-47], key[64-39], key[64-31], key[64-23], key[64-15],
+                key[64-7],  key[64-62], key[64-54], key[64-46], key[64-38], key[64-30], key[64-22],
+                key[64-14], key[64-6],  key[64-61], key[64-53], key[64-45], key[64-37], key[64-29],
+                key[64-21], key[64-13], key[64-5],  key[64-28], key[64-20], key[64-12], key[64-4]};
     
     // second state
     C0 = key_plus[55:28];
@@ -183,6 +183,9 @@ begin
         keyXetran[i-1] = e_transform[i-1]^permutes[i-1];
         right_boxed[i] = left_boxed[i - 1]^();
     end
+    {keyXetran[i-1][47], keyXetran[i-1][42]} * 64 + {keyXetran[i-1][46], keyXetran[i-1][45], keyXetran[i-1][44], keyXetran[i-1][43]} * 4
+
+    box_unrolled[({})]
 
     /*
     ebits ={R0[58], R0[50], R0[42], R0[34], R0[26], R0[18],
