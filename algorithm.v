@@ -107,14 +107,14 @@ begin
     // fifth state
     for (i = 0; i < 16; i = i + 1)
     begin
-        permutes[i] = { concat[i][14], concat[i][17], concat[i][11], concat[i][24], concat[i][1],  concat[i][5],
-                        concat[i][3],  concat[i][28], concat[i][15], concat[i][6],  concat[i][21], concat[i][10],
-                        concat[i][23], concat[i][19], concat[i][12], concat[i][4],  concat[i][26], concat[i][8],
-                        concat[i][16], concat[i][7],  concat[i][27], concat[i][20], concat[i][13], concat[i][2],
-                        concat[i][41], concat[i][52], concat[i][31], concat[i][37], concat[i][47], concat[i][55],
-                        concat[i][30], concat[i][40], concat[i][51], concat[i][45], concat[i][33], concat[i][48],
-                        concat[i][44], concat[i][49], concat[i][39], concat[i][56], concat[i][34], concat[i][53],
-                        concat[i][46], concat[i][42], concat[i][50], concat[i][36], concat[i][29], concat[i][32]};
+        permutes[i] = { concat[i][56-14], concat[i][56-17], concat[i][56-11], concat[i][56-24], concat[i][56-1],  concat[i][56-5],
+                        concat[i][56-3],  concat[i][56-28], concat[i][56-15], concat[i][56-6],  concat[i][56-21], concat[i][56-10],
+                        concat[i][56-23], concat[i][56-19], concat[i][56-12], concat[i][56-4],  concat[i][56-26], concat[i][56-8],
+                        concat[i][56-16], concat[i][56-7],  concat[i][56-27], concat[i][56-20], concat[i][56-13], concat[i][56-2],
+                        concat[i][56-41], concat[i][56-52], concat[i][56-31], concat[i][56-37], concat[i][56-47], concat[i][56-55],
+                        concat[i][56-30], concat[i][56-40], concat[i][56-51], concat[i][56-45], concat[i][56-33], concat[i][56-48],
+                        concat[i][56-44], concat[i][56-49], concat[i][56-39], concat[i][56-56], concat[i][56-34], concat[i][56-53],
+                        concat[i][56-46], concat[i][56-42], concat[i][56-50], concat[i][56-36], concat[i][56-29], concat[i][56-32]};
     end
     // fill sbox structure
     box_unrolled = {4'd14, 4'd4, 4'd13, 4'd1, 4'd2, 4'd15, 4'd11, 4'd8, 4'd3, 4'd10, 4'd6, 4'd12, 4'd5, 4'd9, 4'd0, 4'd7,
