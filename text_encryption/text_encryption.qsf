@@ -637,7 +637,6 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LCD_RS
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LCD_RW
 set_location_assignment PIN_F17 -to LEDG[8]
 set_instance_assignment -name IO_STANDARD "2.5 V" -to LEDG[8]
-set_location_assignment PIN_G21 -to LEDG[7]
 set_instance_assignment -name IO_STANDARD "2.5 V" -to LEDG[7]
 set_location_assignment PIN_G22 -to LEDG[6]
 set_instance_assignment -name IO_STANDARD "2.5 V" -to LEDG[6]
@@ -1092,20 +1091,8 @@ set_location_assignment PIN_G19 -to temp
 set_global_assignment -name VERILOG_FILE four_hex_vals.v
 set_location_assignment PIN_E21 -to temp1
 set_location_assignment PIN_N21 -to encr_go -comment KEY[2]
-set_global_assignment -name VERILOG_FILE lcd_control.v
 set_global_assignment -name VERILOG_FILE encrypt_value.v
-set_global_assignment -name VERILOG_FILE lcd_driver.v
-set_location_assignment PIN_M5 -to disp_data[7]
-set_location_assignment PIN_M21 -to disp_async_rst -comment "KEY[1] // change_state"
-set_location_assignment PIN_M2 -to disp_rs
-set_location_assignment PIN_M3 -to disp_data[6]
-set_location_assignment PIN_K2 -to disp_data[5]
-set_location_assignment PIN_K1 -to disp_data[4]
-set_location_assignment PIN_K7 -to disp_data[3]
-set_location_assignment PIN_L2 -to disp_data[2]
-set_location_assignment PIN_L1 -to disp_data[1]
-set_location_assignment PIN_L3 -to disp_data[0]
-set_location_assignment PIN_L4 -to disp_en
-set_location_assignment PIN_L5 -to display_on
-set_location_assignment PIN_M1 -to disp_rw
+set_location_assignment PIN_M21 -to change_state -comment KEY[1]
+set_global_assignment -name VERILOG_FILE output_files/temp_encr.v
+set_location_assignment PIN_G21 -to encr_led
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

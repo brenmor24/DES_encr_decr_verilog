@@ -3,159 +3,39 @@ TimeQuest Timing Analyzer Summary
 ------------------------------------------------------------
 
 Type  : Slow 1200mV 85C Model Setup 'clk'
-Slack : -4.440
-TNS   : -474.246
-
-Type  : Slow 1200mV 85C Model Setup 'lcd_driver:show_text|lcd_control:lcd|dispClk'
-Slack : -1.511
-TNS   : -9.820
-
-Type  : Slow 1200mV 85C Model Setup 'disp_async_rst'
-Slack : -1.338
-TNS   : -8.253
+Slack : -45.974
+TNS   : -3800.133
 
 Type  : Slow 1200mV 85C Model Hold 'clk'
-Slack : 0.298
-TNS   : 0.000
-
-Type  : Slow 1200mV 85C Model Hold 'lcd_driver:show_text|lcd_control:lcd|dispClk'
-Slack : 0.405
-TNS   : 0.000
-
-Type  : Slow 1200mV 85C Model Hold 'disp_async_rst'
-Slack : 1.497
-TNS   : 0.000
-
-Type  : Slow 1200mV 85C Model Recovery 'clk'
-Slack : -1.151
-TNS   : -19.421
-
-Type  : Slow 1200mV 85C Model Recovery 'lcd_driver:show_text|lcd_control:lcd|dispClk'
-Slack : -0.928
-TNS   : -9.280
-
-Type  : Slow 1200mV 85C Model Removal 'lcd_driver:show_text|lcd_control:lcd|dispClk'
-Slack : 0.851
-TNS   : 0.000
-
-Type  : Slow 1200mV 85C Model Removal 'clk'
-Slack : 1.053
+Slack : 0.401
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Minimum Pulse Width 'clk'
 Slack : -3.000
-TNS   : -276.705
-
-Type  : Slow 1200mV 85C Model Minimum Pulse Width 'disp_async_rst'
-Slack : -3.000
-TNS   : -11.995
-
-Type  : Slow 1200mV 85C Model Minimum Pulse Width 'lcd_driver:show_text|lcd_control:lcd|dispClk'
-Slack : -1.285
-TNS   : -12.850
+TNS   : -302.405
 
 Type  : Slow 1200mV 0C Model Setup 'clk'
-Slack : -3.973
-TNS   : -412.835
-
-Type  : Slow 1200mV 0C Model Setup 'lcd_driver:show_text|lcd_control:lcd|dispClk'
-Slack : -1.281
-TNS   : -8.044
-
-Type  : Slow 1200mV 0C Model Setup 'disp_async_rst'
-Slack : -1.187
-TNS   : -7.133
+Slack : -42.223
+TNS   : -3475.826
 
 Type  : Slow 1200mV 0C Model Hold 'clk'
-Slack : 0.321
-TNS   : 0.000
-
-Type  : Slow 1200mV 0C Model Hold 'lcd_driver:show_text|lcd_control:lcd|dispClk'
-Slack : 0.355
-TNS   : 0.000
-
-Type  : Slow 1200mV 0C Model Hold 'disp_async_rst'
-Slack : 1.402
-TNS   : 0.000
-
-Type  : Slow 1200mV 0C Model Recovery 'clk'
-Slack : -0.979
-TNS   : -16.505
-
-Type  : Slow 1200mV 0C Model Recovery 'lcd_driver:show_text|lcd_control:lcd|dispClk'
-Slack : -0.778
-TNS   : -7.768
-
-Type  : Slow 1200mV 0C Model Removal 'lcd_driver:show_text|lcd_control:lcd|dispClk'
-Slack : 0.913
-TNS   : 0.000
-
-Type  : Slow 1200mV 0C Model Removal 'clk'
-Slack : 1.068
+Slack : 0.353
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Minimum Pulse Width 'clk'
 Slack : -3.000
-TNS   : -276.705
-
-Type  : Slow 1200mV 0C Model Minimum Pulse Width 'disp_async_rst'
-Slack : -3.000
-TNS   : -11.995
-
-Type  : Slow 1200mV 0C Model Minimum Pulse Width 'lcd_driver:show_text|lcd_control:lcd|dispClk'
-Slack : -1.285
-TNS   : -12.850
+TNS   : -302.405
 
 Type  : Fast 1200mV 0C Model Setup 'clk'
-Slack : -1.607
-TNS   : -128.667
-
-Type  : Fast 1200mV 0C Model Setup 'lcd_driver:show_text|lcd_control:lcd|dispClk'
-Slack : -0.216
-TNS   : -0.636
-
-Type  : Fast 1200mV 0C Model Setup 'disp_async_rst'
-Slack : -0.181
-TNS   : -0.579
+Slack : -22.710
+TNS   : -1806.377
 
 Type  : Fast 1200mV 0C Model Hold 'clk'
-Slack : 0.174
-TNS   : 0.000
-
-Type  : Fast 1200mV 0C Model Hold 'lcd_driver:show_text|lcd_control:lcd|dispClk'
-Slack : 0.184
-TNS   : 0.000
-
-Type  : Fast 1200mV 0C Model Hold 'disp_async_rst'
-Slack : 0.706
-TNS   : 0.000
-
-Type  : Fast 1200mV 0C Model Recovery 'clk'
-Slack : -0.720
-TNS   : -12.142
-
-Type  : Fast 1200mV 0C Model Recovery 'lcd_driver:show_text|lcd_control:lcd|dispClk'
-Slack : -0.689
-TNS   : -6.886
-
-Type  : Fast 1200mV 0C Model Removal 'lcd_driver:show_text|lcd_control:lcd|dispClk'
-Slack : 0.234
-TNS   : 0.000
-
-Type  : Fast 1200mV 0C Model Removal 'clk'
-Slack : 0.316
+Slack : 0.181
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Minimum Pulse Width 'clk'
 Slack : -3.000
-TNS   : -229.730
-
-Type  : Fast 1200mV 0C Model Minimum Pulse Width 'disp_async_rst'
-Slack : -3.000
-TNS   : -11.057
-
-Type  : Fast 1200mV 0C Model Minimum Pulse Width 'lcd_driver:show_text|lcd_control:lcd|dispClk'
-Slack : -1.000
-TNS   : -10.000
+TNS   : -251.824
 
 ------------------------------------------------------------

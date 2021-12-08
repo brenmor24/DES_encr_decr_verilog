@@ -124,43 +124,7 @@
 					"strict" : false
 				},
 				{
-					"name" : "disp_rs",
-					"strict" : false
-				},
-				{
-					"name" : "disp_en",
-					"strict" : false
-				},
-				{
-					"name" : "disp_data[0]",
-					"strict" : false
-				},
-				{
-					"name" : "disp_data[1]",
-					"strict" : false
-				},
-				{
-					"name" : "disp_data[2]",
-					"strict" : false
-				},
-				{
-					"name" : "disp_data[3]",
-					"strict" : false
-				},
-				{
-					"name" : "disp_data[4]",
-					"strict" : false
-				},
-				{
-					"name" : "disp_data[5]",
-					"strict" : false
-				},
-				{
-					"name" : "disp_data[6]",
-					"strict" : false
-				},
-				{
-					"name" : "disp_data[7]",
+					"name" : "encr_led",
 					"strict" : false
 				},
 				{
@@ -172,11 +136,11 @@
 					"strict" : false
 				},
 				{
-					"name" : "select_disp[1]",
+					"name" : "select_disp[0]",
 					"strict" : false
 				},
 				{
-					"name" : "select_disp[0]",
+					"name" : "select_disp[1]",
 					"strict" : false
 				},
 				{
@@ -241,10 +205,6 @@
 				},
 				{
 					"name" : "user_input[3]",
-					"strict" : false
-				},
-				{
-					"name" : "disp_async_rst",
 					"strict" : false
 				},
 				{

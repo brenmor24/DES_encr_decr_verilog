@@ -15,23 +15,28 @@ output [6:0]seg7_most_2,
 output [6:0]seg7_least_2,
 output [6:0]seg7_least,
 
-input disp_async_rst,
+/*
+// To update the LCD:
 output check,
 output disp_rs,
 output disp_rw,
 output disp_en,
 output display_on,
-output [7:0]disp_data
+output [7:0]disp_data,
+*/
+
+// testing encr
+output reg encr_led
 );
 
-lcd_driver show_text(clk, disp_async_rst, rst, check, disp_rs, disp_rw, disp_en, display_on, disp_data);
+//lcd_driver show_text(clk, rst, send_data, change_state, encr_go, check, disp_rs, disp_rw, disp_en, display_on, disp_data);
 
-reg [63:0]key;		// user-entered key for encryption
+reg [63:0]key;		// user-entered key for encryption // key[63] = MSb
 reg [63:0]value;	// user-entered value to encrypt
 
 wire [63:0]msg;	// encrypted value will be stored here
 
-reg encr_en;		// enable signal for encryption module
+reg button_press_counter; // to check whether button press has ended or not
 
 /*
 Total cumulative time spent: 20 hours
@@ -66,7 +71,10 @@ Design:
 reg [15:0]disp;	// to store the 16-bit value to display on the 7-segment
 four_hex_vals my_disp(disp, seg7_most, seg7_most_2, seg7_least_2, seg7_least);	// displays a 16-bit value on the 7-segment display
 
-encrypt_value my_encr_value(key, value, msg);
+//wire [63:0] sbox_outs_k1;
+temp_encr my_encr_value(clk, rst, key, value, msg);
+
+reg [63:0]temp_disp;
 
 // FSM State variables:
 reg [4:0]S;
@@ -261,14 +269,20 @@ begin
 		// Waiting for user to press button to encrypt:
 		WAITING:
 		begin
-			if (encr_go == 1'b1)
+			if (encr_go == 1'b0)
 				NS = ENCR;
 			else
 				NS = WAITING;
 		end
 	
 		// Encrypting the text:
-		ENCR: NS = DONE;
+		ENCR: 
+		begin
+			if (change_state == 1'b0)
+				NS = DONE;
+			else
+				NS = ENCR;
+		end
 		
 		// Spins in Done forever until rst:
 		DONE: NS = DONE;
@@ -292,7 +306,7 @@ begin
 		//msg <= 64'd0;
 		temp <= 1'b0;
 		temp1 <= 1'b0;
-		encr_en <= 1'b0;
+		encr_led <= 1'b0;
 		//tester[0] = 3'b010;
 		//tester[1] = 3'b001;
 	end
@@ -309,7 +323,7 @@ begin
 				//msg <= 64'd0;
 				temp <= 1'b0;
 				temp1 <= 1'b0;
-				encr_en <= 1'b0;
+				encr_led <= 1'b0;
 				// set EVERYTHING to 0 (key, value, msg, buttons and switches if needed, etc)
 			end
 			
@@ -396,7 +410,14 @@ begin
 			
 			ENCR:
 			begin
-				encr_en <= 1'b1;
+				encr_led <= 1'b1;
+				temp_disp <= msg; // {32'd0, sbox_outs_k1};
+				case(select_disp)
+					2'd0: disp <= temp_disp[15:0];
+					2'd1: disp <= temp_disp[31:16];
+					2'd2: disp <= temp_disp[47:32];
+					2'd3: disp <= temp_disp[63:48];
+				endcase
 			end
 		
 		endcase

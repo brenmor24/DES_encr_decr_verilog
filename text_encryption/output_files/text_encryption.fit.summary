@@ -1,15 +1,15 @@
-Fitter Status : Successful - Mon Dec 06 23:33:08 2021
+Fitter Status : Successful - Wed Dec 08 13:13:43 2021
 Quartus Prime Version : 16.1.0 Build 196 10/24/2016 SJ Lite Edition
 Revision Name : text_encryption
 Top-level Entity Name : text_encryption
 Family : Cyclone IV E
 Device : EP4CE115F29C7
 Timing Models : Final
-Total logic elements : 496 / 114,480 ( < 1 % )
-    Total combinational functions : 488 / 114,480 ( < 1 % )
-    Dedicated logic registers : 230 / 114,480 ( < 1 % )
-Total registers : 230
-Total pins : 67 / 529 ( 13 % )
+Total logic elements : 4,196 / 114,480 ( 4 % )
+    Total combinational functions : 4,196 / 114,480 ( 4 % )
+    Dedicated logic registers : 233 / 114,480 ( < 1 % )
+Total registers : 233
+Total pins : 54 / 529 ( 10 % )
 Total virtual pins : 0
 Total memory bits : 0 / 3,981,312 ( 0 % )
 Embedded Multiplier 9-bit elements : 0 / 532 ( 0 % )

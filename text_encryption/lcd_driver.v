@@ -1,7 +1,9 @@
 module lcd_driver(
     input clk,
-    input disp_async_rst,
 	 input rst,
+	 input send_data,
+	 input change_state,
+	 input encr_go,
 	 output check,
     output disp_rs,
     output disp_rw,
@@ -46,10 +48,10 @@ parameter START = 5'd0,
 			 
 			 ERROR = 5'b11111;
 			 
-//reg pressed;			 
+//reg pressed;	
 
-// S --> NS transitions			 
-always @(negedge disp_async_rst)
+/*
+always @(negedge send_data)
 begin
 	
 	case(S)
@@ -105,7 +107,186 @@ begin
 		
 	endcase
 	
+end	
+*/	 
+
+
+// S --> NS transitions			 
+always @(*)
+begin
+	
+	case(S)
+		START: NS = IN_KEY_1;
+	
+		// Taking user-entered key for encryption:
+		IN_KEY_1:
+		begin
+			if (send_data == 1'b0)
+				NS = WAITING_1;
+			else
+				NS = IN_KEY_1;
+		end
+		
+		WAITING_1:
+		begin
+			if (send_data == 1'b1)
+				NS = IN_KEY_2;
+			else
+				NS = WAITING_1;
+		end
+		
+		IN_KEY_2:
+		begin
+			if (send_data == 1'b0)
+				NS = WAITING_2;
+			else
+				NS = IN_KEY_2;
+		end
+		
+		WAITING_2:
+		begin
+			if (send_data == 1'b1)
+				NS = IN_KEY_3;
+			else
+				NS = WAITING_2;
+		end
+		
+		IN_KEY_3:
+		begin
+			if (send_data == 1'b0)
+				NS = WAITING_3;
+			else
+				NS = IN_KEY_3;
+		end
+		
+		WAITING_3:
+		begin
+			if (send_data == 1'b1)
+				NS = IN_KEY_4;
+			else
+				NS = WAITING_3;
+		end
+		
+		IN_KEY_4:
+		begin
+			if (send_data == 1'b0)
+				NS = WAITING_4;
+			else
+				NS = IN_KEY_4;
+		end
+		
+		WAITING_4:
+		begin
+			if (send_data == 1'b1)
+				NS = DISP_KEY;
+			else
+				NS = WAITING_4;
+		end
+		
+		// Displaying user-entered key for encryption:
+		DISP_KEY:
+		begin
+			if (change_state == 1'b0)
+				NS = IN_VALUE_1;
+			else
+				NS = DISP_KEY;
+		end
+		
+		// Taking user-entered value to be encrypted:
+		IN_VALUE_1:
+		begin
+			if (send_data == 1'b0)
+				NS = WAITING_5;
+			else
+				NS = IN_VALUE_1;
+		end
+		
+		WAITING_5:
+		begin
+			if (send_data == 1'b1)
+				NS = IN_VALUE_2;
+			else
+				NS = WAITING_5;
+		end
+		
+		IN_VALUE_2:
+		begin
+			if (send_data == 1'b0)
+				NS = WAITING_6;
+			else
+				NS = IN_VALUE_2;
+		end
+		
+		WAITING_6:
+		begin
+			if (send_data == 1'b1)
+				NS = IN_VALUE_3;
+			else
+				NS = WAITING_6;
+		end
+		
+		IN_VALUE_3:
+		begin
+			if (send_data == 1'b0)
+				NS = WAITING_7;
+			else
+				NS = IN_VALUE_3;
+		end
+		
+		WAITING_7:
+		begin
+			if (send_data == 1'b1)
+				NS = IN_VALUE_4;
+			else
+				NS = WAITING_7;
+		end
+		
+		IN_VALUE_4:
+		begin
+			if (send_data == 1'b0)
+				NS = WAITING_8;
+			else
+				NS = IN_VALUE_4;
+		end
+		
+		WAITING_8:
+		begin
+			if (send_data == 1'b1)
+				NS = DISP_VALUE;
+			else
+				NS = WAITING_8;
+		end
+		
+		// Displaying user entered value:
+		DISP_VALUE:
+		begin
+			if (change_state == 1'b0)
+				NS = WAITING;
+			else
+				NS = DISP_VALUE;
+		end
+	
+		// Waiting for user to press button to encrypt:
+		WAITING:
+		begin
+			if (encr_go == 1'b1)
+				NS = ENCR;
+			else
+				NS = WAITING;
+		end
+	
+		// Encrypting the text:
+		ENCR: NS = DONE;
+		
+		// Spins in Done forever until rst:
+		DONE: NS = DONE;
+		
+		default: NS = ERROR;
+		
+	endcase
+	
 end
+
 
 // FSM init
 always@(posedge clk or negedge rst) begin
@@ -130,6 +311,10 @@ always @(posedge clk or negedge rst) begin
 					name <= "Enter [63:48]key                ";
 							 //0123456789ABCDEF0123456789ABCDEF
 							 
+				WAITING_1:
+					name <= "Waiting 1 Stage                 ";
+							 //0123456789ABCDEF0123456789ABCDEF
+							 
 				IN_KEY_2:
 					name <= "Enter [47:32]key                ";
 							 //0123456789ABCDEF0123456789ABCDEF
@@ -139,37 +324,18 @@ always @(posedge clk or negedge rst) begin
 							 //0123456789ABCDEF0123456789ABCDEF
 				
 				IN_KEY_4:
-					name <= "Enter [15:0]key                ";
+					name <= "Enter [15:0]key                 ";
 							 //0123456789ABCDEF0123456789ABCDEF
-				/*
-		      start:
-				  name = "Laser Lift      BattleBoard     ";
-						  //0123456789ABCDEF0123456789ABCDEF
-				p1Move:
-				  name = "Player 1 move   Select moves    ";
-						  //0123456789ABCDEF0123456789ABCDEF
-				p1Attack:
-				  name = "Player 1 attack Select Attack   ";
-						  //0123456789ABCDEF0123456789ABCDEF
-				p1Aim:
-				  name = "Player 1 aim    Select Aim      ";
-						  //0123456789ABCDEF0123456789ABCDEF
-				p2Move:
-				  name = "Player 2 move                   ";
-						  //0123456789ABCDEF0123456789ABCDEF
-				p2Attack:
-				  name = "Player 2 Attack                 ";
-						  //0123456789ABCDEF0123456789ABCDEF
-				p2Aim:
-				  name = "Player 2 Aim                    ";
-						  //0123456789ABCDEF0123456789ABCDEF
-				*/
+							 
+				DISP_KEY:
+					name <= "Displaying key                  ";
+							 //0123456789ABCDEF0123456789ABCDEF
 		endcase
 	end
 end
 
 assign display_on = 1'b1;
 
-lcd_control lcd(clk, disp_async_rst, name, disp_rs, disp_rw, disp_en, disp_data);
+lcd_control lcd(clk, rst, name, disp_rs, disp_rw, disp_en, disp_data);
  
 endmodule 
