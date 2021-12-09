@@ -36,8 +36,6 @@ reg [63:0]value;	// user-entered value to encrypt
 
 wire [63:0]msg;	// encrypted value will be stored here
 
-reg button_press_counter; // to check whether button press has ended or not
-
 /*
 Total cumulative time spent: 20 hours
 
@@ -71,8 +69,8 @@ Design:
 reg [15:0]disp;	// to store the 16-bit value to display on the 7-segment
 four_hex_vals my_disp(disp, seg7_most, seg7_most_2, seg7_least_2, seg7_least);	// displays a 16-bit value on the 7-segment display
 
-//wire [63:0] sbox_outs_k1;
-temp_encr my_encr_value(clk, rst, key, value, msg);
+wire [63:0] tempr;
+temp_encr my_encr_value(clk, rst, key, value, msg, tempr);
 
 reg [63:0]temp_disp;
 
@@ -294,6 +292,7 @@ begin
 end
 
 //reg [2:0] tester[1:0];
+reg encr_en;
 
 // What happens in each state
 always @(posedge clk or negedge rst)
@@ -303,10 +302,10 @@ begin
 		disp <= 16'd0;
 		key <= 64'd0;
 		value <= 64'd0;
-		//msg <= 64'd0;
 		temp <= 1'b0;
 		temp1 <= 1'b0;
 		encr_led <= 1'b0;
+		encr_en <= 1'b0;
 		//tester[0] = 3'b010;
 		//tester[1] = 3'b001;
 	end
@@ -320,10 +319,10 @@ begin
 				disp <= 16'd0;
 				key <= 64'd0;
 				value <= 64'd0;
-				//msg <= 64'd0;
 				temp <= 1'b0;
 				temp1 <= 1'b0;
 				encr_led <= 1'b0;
+				encr_en <= 1'b0;
 				// set EVERYTHING to 0 (key, value, msg, buttons and switches if needed, etc)
 			end
 			
@@ -411,7 +410,8 @@ begin
 			ENCR:
 			begin
 				encr_led <= 1'b1;
-				temp_disp <= msg; // {32'd0, sbox_outs_k1};
+				encr_en <= 1'b1;
+				temp_disp <= tempr; //{16'd0, tempr};
 				case(select_disp)
 					2'd0: disp <= temp_disp[15:0];
 					2'd1: disp <= temp_disp[31:16];

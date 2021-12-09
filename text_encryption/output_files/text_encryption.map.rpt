@@ -1,5 +1,5 @@
 Analysis & Synthesis report for text_encryption
-Wed Dec 08 13:13:01 2021
+Wed Dec 08 22:29:39 2021
 Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
 
 
@@ -18,9 +18,10 @@ Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
  10. General Register Statistics
  11. Multiplexer Restructuring Statistics (Restructuring Performed)
  12. Parameter Settings for User Entity Instance: Top-level Entity: |text_encryption
- 13. Post-Synthesis Netlist Statistics for Top Partition
- 14. Elapsed Time Per Partition
- 15. Analysis & Synthesis Messages
+ 13. Port Connectivity Checks: "temp_encr:my_encr_value"
+ 14. Post-Synthesis Netlist Statistics for Top Partition
+ 15. Elapsed Time Per Partition
+ 16. Analysis & Synthesis Messages
 
 
 
@@ -47,13 +48,13 @@ agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +------------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Wed Dec 08 13:13:00 2021       ;
+; Analysis & Synthesis Status        ; Successful - Wed Dec 08 22:29:39 2021       ;
 ; Quartus Prime Version              ; 16.1.0 Build 196 10/24/2016 SJ Lite Edition ;
 ; Revision Name                      ; text_encryption                             ;
 ; Top-level Entity Name              ; text_encryption                             ;
 ; Family                             ; Cyclone IV E                                ;
-; Total logic elements               ; 4,196                                       ;
-;     Total combinational functions  ; 4,195                                       ;
+; Total logic elements               ; 4,275                                       ;
+;     Total combinational functions  ; 4,274                                       ;
 ;     Dedicated logic registers      ; 233                                         ;
 ; Total registers                    ; 233                                         ;
 ; Total pins                         ; 54                                          ;
@@ -186,16 +187,16 @@ agreement for further details.
 +---------------------------------------------+-----------+
 ; Resource                                    ; Usage     ;
 +---------------------------------------------+-----------+
-; Estimated Total logic elements              ; 4,196     ;
+; Estimated Total logic elements              ; 4,275     ;
 ;                                             ;           ;
-; Total combinational functions               ; 4195      ;
+; Total combinational functions               ; 4274      ;
 ; Logic element usage by number of LUT inputs ;           ;
-;     -- 4 input functions                    ; 3326      ;
-;     -- 3 input functions                    ; 757       ;
-;     -- <=2 input functions                  ; 112       ;
+;     -- 4 input functions                    ; 3574      ;
+;     -- 3 input functions                    ; 595       ;
+;     -- <=2 input functions                  ; 105       ;
 ;                                             ;           ;
 ; Logic elements by mode                      ;           ;
-;     -- normal mode                          ; 4195      ;
+;     -- normal mode                          ; 4274      ;
 ;     -- arithmetic mode                      ; 0         ;
 ;                                             ;           ;
 ; Total registers                             ; 233       ;
@@ -208,8 +209,8 @@ agreement for further details.
 ;                                             ;           ;
 ; Maximum fan-out node                        ; clk~input ;
 ; Maximum fan-out                             ; 233       ;
-; Total fan-out                               ; 16604     ;
-; Average fan-out                             ; 3.66      ;
+; Total fan-out                               ; 17096     ;
+; Average fan-out                             ; 3.70      ;
 +---------------------------------------------+-----------+
 
 
@@ -218,13 +219,13 @@ agreement for further details.
 +---------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+----------------------------------------------------------------+-----------------+--------------+
 ; Compilation Hierarchy Node      ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                            ; Entity Name     ; Library Name ;
 +---------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+----------------------------------------------------------------+-----------------+--------------+
-; |text_encryption                ; 4195 (322)          ; 233 (233)                 ; 0           ; 0            ; 0       ; 0         ; 54   ; 0            ; |text_encryption                                               ; text_encryption ; work         ;
+; |text_encryption                ; 4274 (322)          ; 233 (233)                 ; 0           ; 0            ; 0       ; 0         ; 54   ; 0            ; |text_encryption                                               ; text_encryption ; work         ;
 ;    |four_hex_vals:my_disp|      ; 28 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |text_encryption|four_hex_vals:my_disp                         ; four_hex_vals   ; work         ;
 ;       |seven_segment:left_2|    ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |text_encryption|four_hex_vals:my_disp|seven_segment:left_2    ; seven_segment   ; work         ;
 ;       |seven_segment:leftmost|  ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |text_encryption|four_hex_vals:my_disp|seven_segment:leftmost  ; seven_segment   ; work         ;
 ;       |seven_segment:right_2|   ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |text_encryption|four_hex_vals:my_disp|seven_segment:right_2   ; seven_segment   ; work         ;
 ;       |seven_segment:rightmost| ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |text_encryption|four_hex_vals:my_disp|seven_segment:rightmost ; seven_segment   ; work         ;
-;    |temp_encr:my_encr_value|    ; 3845 (3845)         ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |text_encryption|temp_encr:my_encr_value                       ; temp_encr       ; work         ;
+;    |temp_encr:my_encr_value|    ; 3924 (3924)         ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |text_encryption|temp_encr:my_encr_value                       ; temp_encr       ; work         ;
 +---------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+----------------------------------------------------------------+-----------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
@@ -297,134 +298,150 @@ Encoding Type:  One-Hot
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                      ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------------+
 ; 15:1               ; 16 bits   ; 160 LEs       ; 144 LEs              ; 16 LEs                 ; Yes        ; |text_encryption|disp[15]                       ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux11  ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux30  ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux6   ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux24  ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux9   ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux29  ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux18  ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux4   ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux25  ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux44  ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux46  ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux45  ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux1   ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux15  ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux14  ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux55  ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux20  ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux13  ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux21  ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux57  ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux54  ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux35  ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux51  ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux39  ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux41  ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux61  ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux56  ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux32  ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux73  ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux42  ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux94  ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux71  ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux63  ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux83  ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux70  ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux88  ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux111 ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux110 ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux108 ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux109 ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux67  ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux79  ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux76  ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux77  ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux116 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux85  ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux102 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux107 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux127 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux121 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux87  ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux120 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux119 ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux96  ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux139 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux158 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux132 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux153 ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux172 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux112 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux101 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux137 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux104 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux159 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux125 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux147 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux134 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux152 ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux175 ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux174 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux131 ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux143 ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux141 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux182 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux149 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux165 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux170 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux190 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux130 ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux140 ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux142 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux148 ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux184 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux163 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux201 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux220 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux199 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux183 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux162 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux179 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux165 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux200 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux168 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux222 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux191 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux209 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux197 ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux217 ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux236 ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux237 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux194 ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux204 ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux205 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux247 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux215 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux228 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux233 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux252 ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux238 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux193 ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux207 ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux206 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux213 ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux249 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux246 ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux224 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux265 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux285 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux240 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux228 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux266 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux234 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux284 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux254 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux274 ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux262 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux283 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux281 ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux303 ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux302 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux256 ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux301 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux258 ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux268 ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux270 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux309 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux277 ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux269 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux278 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux314 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux311 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux291 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux305 ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux293 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux297 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux318 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux312 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux290 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux329 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux328 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux299 ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux348 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux316 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux337 ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux324 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux347 ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux364 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux345 ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux367 ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux365 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux323 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux322 ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux332 ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux333 ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux334 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux342 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux378 ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux374 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux340 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux359 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux355 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux370 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux358 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux393 ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux360 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux380 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux377 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux352 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux395 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux413 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux390 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux411 ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux428 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux412 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux381 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux400 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux389 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux408 ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux431 ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux430 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux384 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux385 ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux396 ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux397 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux439 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux405 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux423 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux425 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux444 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux443 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux407 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux441 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux438 ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux417 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux457 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux468 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux433 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux421 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux458 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux426 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux479 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux445 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux466 ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux455 ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux463 ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux461 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux476 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux473 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux451 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux490 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux500 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux484 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux507 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux474 ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux492 ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux493 ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux494 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux449 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux468 ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux463 ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux462 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux482 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux486 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux496 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux502 ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux509 ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux480 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux491 ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |text_encryption|temp_encr:my_encr_value|Mux506 ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------------+
 
 
@@ -460,6 +477,15 @@ Encoding Type:  One-Hot
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
++----------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "temp_encr:my_encr_value"                                                            ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; Port ; Type   ; Severity ; Details                                                                             ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; msg  ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+
+
 +-----------------------------------------------------+
 ; Post-Synthesis Netlist Statistics for Top Partition ;
 +-----------------------+-----------------------------+
@@ -471,15 +497,15 @@ Note: In order to hide this table in the UI and the text report file, please set
 ;     CLR SCLR          ; 6                           ;
 ;     ENA               ; 64                          ;
 ;     ENA CLR           ; 16                          ;
-; cycloneiii_lcell_comb ; 4199                        ;
-;     normal            ; 4199                        ;
+; cycloneiii_lcell_comb ; 4278                        ;
+;     normal            ; 4278                        ;
 ;         1 data inputs ; 4                           ;
-;         2 data inputs ; 112                         ;
-;         3 data inputs ; 757                         ;
-;         4 data inputs ; 3326                        ;
+;         2 data inputs ; 105                         ;
+;         3 data inputs ; 595                         ;
+;         4 data inputs ; 3574                        ;
 ;                       ;                             ;
 ; Max LUT depth         ; 65.00                       ;
-; Average LUT depth     ; 57.18                       ;
+; Average LUT depth     ; 57.35                       ;
 +-----------------------+-----------------------------+
 
 
@@ -488,7 +514,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:53     ;
+; Top            ; 00:01:02     ;
 +----------------+--------------+
 
 
@@ -498,7 +524,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
-    Info: Processing started: Wed Dec 08 13:11:56 2021
+    Info: Processing started: Wed Dec 08 22:28:26 2021
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off text_encryption -c text_encryption
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
@@ -508,33 +534,31 @@ Info (12021): Found 1 design units, including 1 entities, in source file seven_s
     Info (12023): Found entity 1: seven_segment File: M:/text_encryption/seven_segment.v Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file four_hex_vals.v
     Info (12023): Found entity 1: four_hex_vals File: M:/text_encryption/four_hex_vals.v Line: 1
-Info (12021): Found 1 design units, including 1 entities, in source file lcd_control.v
-    Info (12023): Found entity 1: lcd_control File: M:/text_encryption/lcd_control.v Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file encrypt_value.v
     Info (12023): Found entity 1: encrypt_value File: M:/text_encryption/encrypt_value.v Line: 1
-Info (12021): Found 1 design units, including 1 entities, in source file lcd_driver.v
-    Info (12023): Found entity 1: lcd_driver File: M:/text_encryption/lcd_driver.v Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file output_files/temp_encr.v
     Info (12023): Found entity 1: temp_encr File: M:/text_encryption/output_files/temp_encr.v Line: 1
 Info (12127): Elaborating entity "text_encryption" for the top level hierarchy
-Info (10264): Verilog HDL Case Statement information at text_encryption.v(118): all case item expressions in this case statement are onehot File: M:/text_encryption/text_encryption.v Line: 118
-Info (10264): Verilog HDL Case Statement information at text_encryption.v(315): all case item expressions in this case statement are onehot File: M:/text_encryption/text_encryption.v Line: 315
-Info (12128): Elaborating entity "four_hex_vals" for hierarchy "four_hex_vals:my_disp" File: M:/text_encryption/text_encryption.v Line: 72
+Warning (10036): Verilog HDL or VHDL warning at text_encryption.v(295): object "encr_en" assigned a value but never read File: M:/text_encryption/text_encryption.v Line: 295
+Info (10264): Verilog HDL Case Statement information at text_encryption.v(116): all case item expressions in this case statement are onehot File: M:/text_encryption/text_encryption.v Line: 116
+Info (10264): Verilog HDL Case Statement information at text_encryption.v(314): all case item expressions in this case statement are onehot File: M:/text_encryption/text_encryption.v Line: 314
+Info (12128): Elaborating entity "four_hex_vals" for hierarchy "four_hex_vals:my_disp" File: M:/text_encryption/text_encryption.v Line: 70
 Info (12128): Elaborating entity "seven_segment" for hierarchy "four_hex_vals:my_disp|seven_segment:leftmost" File: M:/text_encryption/four_hex_vals.v Line: 9
-Info (12128): Elaborating entity "temp_encr" for hierarchy "temp_encr:my_encr_value" File: M:/text_encryption/text_encryption.v Line: 75
+Info (12128): Elaborating entity "temp_encr" for hierarchy "temp_encr:my_encr_value" File: M:/text_encryption/text_encryption.v Line: 73
+Warning (10034): Output port "msg" at temp_encr.v(6) has no driver File: M:/text_encryption/output_files/temp_encr.v Line: 6
 Info (10008): Verilog HDL or VHDL information: EDA Netlist Writer cannot regroup multidimensional array "s_box" into its bus
 Info (286030): Timing-Driven Synthesis is running
 Info (17049): 5 registers lost all their fanouts during netlist optimizations.
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 4251 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 4330 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 23 input pins
     Info (21059): Implemented 31 output pins
-    Info (21061): Implemented 4197 logic cells
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 1 warning
-    Info: Peak virtual memory: 4809 megabytes
-    Info: Processing ended: Wed Dec 08 13:13:01 2021
-    Info: Elapsed time: 00:01:05
-    Info: Total CPU time (on all processors): 00:01:13
+    Info (21061): Implemented 4276 logic cells
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 3 warnings
+    Info: Peak virtual memory: 4819 megabytes
+    Info: Processing ended: Wed Dec 08 22:29:39 2021
+    Info: Elapsed time: 00:01:13
+    Info: Total CPU time (on all processors): 00:01:24
 
 

@@ -3,8 +3,8 @@ input clk,
 input rst,
 input [63:0]key,
 input [63:0]value,
-output reg [63:0]msg//,
-//output reg [63:0] tempr
+output reg [63:0]msg,
+output reg [63:0] tempr
 );
 
 reg [55:0] key_plus;
@@ -22,20 +22,12 @@ reg [63:0] value_plus;	// value being transformed by IP
 reg [31:0] L0;	// value_plus[63:32]
 reg [31:0] R0;	// value_plus[31:0]
 
-//reg [31:0] lefts [15:0];
-//reg [31:0] rights [15:0];
-
-//reg ebits[47:0];
-//reg function0[47:0];
-
-//reg [2047:0] box_unrolled;
-//reg [3:0] s_box[7:0] [3:0][15:0];
-reg [63:0] s_box[7:0][3:0]; // 4 bit wide entries, 8 sboxes, 4 rows per sbox, 16 columns per sbox
+reg [63:0] s_box[7:0][3:0]; // 63 bit wide entries per row, 8 sboxes, 4 rows per sbox
 
 reg [31:0] right_boxed [16:0];
 reg [31:0] left_boxed [16:0];
 
-reg [47:0] e_transform [16:0]; // E(right_boxed[i])
+reg [47:0] e_transform [16:0]; // E(right_boxed[i-1])
 reg [47:0] keyXetran [16:0];	// K[i] + E(right_boxed[i])
 
 reg [31:0] sbox_outs[16:0]; // 32 bit wide entries, 16 different outputs (ignoring index 0)
@@ -70,7 +62,7 @@ begin
     // third state
 	 
 	 c_blocks[0] = C0;
-	 c_blocks[0] = D0;
+	 d_blocks[0] = D0;
 
     c_blocks[1] = {C0[26:0], C0[27]};
     d_blocks[1] = {D0[26:0], D0[27]};
@@ -119,7 +111,6 @@ begin
 	 
     c_blocks[16] = C0;
     d_blocks[16] = D0;
-
 	 
     // fourth state
     for (i = 5'd1; i < 5'd17; i = i + 5'd1)
@@ -155,7 +146,7 @@ begin
 	 
 	 // S3:
 	 s_box[2][0] = {4'd10, 4'd0, 4'd9, 4'd14, 4'd6, 4'd3, 4'd15, 4'd5, 4'd1, 4'd13, 4'd12, 4'd7, 4'd11, 4'd4, 4'd2, 4'd8}; // S3 begin
-	 s_box[2][1] = {4'd3, 4'd13, 4'd4, 4'd7, 4'd15, 4'd2, 4'd8, 4'd14, 4'd12, 4'd0, 4'd1, 4'd10, 4'd6, 4'd9, 4'd11, 4'd5};
+	 s_box[2][1] = {4'd13, 4'd7, 4'd0, 4'd9, 4'd3, 4'd4, 4'd6, 4'd10, 4'd2, 4'd8, 4'd5, 4'd14, 4'd12, 4'd11, 4'd15, 4'd1};
 	 s_box[2][2] = {4'd13, 4'd6, 4'd4, 4'd9, 4'd8, 4'd15, 4'd3, 4'd0, 4'd11, 4'd1, 4'd2, 4'd12, 4'd5, 4'd10, 4'd14, 4'd7};
 	 s_box[2][3] = {4'd1, 4'd10, 4'd13, 4'd0, 4'd6, 4'd9, 4'd8, 4'd7, 4'd4, 4'd15, 4'd14, 4'd3, 4'd11, 4'd5, 4'd2, 4'd12}; // S3 end
 	 
@@ -204,11 +195,1087 @@ begin
 	 
     L0 = value_plus[63:32];
     R0 = value_plus[31:0];
-
 	 
     left_boxed[0] = L0;
     right_boxed[0] = R0;
+	 
+	 // ************************************************************************************************************************************************************************
+	 // BREAKING DOWN THE FOR LOOP
+	 
+	 // Iteration 1:
+	 left_boxed[1] = right_boxed[0];
+	 
+	 e_transform[1] = {right_boxed[0][32-32], right_boxed[0][32-1],  right_boxed[0][32-2],  right_boxed[0][32-3],  right_boxed[0][32-4],  right_boxed[0][32-5],
+                      right_boxed[0][32-4],  right_boxed[0][32-5],  right_boxed[0][32-6],  right_boxed[0][32-7],  right_boxed[0][32-8],  right_boxed[0][32-9],
+                      right_boxed[0][32-8],  right_boxed[0][32-9],  right_boxed[0][32-10], right_boxed[0][32-11], right_boxed[0][32-12], right_boxed[0][32-13],
+                      right_boxed[0][32-12], right_boxed[0][32-13], right_boxed[0][32-14], right_boxed[0][32-15], right_boxed[0][32-16], right_boxed[0][32-17],
+                      right_boxed[0][32-16], right_boxed[0][32-17], right_boxed[0][32-18], right_boxed[0][32-19], right_boxed[0][32-20], right_boxed[0][32-21],
+                      right_boxed[0][32-20], right_boxed[0][32-21], right_boxed[0][32-22], right_boxed[0][32-23], right_boxed[0][32-24], right_boxed[0][32-25],
+                      right_boxed[0][32-24], right_boxed[0][32-25], right_boxed[0][32-26], right_boxed[0][32-27], right_boxed[0][32-28], right_boxed[0][32-29],
+                      right_boxed[0][32-28], right_boxed[0][32-29], right_boxed[0][32-30], right_boxed[0][32-31], right_boxed[0][32-32], right_boxed[0][32-1]};
+	  
+	 keyXetran[1] = e_transform[1]^permutes[1];
+	 
+	 // s-box-1
+	 row[0] = {keyXetran[1][47], keyXetran[1][42]};
+	 column[0] = keyXetran[1][46:43];
+	 sbox_outs[1][31:28] = s_box[0][row[0]][63 - column[0] * 4'd4 -: 4];
+			
+	 // s-box-2
+	 row[1] = {keyXetran[1][41], keyXetran[1][36]};
+	 column[1] = keyXetran[1][40:37];
+	 sbox_outs[1][27:24] = s_box[1][row[1]][63 - column[1] * 4 -: 4];
+			
+	 // s-box-3
+	 row[2] = {keyXetran[1][35], keyXetran[1][30]};
+	 column[2] = keyXetran[1][34:31];
+	 sbox_outs[1][23:20] = s_box[2][row[2]][63 - column[2] * 4 -: 4];
+			
+	 // s-box-4
+	 row[3] = {keyXetran[1][29], keyXetran[1][24]};
+	 column[3] = keyXetran[1][28:25];
+	 sbox_outs[1][19:16] = s_box[3][row[3]][63 - column[3] * 4 -: 4];
+			
+	 // s-box-5
+	 row[4] = {keyXetran[1][23], keyXetran[1][18]};
+	 column[4] = keyXetran[1][22:19];
+	 sbox_outs[1][15:12] = s_box[4][row[4]][63 - column[4] * 4 -: 4];
+			
+	 // s-box-6
+	 row[5] = {keyXetran[1][17], keyXetran[1][12]};
+	 column[5] = keyXetran[1][16:13];
+	 sbox_outs[1][11:8] = s_box[5][row[5]][63 - column[5] * 4 -: 4];
+			
+	 // s-box-7
+	 row[6] = {keyXetran[1][11], keyXetran[1][6]};
+	 column[6] = keyXetran[1][10:7];
+	 sbox_outs[1][7:4] = s_box[6][row[6]][63 - column[6] * 4 -: 4];
+			
+	 // s-box-8
+	 row[7] = {keyXetran[1][5], keyXetran[1][0]};
+	 column[7] = keyXetran[1][4:1];
+	 sbox_outs[1][3:0] = s_box[7][row[7]][63 - column[7] * 4 -: 4];
+	 
+	 f[1] = {sbox_outs[1][32-16], sbox_outs[1][32-7], sbox_outs[1][32-20], sbox_outs[1][32-21],
+				sbox_outs[1][32-29], sbox_outs[1][32-12], sbox_outs[1][32-28], sbox_outs[1][32-17],
+				sbox_outs[1][32-1], sbox_outs[1][32-15], sbox_outs[1][32-23], sbox_outs[1][32-26],
+				sbox_outs[1][32-5], sbox_outs[1][32-18], sbox_outs[1][32-31], sbox_outs[1][32-10],
+				sbox_outs[1][32-2], sbox_outs[1][32-8], sbox_outs[1][32-24], sbox_outs[1][32-14],
+				sbox_outs[1][32-32], sbox_outs[1][32-27], sbox_outs[1][32-3], sbox_outs[1][32-9],
+				sbox_outs[1][32-19], sbox_outs[1][32-13], sbox_outs[1][32-30], sbox_outs[1][32-6],
+				sbox_outs[1][32-22], sbox_outs[1][32-11], sbox_outs[1][32-4], sbox_outs[1][32-25]};
+				
+	 right_boxed[1] = left_boxed[0]^f[1];
+	 
+	 // ****************************************************************************************
+	 
+	 // Iteration 2:
+	 left_boxed[2] = right_boxed[1];
+	 
+	 e_transform[2] = {right_boxed[1][32-32], right_boxed[1][32-1],  right_boxed[1][32-2],  right_boxed[1][32-3],  right_boxed[1][32-4],  right_boxed[1][32-5],
+                      right_boxed[1][32-4],  right_boxed[1][32-5],  right_boxed[1][32-6],  right_boxed[1][32-7],  right_boxed[1][32-8],  right_boxed[1][32-9],
+                      right_boxed[1][32-8],  right_boxed[1][32-9],  right_boxed[1][32-10], right_boxed[1][32-11], right_boxed[1][32-12], right_boxed[1][32-13],
+                      right_boxed[1][32-12], right_boxed[1][32-13], right_boxed[1][32-14], right_boxed[1][32-15], right_boxed[1][32-16], right_boxed[1][32-17],
+                      right_boxed[1][32-16], right_boxed[1][32-17], right_boxed[1][32-18], right_boxed[1][32-19], right_boxed[1][32-20], right_boxed[1][32-21],
+                      right_boxed[1][32-20], right_boxed[1][32-21], right_boxed[1][32-22], right_boxed[1][32-23], right_boxed[1][32-24], right_boxed[1][32-25],
+                      right_boxed[1][32-24], right_boxed[1][32-25], right_boxed[1][32-26], right_boxed[1][32-27], right_boxed[1][32-28], right_boxed[1][32-29],
+                      right_boxed[1][32-28], right_boxed[1][32-29], right_boxed[1][32-30], right_boxed[1][32-31], right_boxed[1][32-32], right_boxed[1][32-1]};
+	  
+	 keyXetran[2] = e_transform[2]^permutes[2];
+	 
+	 // s-box-1
+	 row[0] = {keyXetran[2][47], keyXetran[2][42]};
+	 column[0] = keyXetran[2][46:43];
+	 sbox_outs[2][31:28] = s_box[0][row[0]][63 - column[0] * 4'd4 -: 4];
+			
+	 // s-box-2
+	 row[1] = {keyXetran[2][41], keyXetran[2][36]};
+	 column[1] = keyXetran[2][40:37];
+	 sbox_outs[2][27:24] = s_box[1][row[1]][63 - column[1] * 4 -: 4];
+			
+	 // s-box-3
+	 row[2] = {keyXetran[2][35], keyXetran[2][30]};
+	 column[2] = keyXetran[2][34:31];
+	 sbox_outs[2][23:20] = s_box[2][row[2]][63 - column[2] * 4 -: 4];
+			
+	 // s-box-4
+	 row[3] = {keyXetran[2][29], keyXetran[2][24]};
+	 column[3] = keyXetran[2][28:25];
+	 sbox_outs[2][19:16] = s_box[3][row[3]][63 - column[3] * 4 -: 4];
+			
+	 // s-box-5
+	 row[4] = {keyXetran[2][23], keyXetran[2][18]};
+	 column[4] = keyXetran[2][22:19];
+	 sbox_outs[2][15:12] = s_box[4][row[4]][63 - column[4] * 4 -: 4];
+			
+	 // s-box-6
+	 row[5] = {keyXetran[2][17], keyXetran[2][12]};
+	 column[5] = keyXetran[2][16:13];
+	 sbox_outs[2][11:8] = s_box[5][row[5]][63 - column[5] * 4 -: 4];
+			
+	 // s-box-7
+	 row[6] = {keyXetran[2][11], keyXetran[2][6]};
+	 column[6] = keyXetran[2][10:7];
+	 sbox_outs[2][7:4] = s_box[6][row[6]][63 - column[6] * 4 -: 4];
+			
+	 // s-box-8
+	 row[7] = {keyXetran[2][5], keyXetran[2][0]};
+	 column[7] = keyXetran[2][4:1];
+	 sbox_outs[2][3:0] = s_box[7][row[7]][63 - column[7] * 4 -: 4];
+	 
+	 f[2] = {sbox_outs[2][32-16], sbox_outs[2][32-7], sbox_outs[2][32-20], sbox_outs[2][32-21],
+				sbox_outs[2][32-29], sbox_outs[2][32-12], sbox_outs[2][32-28], sbox_outs[2][32-17],
+				sbox_outs[2][32-1], sbox_outs[2][32-15], sbox_outs[2][32-23], sbox_outs[2][32-26],
+				sbox_outs[2][32-5], sbox_outs[2][32-18], sbox_outs[2][32-31], sbox_outs[2][32-10],
+				sbox_outs[2][32-2], sbox_outs[2][32-8], sbox_outs[2][32-24], sbox_outs[2][32-14],
+				sbox_outs[2][32-32], sbox_outs[2][32-27], sbox_outs[2][32-3], sbox_outs[2][32-9],
+				sbox_outs[2][32-19], sbox_outs[2][32-13], sbox_outs[2][32-30], sbox_outs[2][32-6],
+				sbox_outs[2][32-22], sbox_outs[2][32-11], sbox_outs[2][32-4], sbox_outs[2][32-25]};
+				
+	 right_boxed[2] = left_boxed[1]^f[2];
+	 
+	 // ****************************************************************************************
+	 
+	 // Iteration 3:
+	 left_boxed[3] = right_boxed[2];
+	 
+	 e_transform[3] = {right_boxed[2][32-32], right_boxed[2][32-1],  right_boxed[2][32-2],  right_boxed[2][32-3],  right_boxed[2][32-4],  right_boxed[2][32-5],
+                      right_boxed[2][32-4],  right_boxed[2][32-5],  right_boxed[2][32-6],  right_boxed[2][32-7],  right_boxed[2][32-8],  right_boxed[2][32-9],
+                      right_boxed[2][32-8],  right_boxed[2][32-9],  right_boxed[2][32-10], right_boxed[2][32-11], right_boxed[2][32-12], right_boxed[2][32-13],
+                      right_boxed[2][32-12], right_boxed[2][32-13], right_boxed[2][32-14], right_boxed[2][32-15], right_boxed[2][32-16], right_boxed[2][32-17],
+                      right_boxed[2][32-16], right_boxed[2][32-17], right_boxed[2][32-18], right_boxed[2][32-19], right_boxed[2][32-20], right_boxed[2][32-21],
+                      right_boxed[2][32-20], right_boxed[2][32-21], right_boxed[2][32-22], right_boxed[2][32-23], right_boxed[2][32-24], right_boxed[2][32-25],
+                      right_boxed[2][32-24], right_boxed[2][32-25], right_boxed[2][32-26], right_boxed[2][32-27], right_boxed[2][32-28], right_boxed[2][32-29],
+                      right_boxed[2][32-28], right_boxed[2][32-29], right_boxed[2][32-30], right_boxed[2][32-31], right_boxed[2][32-32], right_boxed[2][32-1]};
+	  
+	 keyXetran[3] = e_transform[3]^permutes[3];
+	 
+	 // s-box-1
+	 row[0] = {keyXetran[3][47], keyXetran[3][42]};
+	 column[0] = keyXetran[3][46:43];
+	 sbox_outs[3][31:28] = s_box[0][row[0]][63 - column[0] * 4'd4 -: 4];
+			
+	 // s-box-2
+	 row[1] = {keyXetran[3][41], keyXetran[3][36]};
+	 column[1] = keyXetran[3][40:37];
+	 sbox_outs[3][27:24] = s_box[1][row[1]][63 - column[1] * 4 -: 4];
+			
+	 // s-box-3
+	 row[2] = {keyXetran[3][35], keyXetran[3][30]};
+	 column[2] = keyXetran[3][34:31];
+	 sbox_outs[3][23:20] = s_box[2][row[2]][63 - column[2] * 4 -: 4];
+			
+	 // s-box-4
+	 row[3] = {keyXetran[3][29], keyXetran[3][24]};
+	 column[3] = keyXetran[3][28:25];
+	 sbox_outs[3][19:16] = s_box[3][row[3]][63 - column[3] * 4 -: 4];
+			
+	 // s-box-5
+	 row[4] = {keyXetran[3][23], keyXetran[3][18]};
+	 column[4] = keyXetran[3][22:19];
+	 sbox_outs[3][15:12] = s_box[4][row[4]][63 - column[4] * 4 -: 4];
+			
+	 // s-box-6
+	 row[5] = {keyXetran[3][17], keyXetran[3][12]};
+	 column[5] = keyXetran[3][16:13];
+	 sbox_outs[3][11:8] = s_box[5][row[5]][63 - column[5] * 4 -: 4];
+			
+	 // s-box-7
+	 row[6] = {keyXetran[3][11], keyXetran[3][6]};
+	 column[6] = keyXetran[3][10:7];
+	 sbox_outs[3][7:4] = s_box[6][row[6]][63 - column[6] * 4 -: 4];
+			
+	 // s-box-8
+	 row[7] = {keyXetran[3][5], keyXetran[3][0]};
+	 column[7] = keyXetran[3][4:1];
+	 sbox_outs[3][3:0] = s_box[7][row[7]][63 - column[7] * 4 -: 4];
+	 
+	 f[3] = {sbox_outs[3][32-16], sbox_outs[3][32-7], sbox_outs[3][32-20], sbox_outs[3][32-21],
+				sbox_outs[3][32-29], sbox_outs[3][32-12], sbox_outs[3][32-28], sbox_outs[3][32-17],
+				sbox_outs[3][32-1], sbox_outs[3][32-15], sbox_outs[3][32-23], sbox_outs[3][32-26],
+				sbox_outs[3][32-5], sbox_outs[3][32-18], sbox_outs[3][32-31], sbox_outs[3][32-10],
+				sbox_outs[3][32-2], sbox_outs[3][32-8], sbox_outs[3][32-24], sbox_outs[3][32-14],
+				sbox_outs[3][32-32], sbox_outs[3][32-27], sbox_outs[3][32-3], sbox_outs[3][32-9],
+				sbox_outs[3][32-19], sbox_outs[3][32-13], sbox_outs[3][32-30], sbox_outs[3][32-6],
+				sbox_outs[3][32-22], sbox_outs[3][32-11], sbox_outs[3][32-4], sbox_outs[3][32-25]};
+				
+	 right_boxed[3] = left_boxed[2]^f[3];
+	 
+	 // ****************************************************************************************
+	 
+	 // Iteration 4:
+	 left_boxed[4] = right_boxed[3];
+	 
+	 e_transform[4] = {right_boxed[3][32-32], right_boxed[3][32-1],  right_boxed[3][32-2],  right_boxed[3][32-3],  right_boxed[3][32-4],  right_boxed[3][32-5],
+                      right_boxed[3][32-4],  right_boxed[3][32-5],  right_boxed[3][32-6],  right_boxed[3][32-7],  right_boxed[3][32-8],  right_boxed[3][32-9],
+                      right_boxed[3][32-8],  right_boxed[3][32-9],  right_boxed[3][32-10], right_boxed[3][32-11], right_boxed[3][32-12], right_boxed[3][32-13],
+                      right_boxed[3][32-12], right_boxed[3][32-13], right_boxed[3][32-14], right_boxed[3][32-15], right_boxed[3][32-16], right_boxed[3][32-17],
+                      right_boxed[3][32-16], right_boxed[3][32-17], right_boxed[3][32-18], right_boxed[3][32-19], right_boxed[3][32-20], right_boxed[3][32-21],
+                      right_boxed[3][32-20], right_boxed[3][32-21], right_boxed[3][32-22], right_boxed[3][32-23], right_boxed[3][32-24], right_boxed[3][32-25],
+                      right_boxed[3][32-24], right_boxed[3][32-25], right_boxed[3][32-26], right_boxed[3][32-27], right_boxed[3][32-28], right_boxed[3][32-29],
+                      right_boxed[3][32-28], right_boxed[3][32-29], right_boxed[3][32-30], right_boxed[3][32-31], right_boxed[3][32-32], right_boxed[3][32-1]};
+	  
+	 keyXetran[4] = e_transform[4]^permutes[4];
+	 
+	 // s-box-1
+	 row[0] = {keyXetran[4][47], keyXetran[4][42]};
+	 column[0] = keyXetran[4][46:43];
+	 sbox_outs[4][31:28] = s_box[0][row[0]][63 - column[0] * 4'd4 -: 4];
+			
+	 // s-box-2
+	 row[1] = {keyXetran[4][41], keyXetran[4][36]};
+	 column[1] = keyXetran[4][40:37];
+	 sbox_outs[4][27:24] = s_box[1][row[1]][63 - column[1] * 4 -: 4];
+			
+	 // s-box-3
+	 row[2] = {keyXetran[4][35], keyXetran[4][30]};
+	 column[2] = keyXetran[4][34:31];
+	 sbox_outs[4][23:20] = s_box[2][row[2]][63 - column[2] * 4 -: 4];
+			
+	 // s-box-4
+	 row[3] = {keyXetran[4][29], keyXetran[4][24]};
+	 column[3] = keyXetran[4][28:25];
+	 sbox_outs[4][19:16] = s_box[3][row[3]][63 - column[3] * 4 -: 4];
+			
+	 // s-box-5
+	 row[4] = {keyXetran[4][23], keyXetran[4][18]};
+	 column[4] = keyXetran[4][22:19];
+	 sbox_outs[4][15:12] = s_box[4][row[4]][63 - column[4] * 4 -: 4];
+			
+	 // s-box-6
+	 row[5] = {keyXetran[4][17], keyXetran[4][12]};
+	 column[5] = keyXetran[4][16:13];
+	 sbox_outs[4][11:8] = s_box[5][row[5]][63 - column[5] * 4 -: 4];
+			
+	 // s-box-7
+	 row[6] = {keyXetran[4][11], keyXetran[4][6]};
+	 column[6] = keyXetran[4][10:7];
+	 sbox_outs[4][7:4] = s_box[6][row[6]][63 - column[6] * 4 -: 4];
+			
+	 // s-box-8
+	 row[7] = {keyXetran[4][5], keyXetran[4][0]};
+	 column[7] = keyXetran[4][4:1];
+	 sbox_outs[4][3:0] = s_box[7][row[7]][63 - column[7] * 4 -: 4];
+	 
+	 f[4] = {sbox_outs[4][32-16], sbox_outs[4][32-7], sbox_outs[4][32-20], sbox_outs[4][32-21],
+				sbox_outs[4][32-29], sbox_outs[4][32-12], sbox_outs[4][32-28], sbox_outs[4][32-17],
+				sbox_outs[4][32-1], sbox_outs[4][32-15], sbox_outs[4][32-23], sbox_outs[4][32-26],
+				sbox_outs[4][32-5], sbox_outs[4][32-18], sbox_outs[4][32-31], sbox_outs[4][32-10],
+				sbox_outs[4][32-2], sbox_outs[4][32-8], sbox_outs[4][32-24], sbox_outs[4][32-14],
+				sbox_outs[4][32-32], sbox_outs[4][32-27], sbox_outs[4][32-3], sbox_outs[4][32-9],
+				sbox_outs[4][32-19], sbox_outs[4][32-13], sbox_outs[4][32-30], sbox_outs[4][32-6],
+				sbox_outs[4][32-22], sbox_outs[4][32-11], sbox_outs[4][32-4], sbox_outs[4][32-25]};
+				
+	 right_boxed[4] = left_boxed[3]^f[4];
+	 
+	 // ****************************************************************************************
+	 
+	 // Iteration 5:
+	 left_boxed[5] = right_boxed[4];
+	 
+	 e_transform[5] = {right_boxed[4][32-32], right_boxed[4][32-1],  right_boxed[4][32-2],  right_boxed[4][32-3],  right_boxed[4][32-4],  right_boxed[4][32-5],
+                      right_boxed[4][32-4],  right_boxed[4][32-5],  right_boxed[4][32-6],  right_boxed[4][32-7],  right_boxed[4][32-8],  right_boxed[4][32-9],
+                      right_boxed[4][32-8],  right_boxed[4][32-9],  right_boxed[4][32-10], right_boxed[4][32-11], right_boxed[4][32-12], right_boxed[4][32-13],
+                      right_boxed[4][32-12], right_boxed[4][32-13], right_boxed[4][32-14], right_boxed[4][32-15], right_boxed[4][32-16], right_boxed[4][32-17],
+                      right_boxed[4][32-16], right_boxed[4][32-17], right_boxed[4][32-18], right_boxed[4][32-19], right_boxed[4][32-20], right_boxed[4][32-21],
+                      right_boxed[4][32-20], right_boxed[4][32-21], right_boxed[4][32-22], right_boxed[4][32-23], right_boxed[4][32-24], right_boxed[4][32-25],
+                      right_boxed[4][32-24], right_boxed[4][32-25], right_boxed[4][32-26], right_boxed[4][32-27], right_boxed[4][32-28], right_boxed[4][32-29],
+                      right_boxed[4][32-28], right_boxed[4][32-29], right_boxed[4][32-30], right_boxed[4][32-31], right_boxed[4][32-32], right_boxed[4][32-1]};
+	  
+	 keyXetran[5] = e_transform[5]^permutes[5];
+	 
+	 // s-box-1
+	 row[0] = {keyXetran[5][47], keyXetran[5][42]};
+	 column[0] = keyXetran[5][46:43];
+	 sbox_outs[5][31:28] = s_box[0][row[0]][8'd63 - column[0] * 4'd4 -: 4];
+			
+	 // s-box-2
+	 row[1] = {keyXetran[5][41], keyXetran[5][36]};
+	 column[1] = keyXetran[5][40:37];
+	 sbox_outs[5][27:24] = s_box[1][row[1]][63 - column[1] * 4 -: 4];
+			
+	 // s-box-3
+	 row[2] = {keyXetran[5][35], keyXetran[5][30]};
+	 column[2] = keyXetran[5][34:31];
+	 sbox_outs[5][23:20] = s_box[2][row[2]][63 - column[2] * 4 -: 4];
+			
+	 // s-box-4
+	 row[3] = {keyXetran[5][29], keyXetran[5][24]};
+	 column[3] = keyXetran[5][28:25];
+	 sbox_outs[5][19:16] = s_box[3][row[3]][63 - column[3] * 4 -: 4];
+			
+	 // s-box-5
+	 row[4] = {keyXetran[5][23], keyXetran[5][18]};
+	 column[4] = keyXetran[5][22:19];
+	 sbox_outs[5][15:12] = s_box[4][row[4]][63 - column[4] * 4 -: 4];
+			
+	 // s-box-6
+	 row[5] = {keyXetran[5][17], keyXetran[5][12]};
+	 column[5] = keyXetran[5][16:13];
+	 sbox_outs[5][11:8] = s_box[5][row[5]][63 - column[5] * 4 -: 4];
+			
+	 // s-box-7
+	 row[6] = {keyXetran[5][11], keyXetran[5][6]};
+	 column[6] = keyXetran[5][10:7];
+	 sbox_outs[5][7:4] = s_box[6][row[6]][63 - column[6] * 4 -: 4];
+			
+	 // s-box-8
+	 row[7] = {keyXetran[5][5], keyXetran[5][0]};
+	 column[7] = keyXetran[5][4:1];
+	 sbox_outs[5][3:0] = s_box[7][row[7]][63 - column[7] * 4 -: 4];
+	 
+	 f[5] = {sbox_outs[5][32-16], sbox_outs[5][32-7], sbox_outs[5][32-20], sbox_outs[5][32-21],
+				sbox_outs[5][32-29], sbox_outs[5][32-12], sbox_outs[5][32-28], sbox_outs[5][32-17],
+				sbox_outs[5][32-1], sbox_outs[5][32-15], sbox_outs[5][32-23], sbox_outs[5][32-26],
+				sbox_outs[5][32-5], sbox_outs[5][32-18], sbox_outs[5][32-31], sbox_outs[5][32-10],
+				sbox_outs[5][32-2], sbox_outs[5][32-8], sbox_outs[5][32-24], sbox_outs[5][32-14],
+				sbox_outs[5][32-32], sbox_outs[5][32-27], sbox_outs[5][32-3], sbox_outs[5][32-9],
+				sbox_outs[5][32-19], sbox_outs[5][32-13], sbox_outs[5][32-30], sbox_outs[5][32-6],
+				sbox_outs[5][32-22], sbox_outs[5][32-11], sbox_outs[5][32-4], sbox_outs[5][32-25]};
+				
+	 right_boxed[5] = left_boxed[4]^f[5];
+	 
+	 // ****************************************************************************************
+	 
+	 // Iteration 6:
+	 left_boxed[6] = right_boxed[5];
+	 
+	 e_transform[6] = {right_boxed[5][32-32], right_boxed[5][32-1],  right_boxed[5][32-2],  right_boxed[5][32-3],  right_boxed[5][32-4],  right_boxed[5][32-5],
+                      right_boxed[5][32-4],  right_boxed[5][32-5],  right_boxed[5][32-6],  right_boxed[5][32-7],  right_boxed[5][32-8],  right_boxed[5][32-9],
+                      right_boxed[5][32-8],  right_boxed[5][32-9],  right_boxed[5][32-10], right_boxed[5][32-11], right_boxed[5][32-12], right_boxed[5][32-13],
+                      right_boxed[5][32-12], right_boxed[5][32-13], right_boxed[5][32-14], right_boxed[5][32-15], right_boxed[5][32-16], right_boxed[5][32-17],
+                      right_boxed[5][32-16], right_boxed[5][32-17], right_boxed[5][32-18], right_boxed[5][32-19], right_boxed[5][32-20], right_boxed[5][32-21],
+                      right_boxed[5][32-20], right_boxed[5][32-21], right_boxed[5][32-22], right_boxed[5][32-23], right_boxed[5][32-24], right_boxed[5][32-25],
+                      right_boxed[5][32-24], right_boxed[5][32-25], right_boxed[5][32-26], right_boxed[5][32-27], right_boxed[5][32-28], right_boxed[5][32-29],
+                      right_boxed[5][32-28], right_boxed[5][32-29], right_boxed[5][32-30], right_boxed[5][32-31], right_boxed[5][32-32], right_boxed[5][32-1]};
+	  
+	 keyXetran[6] = e_transform[6]^permutes[6];
+	 
+	 // s-box-1
+	 row[0] = {keyXetran[6][47], keyXetran[6][42]};
+	 column[0] = keyXetran[6][46:43];
+	 sbox_outs[6][31:28] = s_box[0][row[0]][8'd63 - column[0] * 4'd4 -: 4];
+			
+	 // s-box-2
+	 row[1] = {keyXetran[6][41], keyXetran[6][36]};
+	 column[1] = keyXetran[6][40:37];
+	 sbox_outs[6][27:24] = s_box[1][row[1]][63 - column[1] * 4 -: 4];
+			
+	 // s-box-3
+	 row[2] = {keyXetran[6][35], keyXetran[6][30]};
+	 column[2] = keyXetran[6][34:31];
+	 sbox_outs[6][23:20] = s_box[2][row[2]][63 - column[2] * 4 -: 4];
+			
+	 // s-box-4
+	 row[3] = {keyXetran[6][29], keyXetran[6][24]};
+	 column[3] = keyXetran[6][28:25];
+	 sbox_outs[6][19:16] = s_box[3][row[3]][63 - column[3] * 4 -: 4];
+			
+	 // s-box-5
+	 row[4] = {keyXetran[6][23], keyXetran[6][18]};
+	 column[4] = keyXetran[6][22:19];
+	 sbox_outs[6][15:12] = s_box[4][row[4]][63 - column[4] * 4 -: 4];
+			
+	 // s-box-6
+	 row[5] = {keyXetran[6][17], keyXetran[6][12]};
+	 column[5] = keyXetran[6][16:13];
+	 sbox_outs[6][11:8] = s_box[5][row[5]][63 - column[5] * 4 -: 4];
+			
+	 // s-box-7
+	 row[6] = {keyXetran[6][11], keyXetran[6][6]};
+	 column[6] = keyXetran[6][10:7];
+	 sbox_outs[6][7:4] = s_box[6][row[6]][63 - column[6] * 4 -: 4];
+			
+	 // s-box-8
+	 row[7] = {keyXetran[6][5], keyXetran[6][0]};
+	 column[7] = keyXetran[6][4:1];
+	 sbox_outs[6][3:0] = s_box[7][row[7]][63 - column[7] * 4 -: 4];
+	 
+	 f[6] = {sbox_outs[6][32-16], sbox_outs[6][32-7], sbox_outs[6][32-20], sbox_outs[6][32-21],
+				sbox_outs[6][32-29], sbox_outs[6][32-12], sbox_outs[6][32-28], sbox_outs[6][32-17],
+				sbox_outs[6][32-1], sbox_outs[6][32-15], sbox_outs[6][32-23], sbox_outs[6][32-26],
+				sbox_outs[6][32-5], sbox_outs[6][32-18], sbox_outs[6][32-31], sbox_outs[6][32-10],
+				sbox_outs[6][32-2], sbox_outs[6][32-8], sbox_outs[6][32-24], sbox_outs[6][32-14],
+				sbox_outs[6][32-32], sbox_outs[6][32-27], sbox_outs[6][32-3], sbox_outs[6][32-9],
+				sbox_outs[6][32-19], sbox_outs[6][32-13], sbox_outs[6][32-30], sbox_outs[6][32-6],
+				sbox_outs[6][32-22], sbox_outs[6][32-11], sbox_outs[6][32-4], sbox_outs[6][32-25]};
+				
+	 right_boxed[6] = left_boxed[5]^f[6];
+	 
+	 // ****************************************************************************************
+	 
+	 // Iteration 7:
+	 left_boxed[7] = right_boxed[6];
+	 
+	 e_transform[7] = {right_boxed[6][32-32], right_boxed[6][32-1],  right_boxed[6][32-2],  right_boxed[6][32-3],  right_boxed[6][32-4],  right_boxed[6][32-5],
+                      right_boxed[6][32-4],  right_boxed[6][32-5],  right_boxed[6][32-6],  right_boxed[6][32-7],  right_boxed[6][32-8],  right_boxed[6][32-9],
+                      right_boxed[6][32-8],  right_boxed[6][32-9],  right_boxed[6][32-10], right_boxed[6][32-11], right_boxed[6][32-12], right_boxed[6][32-13],
+                      right_boxed[6][32-12], right_boxed[6][32-13], right_boxed[6][32-14], right_boxed[6][32-15], right_boxed[6][32-16], right_boxed[6][32-17],
+                      right_boxed[6][32-16], right_boxed[6][32-17], right_boxed[6][32-18], right_boxed[6][32-19], right_boxed[6][32-20], right_boxed[6][32-21],
+                      right_boxed[6][32-20], right_boxed[6][32-21], right_boxed[6][32-22], right_boxed[6][32-23], right_boxed[6][32-24], right_boxed[6][32-25],
+                      right_boxed[6][32-24], right_boxed[6][32-25], right_boxed[6][32-26], right_boxed[6][32-27], right_boxed[6][32-28], right_boxed[6][32-29],
+                      right_boxed[6][32-28], right_boxed[6][32-29], right_boxed[6][32-30], right_boxed[6][32-31], right_boxed[6][32-32], right_boxed[6][32-1]};
+	  
+	 keyXetran[7] = e_transform[7]^permutes[7];
+	 
+	 // s-box-1
+	 row[0] = {keyXetran[7][47], keyXetran[7][42]};
+	 column[0] = keyXetran[7][46:43];
+	 sbox_outs[7][31:28] = s_box[0][row[0]][8'd63 - column[0] * 4'd4 -: 4];
+			
+	 // s-box-2
+	 row[1] = {keyXetran[7][41], keyXetran[7][36]};
+	 column[1] = keyXetran[7][40:37];
+	 sbox_outs[7][27:24] = s_box[1][row[1]][63 - column[1] * 4 -: 4];
+			
+	 // s-box-3
+	 row[2] = {keyXetran[7][35], keyXetran[7][30]};
+	 column[2] = keyXetran[7][34:31];
+	 sbox_outs[7][23:20] = s_box[2][row[2]][63 - column[2] * 4 -: 4];
+			
+	 // s-box-4
+	 row[3] = {keyXetran[7][29], keyXetran[7][24]};
+	 column[3] = keyXetran[7][28:25];
+	 sbox_outs[7][19:16] = s_box[3][row[3]][63 - column[3] * 4 -: 4];
+			
+	 // s-box-5
+	 row[4] = {keyXetran[7][23], keyXetran[7][18]};
+	 column[4] = keyXetran[7][22:19];
+	 sbox_outs[7][15:12] = s_box[4][row[4]][63 - column[4] * 4 -: 4];
+			
+	 // s-box-6
+	 row[5] = {keyXetran[7][17], keyXetran[7][12]};
+	 column[5] = keyXetran[7][16:13];
+	 sbox_outs[7][11:8] = s_box[5][row[5]][63 - column[5] * 4 -: 4];
+			
+	 // s-box-7
+	 row[6] = {keyXetran[7][11], keyXetran[7][6]};
+	 column[6] = keyXetran[7][10:7];
+	 sbox_outs[7][7:4] = s_box[6][row[6]][63 - column[6] * 4 -: 4];
+			
+	 // s-box-8
+	 row[7] = {keyXetran[7][5], keyXetran[7][0]};
+	 column[7] = keyXetran[7][4:1];
+	 sbox_outs[7][3:0] = s_box[7][row[7]][63 - column[7] * 4 -: 4];
+	 
+	 f[7] = {sbox_outs[7][32-16], sbox_outs[7][32-7], sbox_outs[7][32-20], sbox_outs[7][32-21],
+				sbox_outs[7][32-29], sbox_outs[7][32-12], sbox_outs[7][32-28], sbox_outs[7][32-17],
+				sbox_outs[7][32-1], sbox_outs[7][32-15], sbox_outs[7][32-23], sbox_outs[7][32-26],
+				sbox_outs[7][32-5], sbox_outs[7][32-18], sbox_outs[7][32-31], sbox_outs[7][32-10],
+				sbox_outs[7][32-2], sbox_outs[7][32-8], sbox_outs[7][32-24], sbox_outs[7][32-14],
+				sbox_outs[7][32-32], sbox_outs[7][32-27], sbox_outs[7][32-3], sbox_outs[7][32-9],
+				sbox_outs[7][32-19], sbox_outs[7][32-13], sbox_outs[7][32-30], sbox_outs[7][32-6],
+				sbox_outs[7][32-22], sbox_outs[7][32-11], sbox_outs[7][32-4], sbox_outs[7][32-25]};
+				
+	 right_boxed[7] = left_boxed[6]^f[7];
+	 
+	 // ****************************************************************************************
+	 
+	 // Iteration 8:
+	 left_boxed[8] = right_boxed[7];
+	 
+	 e_transform[8] = {right_boxed[7][32-32], right_boxed[7][32-1],  right_boxed[7][32-2],  right_boxed[7][32-3],  right_boxed[7][32-4],  right_boxed[7][32-5],
+                      right_boxed[7][32-4],  right_boxed[7][32-5],  right_boxed[7][32-6],  right_boxed[7][32-7],  right_boxed[7][32-8],  right_boxed[7][32-9],
+                      right_boxed[7][32-8],  right_boxed[7][32-9],  right_boxed[7][32-10], right_boxed[7][32-11], right_boxed[7][32-12], right_boxed[7][32-13],
+                      right_boxed[7][32-12], right_boxed[7][32-13], right_boxed[7][32-14], right_boxed[7][32-15], right_boxed[7][32-16], right_boxed[7][32-17],
+                      right_boxed[7][32-16], right_boxed[7][32-17], right_boxed[7][32-18], right_boxed[7][32-19], right_boxed[7][32-20], right_boxed[7][32-21],
+                      right_boxed[7][32-20], right_boxed[7][32-21], right_boxed[7][32-22], right_boxed[7][32-23], right_boxed[7][32-24], right_boxed[7][32-25],
+                      right_boxed[7][32-24], right_boxed[7][32-25], right_boxed[7][32-26], right_boxed[7][32-27], right_boxed[7][32-28], right_boxed[7][32-29],
+                      right_boxed[7][32-28], right_boxed[7][32-29], right_boxed[7][32-30], right_boxed[7][32-31], right_boxed[7][32-32], right_boxed[7][32-1]};
+	  
+	 keyXetran[8] = e_transform[8]^permutes[8];
+	 
+	 // s-box-1
+	 row[0] = {keyXetran[8][47], keyXetran[8][42]};
+	 column[0] = keyXetran[8][46:43];
+	 sbox_outs[8][31:28] = s_box[0][row[0]][8'd63 - column[0] * 4'd4 -: 4];
+			
+	 // s-box-2
+	 row[1] = {keyXetran[8][41], keyXetran[8][36]};
+	 column[1] = keyXetran[8][40:37];
+	 sbox_outs[8][27:24] = s_box[1][row[1]][63 - column[1] * 4 -: 4];
+			
+	 // s-box-3
+	 row[2] = {keyXetran[8][35], keyXetran[8][30]};
+	 column[2] = keyXetran[8][34:31];
+	 sbox_outs[8][23:20] = s_box[2][row[2]][63 - column[2] * 4 -: 4];
+			
+	 // s-box-4
+	 row[3] = {keyXetran[8][29], keyXetran[8][24]};
+	 column[3] = keyXetran[8][28:25];
+	 sbox_outs[8][19:16] = s_box[3][row[3]][63 - column[3] * 4 -: 4];
+			
+	 // s-box-5
+	 row[4] = {keyXetran[8][23], keyXetran[8][18]};
+	 column[4] = keyXetran[8][22:19];
+	 sbox_outs[8][15:12] = s_box[4][row[4]][63 - column[4] * 4 -: 4];
+			
+	 // s-box-6
+	 row[5] = {keyXetran[8][17], keyXetran[8][12]};
+	 column[5] = keyXetran[8][16:13];
+	 sbox_outs[8][11:8] = s_box[5][row[5]][63 - column[5] * 4 -: 4];
+			
+	 // s-box-7
+	 row[6] = {keyXetran[8][11], keyXetran[8][6]};
+	 column[6] = keyXetran[8][10:7];
+	 sbox_outs[8][7:4] = s_box[6][row[6]][63 - column[6] * 4 -: 4];
+			
+	 // s-box-8
+	 row[7] = {keyXetran[8][5], keyXetran[8][0]};
+	 column[7] = keyXetran[8][4:1];
+	 sbox_outs[8][3:0] = s_box[7][row[7]][63 - column[7] * 4 -: 4];
+	 
+	 f[8] = {sbox_outs[8][32-16], sbox_outs[8][32-7], sbox_outs[8][32-20], sbox_outs[8][32-21],
+				sbox_outs[8][32-29], sbox_outs[8][32-12], sbox_outs[8][32-28], sbox_outs[8][32-17],
+				sbox_outs[8][32-1], sbox_outs[8][32-15], sbox_outs[8][32-23], sbox_outs[8][32-26],
+				sbox_outs[8][32-5], sbox_outs[8][32-18], sbox_outs[8][32-31], sbox_outs[8][32-10],
+				sbox_outs[8][32-2], sbox_outs[8][32-8], sbox_outs[8][32-24], sbox_outs[8][32-14],
+				sbox_outs[8][32-32], sbox_outs[8][32-27], sbox_outs[8][32-3], sbox_outs[8][32-9],
+				sbox_outs[8][32-19], sbox_outs[8][32-13], sbox_outs[8][32-30], sbox_outs[8][32-6],
+				sbox_outs[8][32-22], sbox_outs[8][32-11], sbox_outs[8][32-4], sbox_outs[8][32-25]};
+				
+	 right_boxed[8] = left_boxed[7]^f[8];
+	 
+	 // ****************************************************************************************
+	 
+	 // Iteration 9:
+	 left_boxed[9] = right_boxed[8];
+	 
+	 e_transform[9] = {right_boxed[8][32-32], right_boxed[8][32-1],  right_boxed[8][32-2],  right_boxed[8][32-3],  right_boxed[8][32-4],  right_boxed[8][32-5],
+                      right_boxed[8][32-4],  right_boxed[8][32-5],  right_boxed[8][32-6],  right_boxed[8][32-7],  right_boxed[8][32-8],  right_boxed[8][32-9],
+                      right_boxed[8][32-8],  right_boxed[8][32-9],  right_boxed[8][32-10], right_boxed[8][32-11], right_boxed[8][32-12], right_boxed[8][32-13],
+                      right_boxed[8][32-12], right_boxed[8][32-13], right_boxed[8][32-14], right_boxed[8][32-15], right_boxed[8][32-16], right_boxed[8][32-17],
+                      right_boxed[8][32-16], right_boxed[8][32-17], right_boxed[8][32-18], right_boxed[8][32-19], right_boxed[8][32-20], right_boxed[8][32-21],
+                      right_boxed[8][32-20], right_boxed[8][32-21], right_boxed[8][32-22], right_boxed[8][32-23], right_boxed[8][32-24], right_boxed[8][32-25],
+                      right_boxed[8][32-24], right_boxed[8][32-25], right_boxed[8][32-26], right_boxed[8][32-27], right_boxed[8][32-28], right_boxed[8][32-29],
+                      right_boxed[8][32-28], right_boxed[8][32-29], right_boxed[8][32-30], right_boxed[8][32-31], right_boxed[8][32-32], right_boxed[8][32-1]};
+	  
+	 keyXetran[9] = e_transform[9]^permutes[9];
+	 
+	 // s-box-1
+	 row[0] = {keyXetran[9][47], keyXetran[9][42]};
+	 column[0] = keyXetran[9][46:43];
+	 sbox_outs[9][31:28] = s_box[0][row[0]][8'd63 - column[0] * 4'd4 -: 4];
+			
+	 // s-box-2
+	 row[1] = {keyXetran[9][41], keyXetran[9][36]};
+	 column[1] = keyXetran[9][40:37];
+	 sbox_outs[9][27:24] = s_box[1][row[1]][63 - column[1] * 4 -: 4];
+			
+	 // s-box-3
+	 row[2] = {keyXetran[9][35], keyXetran[9][30]};
+	 column[2] = keyXetran[9][34:31];
+	 sbox_outs[9][23:20] = s_box[2][row[2]][63 - column[2] * 4 -: 4];
+			
+	 // s-box-4
+	 row[3] = {keyXetran[9][29], keyXetran[9][24]};
+	 column[3] = keyXetran[9][28:25];
+	 sbox_outs[9][19:16] = s_box[3][row[3]][63 - column[3] * 4 -: 4];
+			
+	 // s-box-5
+	 row[4] = {keyXetran[9][23], keyXetran[9][18]};
+	 column[4] = keyXetran[9][22:19];
+	 sbox_outs[9][15:12] = s_box[4][row[4]][63 - column[4] * 4 -: 4];
+			
+	 // s-box-6
+	 row[5] = {keyXetran[9][17], keyXetran[9][12]};
+	 column[5] = keyXetran[9][16:13];
+	 sbox_outs[9][11:8] = s_box[5][row[5]][63 - column[5] * 4 -: 4];
+			
+	 // s-box-7
+	 row[6] = {keyXetran[9][11], keyXetran[9][6]};
+	 column[6] = keyXetran[9][10:7];
+	 sbox_outs[9][7:4] = s_box[6][row[6]][63 - column[6] * 4 -: 4];
+			
+	 // s-box-8
+	 row[7] = {keyXetran[9][5], keyXetran[9][0]};
+	 column[7] = keyXetran[9][4:1];
+	 sbox_outs[9][3:0] = s_box[7][row[7]][63 - column[7] * 4 -: 4];
+	 
+	 f[9] = {sbox_outs[9][32-16], sbox_outs[9][32-7], sbox_outs[9][32-20], sbox_outs[9][32-21],
+				sbox_outs[9][32-29], sbox_outs[9][32-12], sbox_outs[9][32-28], sbox_outs[9][32-17],
+				sbox_outs[9][32-1], sbox_outs[9][32-15], sbox_outs[9][32-23], sbox_outs[9][32-26],
+				sbox_outs[9][32-5], sbox_outs[9][32-18], sbox_outs[9][32-31], sbox_outs[9][32-10],
+				sbox_outs[9][32-2], sbox_outs[9][32-8], sbox_outs[9][32-24], sbox_outs[9][32-14],
+				sbox_outs[9][32-32], sbox_outs[9][32-27], sbox_outs[9][32-3], sbox_outs[9][32-9],
+				sbox_outs[9][32-19], sbox_outs[9][32-13], sbox_outs[9][32-30], sbox_outs[9][32-6],
+				sbox_outs[9][32-22], sbox_outs[9][32-11], sbox_outs[9][32-4], sbox_outs[9][32-25]};
+				
+	 right_boxed[9] = left_boxed[8]^f[9];
+	 
+	 // ****************************************************************************************
+	 
+	 // Iteration 10:
+	 left_boxed[10] = right_boxed[9];
+	 
+	 e_transform[10] = {right_boxed[9][32-32], right_boxed[9][32-1],  right_boxed[9][32-2],  right_boxed[9][32-3],  right_boxed[9][32-4],  right_boxed[9][32-5],
+                       right_boxed[9][32-4],  right_boxed[9][32-5],  right_boxed[9][32-6],  right_boxed[9][32-7],  right_boxed[9][32-8],  right_boxed[9][32-9],
+                       right_boxed[9][32-8],  right_boxed[9][32-9],  right_boxed[9][32-10], right_boxed[9][32-11], right_boxed[9][32-12], right_boxed[9][32-13],
+                       right_boxed[9][32-12], right_boxed[9][32-13], right_boxed[9][32-14], right_boxed[9][32-15], right_boxed[9][32-16], right_boxed[9][32-17],
+                       right_boxed[9][32-16], right_boxed[9][32-17], right_boxed[9][32-18], right_boxed[9][32-19], right_boxed[9][32-20], right_boxed[9][32-21],
+                       right_boxed[9][32-20], right_boxed[9][32-21], right_boxed[9][32-22], right_boxed[9][32-23], right_boxed[9][32-24], right_boxed[9][32-25],
+                       right_boxed[9][32-24], right_boxed[9][32-25], right_boxed[9][32-26], right_boxed[9][32-27], right_boxed[9][32-28], right_boxed[9][32-29],
+                       right_boxed[9][32-28], right_boxed[9][32-29], right_boxed[9][32-30], right_boxed[9][32-31], right_boxed[9][32-32], right_boxed[9][32-1]};
+	  
+	 keyXetran[10] = e_transform[10]^permutes[10];
+	 
+	 // s-box-1
+	 row[0] = {keyXetran[10][47], keyXetran[10][42]};
+	 column[0] = keyXetran[10][46:43];
+	 sbox_outs[10][31:28] = s_box[0][row[0]][8'd63 - column[0] * 4'd4 -: 4];
+			
+	 // s-box-2
+	 row[1] = {keyXetran[10][41], keyXetran[10][36]};
+	 column[1] = keyXetran[10][40:37];
+	 sbox_outs[10][27:24] = s_box[1][row[1]][63 - column[1] * 4 -: 4];
+			
+	 // s-box-3
+	 row[2] = {keyXetran[10][35], keyXetran[10][30]};
+	 column[2] = keyXetran[10][34:31];
+	 sbox_outs[10][23:20] = s_box[2][row[2]][63 - column[2] * 4 -: 4];
+			
+	 // s-box-4
+	 row[3] = {keyXetran[10][29], keyXetran[10][24]};
+	 column[3] = keyXetran[10][28:25];
+	 sbox_outs[10][19:16] = s_box[3][row[3]][63 - column[3] * 4 -: 4];
+			
+	 // s-box-5
+	 row[4] = {keyXetran[10][23], keyXetran[10][18]};
+	 column[4] = keyXetran[10][22:19];
+	 sbox_outs[10][15:12] = s_box[4][row[4]][63 - column[4] * 4 -: 4];
+			
+	 // s-box-6
+	 row[5] = {keyXetran[10][17], keyXetran[10][12]};
+	 column[5] = keyXetran[10][16:13];
+	 sbox_outs[10][11:8] = s_box[5][row[5]][63 - column[5] * 4 -: 4];
+			
+	 // s-box-7
+	 row[6] = {keyXetran[10][11], keyXetran[10][6]};
+	 column[6] = keyXetran[10][10:7];
+	 sbox_outs[10][7:4] = s_box[6][row[6]][63 - column[6] * 4 -: 4];
+			
+	 // s-box-8
+	 row[7] = {keyXetran[10][5], keyXetran[10][0]};
+	 column[7] = keyXetran[10][4:1];
+	 sbox_outs[10][3:0] = s_box[7][row[7]][63 - column[7] * 4 -: 4];
+	 
+	 f[10] = {sbox_outs[10][32-16], sbox_outs[10][32-7], sbox_outs[10][32-20], sbox_outs[10][32-21],
+				 sbox_outs[10][32-29], sbox_outs[10][32-12], sbox_outs[10][32-28], sbox_outs[10][32-17],
+				 sbox_outs[10][32-1], sbox_outs[10][32-15], sbox_outs[10][32-23], sbox_outs[10][32-26],
+				 sbox_outs[10][32-5], sbox_outs[10][32-18], sbox_outs[10][32-31], sbox_outs[10][32-10],
+				 sbox_outs[10][32-2], sbox_outs[10][32-8], sbox_outs[10][32-24], sbox_outs[10][32-14],
+				 sbox_outs[10][32-32], sbox_outs[10][32-27], sbox_outs[10][32-3], sbox_outs[10][32-9],
+				 sbox_outs[10][32-19], sbox_outs[10][32-13], sbox_outs[10][32-30], sbox_outs[10][32-6],
+				 sbox_outs[10][32-22], sbox_outs[10][32-11], sbox_outs[10][32-4], sbox_outs[10][32-25]};
+				
+	 right_boxed[10] = left_boxed[9]^f[10];
+	 
+	 // ****************************************************************************************
+	 
+	 // Iteration 11:
+	 left_boxed[11] = right_boxed[10];
+	 
+	 e_transform[11] = {right_boxed[10][32-32], right_boxed[10][32-1],  right_boxed[10][32-2],  right_boxed[10][32-3],  right_boxed[10][32-4],  right_boxed[10][32-5],
+                       right_boxed[10][32-4],  right_boxed[10][32-5],  right_boxed[10][32-6],  right_boxed[10][32-7],  right_boxed[10][32-8],  right_boxed[10][32-9],
+                       right_boxed[10][32-8],  right_boxed[10][32-9],  right_boxed[10][32-10], right_boxed[10][32-11], right_boxed[10][32-12], right_boxed[10][32-13],
+                       right_boxed[10][32-12], right_boxed[10][32-13], right_boxed[10][32-14], right_boxed[10][32-15], right_boxed[10][32-16], right_boxed[10][32-17],
+                       right_boxed[10][32-16], right_boxed[10][32-17], right_boxed[10][32-18], right_boxed[10][32-19], right_boxed[10][32-20], right_boxed[10][32-21],
+                       right_boxed[10][32-20], right_boxed[10][32-21], right_boxed[10][32-22], right_boxed[10][32-23], right_boxed[10][32-24], right_boxed[10][32-25],
+                       right_boxed[10][32-24], right_boxed[10][32-25], right_boxed[10][32-26], right_boxed[10][32-27], right_boxed[10][32-28], right_boxed[10][32-29],
+                       right_boxed[10][32-28], right_boxed[10][32-29], right_boxed[10][32-30], right_boxed[10][32-31], right_boxed[10][32-32], right_boxed[10][32-1]};
+	  
+	 keyXetran[11] = e_transform[11]^permutes[11];
+	 
+	 // s-box-1
+	 row[0] = {keyXetran[11][47], keyXetran[11][42]};
+	 column[0] = keyXetran[11][46:43];
+	 sbox_outs[11][31:28] = s_box[0][row[0]][8'd63 - column[0] * 4'd4 -: 4];
+			
+	 // s-box-2
+	 row[1] = {keyXetran[11][41], keyXetran[11][36]};
+	 column[1] = keyXetran[11][40:37];
+	 sbox_outs[11][27:24] = s_box[1][row[1]][63 - column[1] * 4 -: 4];
+			
+	 // s-box-3
+	 row[2] = {keyXetran[11][35], keyXetran[11][30]};
+	 column[2] = keyXetran[11][34:31];
+	 sbox_outs[11][23:20] = s_box[2][row[2]][63 - column[2] * 4 -: 4];
+			
+	 // s-box-4
+	 row[3] = {keyXetran[11][29], keyXetran[11][24]};
+	 column[3] = keyXetran[11][28:25];
+	 sbox_outs[11][19:16] = s_box[3][row[3]][63 - column[3] * 4 -: 4];
+			
+	 // s-box-5
+	 row[4] = {keyXetran[11][23], keyXetran[11][18]};
+	 column[4] = keyXetran[11][22:19];
+	 sbox_outs[11][15:12] = s_box[4][row[4]][63 - column[4] * 4 -: 4];
+			
+	 // s-box-6
+	 row[5] = {keyXetran[11][17], keyXetran[11][12]};
+	 column[5] = keyXetran[11][16:13];
+	 sbox_outs[11][11:8] = s_box[5][row[5]][63 - column[5] * 4 -: 4];
+			
+	 // s-box-7
+	 row[6] = {keyXetran[11][11], keyXetran[11][6]};
+	 column[6] = keyXetran[11][10:7];
+	 sbox_outs[11][7:4] = s_box[6][row[6]][63 - column[6] * 4 -: 4];
+			
+	 // s-box-8
+	 row[7] = {keyXetran[11][5], keyXetran[11][0]};
+	 column[7] = keyXetran[11][4:1];
+	 sbox_outs[11][3:0] = s_box[7][row[7]][63 - column[7] * 4 -: 4];
+	 
+	 f[11] = {sbox_outs[11][32-16], sbox_outs[11][32-7], sbox_outs[11][32-20], sbox_outs[11][32-21],
+				 sbox_outs[11][32-29], sbox_outs[11][32-12], sbox_outs[11][32-28], sbox_outs[11][32-17],
+				 sbox_outs[11][32-1], sbox_outs[11][32-15], sbox_outs[11][32-23], sbox_outs[11][32-26],
+				 sbox_outs[11][32-5], sbox_outs[11][32-18], sbox_outs[11][32-31], sbox_outs[11][32-10],
+				 sbox_outs[11][32-2], sbox_outs[11][32-8], sbox_outs[11][32-24], sbox_outs[11][32-14],
+				 sbox_outs[11][32-32], sbox_outs[11][32-27], sbox_outs[11][32-3], sbox_outs[11][32-9],
+				 sbox_outs[11][32-19], sbox_outs[11][32-13], sbox_outs[11][32-30], sbox_outs[11][32-6],
+				 sbox_outs[11][32-22], sbox_outs[11][32-11], sbox_outs[11][32-4], sbox_outs[11][32-25]};
+				
+	 right_boxed[11] = left_boxed[10]^f[11];
+	 
+	 // ****************************************************************************************
+	 
+	 // Iteration 12:
+	 left_boxed[12] = right_boxed[11];
+	 
+	 e_transform[12] = {right_boxed[11][32-32], right_boxed[11][32-1],  right_boxed[11][32-2],  right_boxed[11][32-3],  right_boxed[11][32-4],  right_boxed[11][32-5],
+                       right_boxed[11][32-4],  right_boxed[11][32-5],  right_boxed[11][32-6],  right_boxed[11][32-7],  right_boxed[11][32-8],  right_boxed[11][32-9],
+                       right_boxed[11][32-8],  right_boxed[11][32-9],  right_boxed[11][32-10], right_boxed[11][32-11], right_boxed[11][32-12], right_boxed[11][32-13],
+                       right_boxed[11][32-12], right_boxed[11][32-13], right_boxed[11][32-14], right_boxed[11][32-15], right_boxed[11][32-16], right_boxed[11][32-17],
+                       right_boxed[11][32-16], right_boxed[11][32-17], right_boxed[11][32-18], right_boxed[11][32-19], right_boxed[11][32-20], right_boxed[11][32-21],
+                       right_boxed[11][32-20], right_boxed[11][32-21], right_boxed[11][32-22], right_boxed[11][32-23], right_boxed[11][32-24], right_boxed[11][32-25],
+                       right_boxed[11][32-24], right_boxed[11][32-25], right_boxed[11][32-26], right_boxed[11][32-27], right_boxed[11][32-28], right_boxed[11][32-29],
+                       right_boxed[11][32-28], right_boxed[11][32-29], right_boxed[11][32-30], right_boxed[11][32-31], right_boxed[11][32-32], right_boxed[11][32-1]};
+	  
+	 keyXetran[12] = e_transform[12]^permutes[12];
+	 
+	 // s-box-1
+	 row[0] = {keyXetran[12][47], keyXetran[12][42]};
+	 column[0] = keyXetran[12][46:43];
+	 sbox_outs[12][31:28] = s_box[0][row[0]][8'd63 - column[0] * 4'd4 -: 4];
+			
+	 // s-box-2
+	 row[1] = {keyXetran[12][41], keyXetran[12][36]};
+	 column[1] = keyXetran[12][40:37];
+	 sbox_outs[12][27:24] = s_box[1][row[1]][63 - column[1] * 4 -: 4];
+			
+	 // s-box-3
+	 row[2] = {keyXetran[12][35], keyXetran[12][30]};
+	 column[2] = keyXetran[12][34:31];
+	 sbox_outs[12][23:20] = s_box[2][row[2]][63 - column[2] * 4 -: 4];
+			
+	 // s-box-4
+	 row[3] = {keyXetran[12][29], keyXetran[12][24]};
+	 column[3] = keyXetran[12][28:25];
+	 sbox_outs[12][19:16] = s_box[3][row[3]][63 - column[3] * 4 -: 4];
+			
+	 // s-box-5
+	 row[4] = {keyXetran[12][23], keyXetran[12][18]};
+	 column[4] = keyXetran[12][22:19];
+	 sbox_outs[12][15:12] = s_box[4][row[4]][63 - column[4] * 4 -: 4];
+			
+	 // s-box-6
+	 row[5] = {keyXetran[12][17], keyXetran[12][12]};
+	 column[5] = keyXetran[12][16:13];
+	 sbox_outs[12][11:8] = s_box[5][row[5]][63 - column[5] * 4 -: 4];
+			
+	 // s-box-7
+	 row[6] = {keyXetran[12][11], keyXetran[12][6]};
+	 column[6] = keyXetran[12][10:7];
+	 sbox_outs[12][7:4] = s_box[6][row[6]][63 - column[6] * 4 -: 4];
+			
+	 // s-box-8
+	 row[7] = {keyXetran[12][5], keyXetran[12][0]};
+	 column[7] = keyXetran[12][4:1];
+	 sbox_outs[12][3:0] = s_box[7][row[7]][63 - column[7] * 4 -: 4];
+	 
+	 f[12] = {sbox_outs[12][32-16], sbox_outs[12][32-7], sbox_outs[12][32-20], sbox_outs[12][32-21],
+				 sbox_outs[12][32-29], sbox_outs[12][32-12], sbox_outs[12][32-28], sbox_outs[12][32-17],
+				 sbox_outs[12][32-1], sbox_outs[12][32-15], sbox_outs[12][32-23], sbox_outs[12][32-26],
+				 sbox_outs[12][32-5], sbox_outs[12][32-18], sbox_outs[12][32-31], sbox_outs[12][32-10],
+				 sbox_outs[12][32-2], sbox_outs[12][32-8], sbox_outs[12][32-24], sbox_outs[12][32-14],
+				 sbox_outs[12][32-32], sbox_outs[12][32-27], sbox_outs[12][32-3], sbox_outs[12][32-9],
+				 sbox_outs[12][32-19], sbox_outs[12][32-13], sbox_outs[12][32-30], sbox_outs[12][32-6],
+				 sbox_outs[12][32-22], sbox_outs[12][32-11], sbox_outs[12][32-4], sbox_outs[12][32-25]};
+				
+	 right_boxed[12] = left_boxed[11]^f[12];
+	 
+	 // ****************************************************************************************
+	 
+	 // Iteration 13:
+	 left_boxed[13] = right_boxed[12];
+	 
+	 e_transform[13] = {right_boxed[12][32-32], right_boxed[12][32-1],  right_boxed[12][32-2],  right_boxed[12][32-3],  right_boxed[12][32-4],  right_boxed[12][32-5],
+                       right_boxed[12][32-4],  right_boxed[12][32-5],  right_boxed[12][32-6],  right_boxed[12][32-7],  right_boxed[12][32-8],  right_boxed[12][32-9],
+                       right_boxed[12][32-8],  right_boxed[12][32-9],  right_boxed[12][32-10], right_boxed[12][32-11], right_boxed[12][32-12], right_boxed[12][32-13],
+                       right_boxed[12][32-12], right_boxed[12][32-13], right_boxed[12][32-14], right_boxed[12][32-15], right_boxed[12][32-16], right_boxed[12][32-17],
+                       right_boxed[12][32-16], right_boxed[12][32-17], right_boxed[12][32-18], right_boxed[12][32-19], right_boxed[12][32-20], right_boxed[12][32-21],
+                       right_boxed[12][32-20], right_boxed[12][32-21], right_boxed[12][32-22], right_boxed[12][32-23], right_boxed[12][32-24], right_boxed[12][32-25],
+                       right_boxed[12][32-24], right_boxed[12][32-25], right_boxed[12][32-26], right_boxed[12][32-27], right_boxed[12][32-28], right_boxed[12][32-29],
+                       right_boxed[12][32-28], right_boxed[12][32-29], right_boxed[12][32-30], right_boxed[12][32-31], right_boxed[12][32-32], right_boxed[12][32-1]};
+	  
+	 keyXetran[13] = e_transform[13]^permutes[13];
+	 
+	 // s-box-1
+	 row[0] = {keyXetran[13][47], keyXetran[13][42]};
+	 column[0] = keyXetran[13][46:43];
+	 sbox_outs[13][31:28] = s_box[0][row[0]][8'd63 - column[0] * 4'd4 -: 4];
+			
+	 // s-box-2
+	 row[1] = {keyXetran[13][41], keyXetran[13][36]};
+	 column[1] = keyXetran[13][40:37];
+	 sbox_outs[13][27:24] = s_box[1][row[1]][63 - column[1] * 4 -: 4];
+			
+	 // s-box-3
+	 row[2] = {keyXetran[13][35], keyXetran[13][30]};
+	 column[2] = keyXetran[13][34:31];
+	 sbox_outs[13][23:20] = s_box[2][row[2]][63 - column[2] * 4 -: 4];
+			
+	 // s-box-4
+	 row[3] = {keyXetran[13][29], keyXetran[13][24]};
+	 column[3] = keyXetran[13][28:25];
+	 sbox_outs[13][19:16] = s_box[3][row[3]][63 - column[3] * 4 -: 4];
+			
+	 // s-box-5
+	 row[4] = {keyXetran[13][23], keyXetran[13][18]};
+	 column[4] = keyXetran[13][22:19];
+	 sbox_outs[13][15:12] = s_box[4][row[4]][63 - column[4] * 4 -: 4];
+			
+	 // s-box-6
+	 row[5] = {keyXetran[13][17], keyXetran[13][12]};
+	 column[5] = keyXetran[13][16:13];
+	 sbox_outs[13][11:8] = s_box[5][row[5]][63 - column[5] * 4 -: 4];
+			
+	 // s-box-7
+	 row[6] = {keyXetran[13][11], keyXetran[13][6]};
+	 column[6] = keyXetran[13][10:7];
+	 sbox_outs[13][7:4] = s_box[6][row[6]][63 - column[6] * 4 -: 4];
+			
+	 // s-box-8
+	 row[7] = {keyXetran[13][5], keyXetran[13][0]};
+	 column[7] = keyXetran[13][4:1];
+	 sbox_outs[13][3:0] = s_box[7][row[7]][63 - column[7] * 4 -: 4];
+	 
+	 f[13] = {sbox_outs[13][32-16], sbox_outs[13][32-7], sbox_outs[13][32-20], sbox_outs[13][32-21],
+				 sbox_outs[13][32-29], sbox_outs[13][32-12], sbox_outs[13][32-28], sbox_outs[13][32-17],
+				 sbox_outs[13][32-1], sbox_outs[13][32-15], sbox_outs[13][32-23], sbox_outs[13][32-26],
+				 sbox_outs[13][32-5], sbox_outs[13][32-18], sbox_outs[13][32-31], sbox_outs[13][32-10],
+				 sbox_outs[13][32-2], sbox_outs[13][32-8], sbox_outs[13][32-24], sbox_outs[13][32-14],
+				 sbox_outs[13][32-32], sbox_outs[13][32-27], sbox_outs[13][32-3], sbox_outs[13][32-9],
+				 sbox_outs[13][32-19], sbox_outs[13][32-13], sbox_outs[13][32-30], sbox_outs[13][32-6],
+				 sbox_outs[13][32-22], sbox_outs[13][32-11], sbox_outs[13][32-4], sbox_outs[13][32-25]};
+				
+	 right_boxed[13] = left_boxed[12]^f[13];
+	 
+	 // ****************************************************************************************
+	 
+	 // Iteration 14:
+	 left_boxed[14] = right_boxed[13];
+	 
+	 e_transform[14] = {right_boxed[13][32-32], right_boxed[13][32-1],  right_boxed[13][32-2],  right_boxed[13][32-3],  right_boxed[13][32-4],  right_boxed[13][32-5],
+                       right_boxed[13][32-4],  right_boxed[13][32-5],  right_boxed[13][32-6],  right_boxed[13][32-7],  right_boxed[13][32-8],  right_boxed[13][32-9],
+                       right_boxed[13][32-8],  right_boxed[13][32-9],  right_boxed[13][32-10], right_boxed[13][32-11], right_boxed[13][32-12], right_boxed[13][32-13],
+                       right_boxed[13][32-12], right_boxed[13][32-13], right_boxed[13][32-14], right_boxed[13][32-15], right_boxed[13][32-16], right_boxed[13][32-17],
+                       right_boxed[13][32-16], right_boxed[13][32-17], right_boxed[13][32-18], right_boxed[13][32-19], right_boxed[13][32-20], right_boxed[13][32-21],
+                       right_boxed[13][32-20], right_boxed[13][32-21], right_boxed[13][32-22], right_boxed[13][32-23], right_boxed[13][32-24], right_boxed[13][32-25],
+                       right_boxed[13][32-24], right_boxed[13][32-25], right_boxed[13][32-26], right_boxed[13][32-27], right_boxed[13][32-28], right_boxed[13][32-29],
+                       right_boxed[13][32-28], right_boxed[13][32-29], right_boxed[13][32-30], right_boxed[13][32-31], right_boxed[13][32-32], right_boxed[13][32-1]};
+	  
+	 keyXetran[14] = e_transform[14]^permutes[14];
+	 
+	 // s-box-1
+	 row[0] = {keyXetran[14][47], keyXetran[14][42]};
+	 column[0] = keyXetran[14][46:43];
+	 sbox_outs[14][31:28] = s_box[0][row[0]][8'd63 - column[0] * 4'd4 -: 4];
+			
+	 // s-box-2
+	 row[1] = {keyXetran[14][41], keyXetran[14][36]};
+	 column[1] = keyXetran[14][40:37];
+	 sbox_outs[14][27:24] = s_box[1][row[1]][63 - column[1] * 4 -: 4];
+			
+	 // s-box-3
+	 row[2] = {keyXetran[14][35], keyXetran[14][30]};
+	 column[2] = keyXetran[14][34:31];
+	 sbox_outs[14][23:20] = s_box[2][row[2]][63 - column[2] * 4 -: 4];
+			
+	 // s-box-4
+	 row[3] = {keyXetran[14][29], keyXetran[14][24]};
+	 column[3] = keyXetran[14][28:25];
+	 sbox_outs[14][19:16] = s_box[3][row[3]][63 - column[3] * 4 -: 4];
+			
+	 // s-box-5
+	 row[4] = {keyXetran[14][23], keyXetran[14][18]};
+	 column[4] = keyXetran[14][22:19];
+	 sbox_outs[14][15:12] = s_box[4][row[4]][63 - column[4] * 4 -: 4];
+			
+	 // s-box-6
+	 row[5] = {keyXetran[14][17], keyXetran[14][12]};
+	 column[5] = keyXetran[14][16:13];
+	 sbox_outs[14][11:8] = s_box[5][row[5]][63 - column[5] * 4 -: 4];
+			
+	 // s-box-7
+	 row[6] = {keyXetran[14][11], keyXetran[14][6]};
+	 column[6] = keyXetran[14][10:7];
+	 sbox_outs[14][7:4] = s_box[6][row[6]][63 - column[6] * 4 -: 4];
+			
+	 // s-box-8
+	 row[7] = {keyXetran[14][5], keyXetran[14][0]};
+	 column[7] = keyXetran[14][4:1];
+	 sbox_outs[14][3:0] = s_box[7][row[7]][63 - column[7] * 4 -: 4];
+	 
+	 f[14] = {sbox_outs[14][32-16], sbox_outs[14][32-7], sbox_outs[14][32-20], sbox_outs[14][32-21],
+				 sbox_outs[14][32-29], sbox_outs[14][32-12], sbox_outs[14][32-28], sbox_outs[14][32-17],
+				 sbox_outs[14][32-1], sbox_outs[14][32-15], sbox_outs[14][32-23], sbox_outs[14][32-26],
+				 sbox_outs[14][32-5], sbox_outs[14][32-18], sbox_outs[14][32-31], sbox_outs[14][32-10],
+				 sbox_outs[14][32-2], sbox_outs[14][32-8], sbox_outs[14][32-24], sbox_outs[14][32-14],
+				 sbox_outs[14][32-32], sbox_outs[14][32-27], sbox_outs[14][32-3], sbox_outs[14][32-9],
+				 sbox_outs[14][32-19], sbox_outs[14][32-13], sbox_outs[14][32-30], sbox_outs[14][32-6],
+				 sbox_outs[14][32-22], sbox_outs[14][32-11], sbox_outs[14][32-4], sbox_outs[14][32-25]};
+				
+	 right_boxed[14] = left_boxed[13]^f[14];
+	 
+	 // ****************************************************************************************
+	 
+	 // Iteration 15:
+	 left_boxed[15] = right_boxed[14];
+	 
+	 e_transform[15] = {right_boxed[14][32-32], right_boxed[14][32-1],  right_boxed[14][32-2],  right_boxed[14][32-3],  right_boxed[14][32-4],  right_boxed[14][32-5],
+                       right_boxed[14][32-4],  right_boxed[14][32-5],  right_boxed[14][32-6],  right_boxed[14][32-7],  right_boxed[14][32-8],  right_boxed[14][32-9],
+                       right_boxed[14][32-8],  right_boxed[14][32-9],  right_boxed[14][32-10], right_boxed[14][32-11], right_boxed[14][32-12], right_boxed[14][32-13],
+                       right_boxed[14][32-12], right_boxed[14][32-13], right_boxed[14][32-14], right_boxed[14][32-15], right_boxed[14][32-16], right_boxed[14][32-17],
+                       right_boxed[14][32-16], right_boxed[14][32-17], right_boxed[14][32-18], right_boxed[14][32-19], right_boxed[14][32-20], right_boxed[14][32-21],
+                       right_boxed[14][32-20], right_boxed[14][32-21], right_boxed[14][32-22], right_boxed[14][32-23], right_boxed[14][32-24], right_boxed[14][32-25],
+                       right_boxed[14][32-24], right_boxed[14][32-25], right_boxed[14][32-26], right_boxed[14][32-27], right_boxed[14][32-28], right_boxed[14][32-29],
+                       right_boxed[14][32-28], right_boxed[14][32-29], right_boxed[14][32-30], right_boxed[14][32-31], right_boxed[14][32-32], right_boxed[14][32-1]};
+	  
+	 keyXetran[15] = e_transform[15]^permutes[15];
+	 
+	 // s-box-1
+	 row[0] = {keyXetran[15][47], keyXetran[15][42]};
+	 column[0] = keyXetran[15][46:43];
+	 sbox_outs[15][31:28] = s_box[0][row[0]][63 - column[0] * 4'd4 -: 4];
+			
+	 // s-box-2
+	 row[1] = {keyXetran[15][41], keyXetran[15][36]};
+	 column[1] = keyXetran[15][40:37];
+	 sbox_outs[15][27:24] = s_box[1][row[1]][63 - column[1] * 4 -: 4];
+			
+	 // s-box-3
+	 row[2] = {keyXetran[15][35], keyXetran[15][30]};
+	 column[2] = keyXetran[15][34:31];
+	 sbox_outs[15][23:20] = s_box[2][row[2]][63 - column[2] * 4 -: 4];
+			
+	 // s-box-4
+	 row[3] = {keyXetran[15][29], keyXetran[15][24]};
+	 column[3] = keyXetran[15][28:25];
+	 sbox_outs[15][19:16] = s_box[3][row[3]][63 - column[3] * 4 -: 4];
+			
+	 // s-box-5
+	 row[4] = {keyXetran[15][23], keyXetran[15][18]};
+	 column[4] = keyXetran[15][22:19];
+	 sbox_outs[15][15:12] = s_box[4][row[4]][63 - column[4] * 4 -: 4];
+			
+	 // s-box-6
+	 row[5] = {keyXetran[15][17], keyXetran[15][12]};
+	 column[5] = keyXetran[15][16:13];
+	 sbox_outs[15][11:8] = s_box[5][row[5]][63 - column[5] * 4 -: 4];
+			
+	 // s-box-7
+	 row[6] = {keyXetran[15][11], keyXetran[15][6]};
+	 column[6] = keyXetran[15][10:7];
+	 sbox_outs[15][7:4] = s_box[6][row[6]][63 - column[6] * 4 -: 4];
+			
+	 // s-box-8
+	 row[7] = {keyXetran[15][5], keyXetran[15][0]};
+	 column[7] = keyXetran[15][4:1];
+	 sbox_outs[15][3:0] = s_box[7][row[7]][63 - column[7] * 4 -: 4];
+	 
+	 f[15] = {sbox_outs[15][32-16], sbox_outs[15][32-7], sbox_outs[15][32-20], sbox_outs[15][32-21],
+				 sbox_outs[15][32-29], sbox_outs[15][32-12], sbox_outs[15][32-28], sbox_outs[15][32-17],
+				 sbox_outs[15][32-1], sbox_outs[15][32-15], sbox_outs[15][32-23], sbox_outs[15][32-26],
+				 sbox_outs[15][32-5], sbox_outs[15][32-18], sbox_outs[15][32-31], sbox_outs[15][32-10],
+				 sbox_outs[15][32-2], sbox_outs[15][32-8], sbox_outs[15][32-24], sbox_outs[15][32-14],
+				 sbox_outs[15][32-32], sbox_outs[15][32-27], sbox_outs[15][32-3], sbox_outs[15][32-9],
+				 sbox_outs[15][32-19], sbox_outs[15][32-13], sbox_outs[15][32-30], sbox_outs[15][32-6],
+				 sbox_outs[15][32-22], sbox_outs[15][32-11], sbox_outs[15][32-4], sbox_outs[15][32-25]};
+				
+	 right_boxed[15] = left_boxed[14]^f[15];
+	 
+	 // ****************************************************************************************
+	 
+	 // Iteration 16:
+	 left_boxed[16] = right_boxed[15];
+	 
+	 e_transform[16] = {right_boxed[15][32-32], right_boxed[15][32-1],  right_boxed[15][32-2],  right_boxed[15][32-3],  right_boxed[15][32-4],  right_boxed[15][32-5],
+                       right_boxed[15][32-4],  right_boxed[15][32-5],  right_boxed[15][32-6],  right_boxed[15][32-7],  right_boxed[15][32-8],  right_boxed[15][32-9],
+                       right_boxed[15][32-8],  right_boxed[15][32-9],  right_boxed[15][32-10], right_boxed[15][32-11], right_boxed[15][32-12], right_boxed[15][32-13],
+                       right_boxed[15][32-12], right_boxed[15][32-13], right_boxed[15][32-14], right_boxed[15][32-15], right_boxed[15][32-16], right_boxed[15][32-17],
+                       right_boxed[15][32-16], right_boxed[15][32-17], right_boxed[15][32-18], right_boxed[15][32-19], right_boxed[15][32-20], right_boxed[15][32-21],
+                       right_boxed[15][32-20], right_boxed[15][32-21], right_boxed[15][32-22], right_boxed[15][32-23], right_boxed[15][32-24], right_boxed[15][32-25],
+                       right_boxed[15][32-24], right_boxed[15][32-25], right_boxed[15][32-26], right_boxed[15][32-27], right_boxed[15][32-28], right_boxed[15][32-29],
+                       right_boxed[15][32-28], right_boxed[15][32-29], right_boxed[15][32-30], right_boxed[15][32-31], right_boxed[15][32-32], right_boxed[15][32-1]};
+	  
+	 keyXetran[16] = e_transform[16]^permutes[16];
+	 
+	 // s-box-1
+	 row[0] = {keyXetran[16][47], keyXetran[16][42]};
+	 column[0] = keyXetran[16][46:43];
+	 sbox_outs[16][31:28] = s_box[0][row[0]][8'd63 - column[0] * 4'd4 -: 4];
+			
+	 // s-box-2
+	 row[1] = {keyXetran[16][41], keyXetran[16][36]};
+	 column[1] = keyXetran[16][40:37];
+	 sbox_outs[16][27:24] = s_box[1][row[1]][63 - column[1] * 4 -: 4];
+			
+	 // s-box-3
+	 row[2] = {keyXetran[16][35], keyXetran[16][30]};
+	 column[2] = keyXetran[16][34:31];
+	 sbox_outs[16][23:20] = s_box[2][row[2]][63 - column[2] * 4 -: 4];
+			
+	 // s-box-4
+	 row[3] = {keyXetran[16][29], keyXetran[16][24]};
+	 column[3] = keyXetran[16][28:25];
+	 sbox_outs[16][19:16] = s_box[3][row[3]][63 - column[3] * 4 -: 4];
+			
+	 // s-box-5
+	 row[4] = {keyXetran[16][23], keyXetran[16][18]};
+	 column[4] = keyXetran[16][22:19];
+	 sbox_outs[16][15:12] = s_box[4][row[4]][63 - column[4] * 4 -: 4];
+			
+	 // s-box-6
+	 row[5] = {keyXetran[16][17], keyXetran[16][12]};
+	 column[5] = keyXetran[16][16:13];
+	 sbox_outs[16][11:8] = s_box[5][row[5]][63 - column[5] * 4 -: 4];
+			
+	 // s-box-7
+	 row[6] = {keyXetran[16][11], keyXetran[16][6]};
+	 column[6] = keyXetran[16][10:7];
+	 sbox_outs[16][7:4] = s_box[6][row[6]][63 - column[6] * 4 -: 4];
+			
+	 // s-box-8
+	 row[7] = {keyXetran[16][5], keyXetran[16][0]};
+	 column[7] = keyXetran[16][4:1];
+	 sbox_outs[16][3:0] = s_box[7][row[7]][63 - column[7] * 4 -: 4];
+	 
+	 f[16] = {sbox_outs[16][32-16], sbox_outs[16][32-7], sbox_outs[16][32-20], sbox_outs[16][32-21],
+				 sbox_outs[16][32-29], sbox_outs[16][32-12], sbox_outs[16][32-28], sbox_outs[16][32-17],
+				 sbox_outs[16][32-1], sbox_outs[16][32-15], sbox_outs[16][32-23], sbox_outs[16][32-26],
+				 sbox_outs[16][32-5], sbox_outs[16][32-18], sbox_outs[16][32-31], sbox_outs[16][32-10],
+				 sbox_outs[16][32-2], sbox_outs[16][32-8], sbox_outs[16][32-24], sbox_outs[16][32-14],
+				 sbox_outs[16][32-32], sbox_outs[16][32-27], sbox_outs[16][32-3], sbox_outs[16][32-9],
+				 sbox_outs[16][32-19], sbox_outs[16][32-13], sbox_outs[16][32-30], sbox_outs[16][32-6],
+				 sbox_outs[16][32-22], sbox_outs[16][32-11], sbox_outs[16][32-4], sbox_outs[16][32-25]};
+				
+	 right_boxed[16] = left_boxed[15]^f[16];
 
+	 // Temp output for testing:
+	 tempr = {right_boxed[16], left_boxed[16]};
+
+	 /*
 	for (i = 5'd1; i < 5'd17; i = i + 5'd1)
    begin
         left_boxed[i] = right_boxed[i - 1];
@@ -268,11 +1335,11 @@ begin
 			f[i] = {sbox_outs[i][32-16], sbox_outs[i][32-7], sbox_outs[i][32-20], sbox_outs[i][32-21],
 					  sbox_outs[i][32-29], sbox_outs[i][32-12], sbox_outs[i][32-28], sbox_outs[i][32-17],
 					  sbox_outs[i][32-1], sbox_outs[i][32-15], sbox_outs[i][32-23], sbox_outs[i][32-26],
-					  sbox_outs[i][32-5], sbox_outs[i][32-18], sbox_outs[i][32-31], sbox_outs[i][32-10],
-					  sbox_outs[i][32-2], sbox_outs[i][32-8], sbox_outs[i][32-24], sbox_outs[i][32-14],
-					  sbox_outs[i][32-32], sbox_outs[i][32-27], sbox_outs[i][32-3], sbox_outs[i][32-9],
-					  sbox_outs[i][32-19], sbox_outs[i][32-13], sbox_outs[i][32-30], sbox_outs[i][32-6],
-					  sbox_outs[i][32-22], sbox_outs[i][32-11], sbox_outs[i][32-4], sbox_outs[i][32-25]};
+					  sbox_outs[i][32-5], sbox_outs[i][32-18], sbox_outs[i][32-31], sbox_outs[i][32-10], //
+					  sbox_outs[i][32-2], sbox_outs[i][32-8], sbox_outs[i][32-24], sbox_outs[i][32-14], //
+					  sbox_outs[i][32-32], sbox_outs[i][32-27], sbox_outs[i][32-3], sbox_outs[i][32-9], //
+					  sbox_outs[i][32-19], sbox_outs[i][32-13], sbox_outs[i][32-30], sbox_outs[i][32-6], //
+					  sbox_outs[i][32-22], sbox_outs[i][32-11], sbox_outs[i][32-4], sbox_outs[i][32-25]}; //
 					  
 			right_boxed[i] = left_boxed[i - 1]^f[i];
 			
@@ -281,10 +1348,13 @@ begin
 		  
     end // end giant for loop
 	 
+	 */
+	 
 	 //00001010 01001100 11011001 10010101 01000011 01000010 00110010 00110100 --> EXPECTED
 	 //11101011 10101000 01000101 11001100 01110100 10111011 00001000 01100010 --> ACTUAL
 	 //EBA8					45CC					74BB					0862
 	 
+	 /*
 	 reversal = {right_boxed[16], left_boxed[16]};
 	 
 	 msg = {reversal[64-40], reversal[64-8], reversal[64-48], reversal[64-16], reversal[64-56], reversal[64-24], reversal[64-64], reversal[64-32],
@@ -298,145 +1368,8 @@ begin
 	 
 	 //tempr = {32'd0, sbox_outs[1]};
 	 
-	 
+	 */
 
 end
-
-// ****************************************************************************************************************************************************
-
-/*
-reg [3:0]S;
-reg [3:0]NS;
-
-reg [4:0]k;
-
-parameter START = 4'd0,
-			 FOR_INIT = 4'd1,
-			 FOR_COND = 4'd2,
-			 FOR_BODY = 4'd3,
-			 INCR = 4'd4,
-			 DONE = 4'd5,
-			 ERROR = 4'hF;
-
-// FSM init
-always @(posedge clk or negedge rst)
-begin
-	if (rst == 1'b0)
-		S = START;
-	else
-		S = NS;
-end
-
-// State transitions
-always @(*)
-begin
-	case(S)
-		START: NS = FOR_INIT;
-		FOR_INIT: NS = FOR_COND;
-		FOR_COND:
-		begin
-			if (k < 5'd17)
-				NS = FOR_BODY;
-			else
-				NS = DONE;
-		end
-		FOR_BODY: NS = INCR;
-		INCR: NS = FOR_COND;
-		DONE: NS = DONE;
-		default: NS = ERROR;
-	endcase
-end
-
-// What to do in each State
-always @(posedge clk or negedge rst)
-begin
-	if (rst == 1'b0)
-		k = 5'd1;
-	else
-		case(S)
-			START:
-			begin
-				k = 5'd1;
-				
-				left_boxed[16:0] = 544'd0;
-				right_boxed[16:0] = 544'd0;
-				e_transform[16:0] = 816'd0;
-				keyXetran[16:0] = 816'd0;
-				row[7:0] = 16'd0;
-				column[7:0] = 32'd0;
-				sbox_outs[16:0] = 544'd0;
-				f[16:0] = 544'd0;
-				reversal[16:0] = 1088'd0;
-				
-			end
-			
-			FOR_INIT: k = 5'd0;
-			
-			FOR_BODY:
-			begin
-				left_boxed[0] = L0;
-				right_boxed[0] = R0;
-				left_boxed[k] = right_boxed[k - 1];
-				
-				e_transform[k] = {right_boxed[k-1][32-32], right_boxed[k-1][32-1],  right_boxed[k-1][32-2],  right_boxed[k-1][32-3],  right_boxed[k-1][32-4],  right_boxed[k-1][32-5],
-                            right_boxed[k-1][32-4],  right_boxed[k-1][32-5],  right_boxed[k-1][32-6],  right_boxed[k-1][32-7],  right_boxed[k-1][32-8],  right_boxed[k-1][32-9],
-                            right_boxed[k-1][32-8],  right_boxed[k-1][32-9],  right_boxed[k-1][32-10], right_boxed[k-1][32-11], right_boxed[k-1][32-12], right_boxed[k-1][32-13],
-                            right_boxed[k-1][32-12], right_boxed[k-1][32-13], right_boxed[k-1][32-14], right_boxed[k-1][32-15], right_boxed[k-1][32-16], right_boxed[k-1][32-17],
-                            right_boxed[k-1][32-16], right_boxed[k-1][32-17], right_boxed[k-1][32-18], right_boxed[k-1][32-19], right_boxed[k-1][32-20], right_boxed[k-1][32-21],
-                            right_boxed[k-1][32-20], right_boxed[k-1][32-21], right_boxed[k-1][32-22], right_boxed[k-1][32-23], right_boxed[k-1][32-24], right_boxed[k-1][32-25],
-                            right_boxed[k-1][32-24], right_boxed[k-1][32-25], right_boxed[k-1][32-26], right_boxed[k-1][32-27], right_boxed[k-1][32-28], right_boxed[k-1][32-29],
-                            right_boxed[k-1][32-28], right_boxed[k-1][32-29], right_boxed[k-1][32-30], right_boxed[k-1][32-31], right_boxed[k-1][32-32], right_boxed[k-1][32-1]};
-
-									 
-				keyXetran[k] = e_transform[k]^permutes[k];
-				
-				// s-box-1
-				row[0] = {keyXetran[k][47], keyXetran[k][42]};
-				column[0] = keyXetran[k][46:43];
-				sbox_outs[k][31:28] = s_box[0][row[0]][8'd63 - column[0] * 4'd4 -: 4];
-				
-				// s-box-2
-				row[1] = {keyXetran[k][41], keyXetran[k][36]};
-				column[1] = keyXetran[k][40:37];
-				sbox_outs[k][27:24] = s_box[1][row[1]][63 - column[1] * 4 -: 4];
-			
-				// s-box-3
-				row[2] = {keyXetran[k][35], keyXetran[k][30]};
-				column[2] = keyXetran[k][34:31];
-				sbox_outs[k][23:20] = s_box[2][row[2]][63 - column[2] * 4 -: 4];
-			
-				// s-box-4
-				row[3] = {keyXetran[k][29], keyXetran[k][24]};
-				column[3] = keyXetran[k][28:25];
-				sbox_outs[k][19:16] = s_box[3][row[3]][63 - column[3] * 4 -: 4];
-			
-				// s-box-5
-				row[4] = {keyXetran[k][23], keyXetran[k][18]};
-				column[4] = keyXetran[k][21:19];
-				sbox_outs[k][15:12] = s_box[4][row[4]][63 - column[4] * 4 -: 4];
-			
-				// s-box-6
-				row[5] = {keyXetran[k][17], keyXetran[k][12]};
-				column[5] = keyXetran[k][16:13];
-				sbox_outs[k][11:8] = s_box[5][row[5]][63 - column[5] * 4 -: 4];
-			
-				// s-box-7
-				row[6] = {keyXetran[k][11], keyXetran[k][6]};
-				column[6] = keyXetran[k][10:7];
-				sbox_outs[k][7:4] = s_box[6][row[6]][63 - column[6] * 4 -: 4];
-			
-				// s-box-8
-				row[7] = {keyXetran[k][5], keyXetran[k][0]};
-				column[7] = keyXetran[k][4:1];
-				sbox_outs[k][3:0] = s_box[7][row[7]][63 - column[7] * 4 -: 4];
-				
-				sbox_outs_k1 = {32'd0, sbox_outs[1]};
-				
-			end
-			
-			INCR: k = k + 5'd1;
-		endcase
-end
-*/
 
 endmodule
