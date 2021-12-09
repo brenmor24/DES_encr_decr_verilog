@@ -1,10 +1,8 @@
 module temp_encr(
-input clk,
-input rst,
+input mode,
 input [63:0]key,
 input [63:0]value,
-output reg [63:0]msg,
-output reg [63:0] tempr
+output reg [63:0]msg
 );
 
 reg [55:0] key_plus;
@@ -15,7 +13,7 @@ reg [27:0] c_blocks [16:0]; // C[i]
 reg [27:0] d_blocks [16:0]; // D[i]
 
 reg [55:0] concat [16:0];	// {c_blocks[i], d_blocks[i]}
-reg [47:0] permutes [16:0];	// concat[i] --> K[i]
+reg [47:0] permutes [16:0];	// concat[1] --> K[i]
 
 reg [63:0] value_plus;	// value being transformed by IP
 
@@ -112,25 +110,178 @@ begin
     c_blocks[16] = C0;
     d_blocks[16] = D0;
 	 
-    // fourth state
-    for (i = 5'd1; i < 5'd17; i = i + 5'd1)
-    begin
-        concat[i] = {c_blocks[i], d_blocks[i]};// CHANGE MADE HERE
-    end
-
+	 // **********************************************************************************************************************************
+	 // Concatenating the c_blocks and d_blocks together
 	 
-    // fifth state
-    for (i = 5'd1; i < 5'd17; i = i + 5'd1)
-    begin
-        permutes[i] = { concat[i][56-14], concat[i][56-17], concat[i][56-11], concat[i][56-24], concat[i][56-1],  concat[i][56-5],
-                        concat[i][56-3],  concat[i][56-28], concat[i][56-15], concat[i][56-6],  concat[i][56-21], concat[i][56-10],
-                        concat[i][56-23], concat[i][56-19], concat[i][56-12], concat[i][56-4],  concat[i][56-26], concat[i][56-8],
-                        concat[i][56-16], concat[i][56-7],  concat[i][56-27], concat[i][56-20], concat[i][56-13], concat[i][56-2],
-                        concat[i][56-41], concat[i][56-52], concat[i][56-31], concat[i][56-37], concat[i][56-47], concat[i][56-55],
-                        concat[i][56-30], concat[i][56-40], concat[i][56-51], concat[i][56-45], concat[i][56-33], concat[i][56-48],
-                        concat[i][56-44], concat[i][56-49], concat[i][56-39], concat[i][56-56], concat[i][56-34], concat[i][56-53],
-                        concat[i][56-46], concat[i][56-42], concat[i][56-50], concat[i][56-36], concat[i][56-29], concat[i][56-32]};
-    end
+	 concat[1] = {c_blocks[1], d_blocks[1]};
+	 concat[2] = {c_blocks[2], d_blocks[2]};
+	 concat[3] = {c_blocks[3], d_blocks[3]};
+	 concat[4] = {c_blocks[4], d_blocks[4]};
+	 
+	 concat[5] = {c_blocks[5], d_blocks[5]};
+	 concat[6] = {c_blocks[6], d_blocks[6]};
+	 concat[7] = {c_blocks[7], d_blocks[7]};
+	 concat[8] = {c_blocks[8], d_blocks[8]};
+	 
+	 concat[9] = {c_blocks[9], d_blocks[9]};
+	 concat[10] = {c_blocks[10], d_blocks[10]};
+	 concat[11] = {c_blocks[11], d_blocks[11]};
+	 concat[12] = {c_blocks[12], d_blocks[12]};
+	 
+	 concat[13] = {c_blocks[13], d_blocks[13]};
+	 concat[14] = {c_blocks[14], d_blocks[14]};
+	 concat[15] = {c_blocks[15], d_blocks[15]};
+	 concat[16] = {c_blocks[16], d_blocks[16]};
+	 
+	 // *********************************************************************************************************************************
+	 // Calculating the sub keys (aka permutes)
+	 
+	 permutes[1] = {concat[1][56-14], concat[1][56-17], concat[1][56-11], concat[1][56-24], concat[1][56-1],  concat[1][56-5],
+                   concat[1][56-3],  concat[1][56-28], concat[1][56-15], concat[1][56-6],  concat[1][56-21], concat[1][56-10],
+                   concat[1][56-23], concat[1][56-19], concat[1][56-12], concat[1][56-4],  concat[1][56-26], concat[1][56-8],
+                   concat[1][56-16], concat[1][56-7],  concat[1][56-27], concat[1][56-20], concat[1][56-13], concat[1][56-2],
+                   concat[1][56-41], concat[1][56-52], concat[1][56-31], concat[1][56-37], concat[1][56-47], concat[1][56-55],
+                   concat[1][56-30], concat[1][56-40], concat[1][56-51], concat[1][56-45], concat[1][56-33], concat[1][56-48],
+                   concat[1][56-44], concat[1][56-49], concat[1][56-39], concat[1][56-56], concat[1][56-34], concat[1][56-53],
+                   concat[1][56-46], concat[1][56-42], concat[1][56-50], concat[1][56-36], concat[1][56-29], concat[1][56-32]};
+						 
+	permutes[2] = {concat[2][56-14], concat[2][56-17], concat[2][56-11], concat[2][56-24], concat[2][56-1],  concat[2][56-5],
+                  concat[2][56-3],  concat[2][56-28], concat[2][56-15], concat[2][56-6],  concat[2][56-21], concat[2][56-10],
+                  concat[2][56-23], concat[2][56-19], concat[2][56-12], concat[2][56-4],  concat[2][56-26], concat[2][56-8],
+                  concat[2][56-16], concat[2][56-7],  concat[2][56-27], concat[2][56-20], concat[2][56-13], concat[2][56-2],
+                  concat[2][56-41], concat[2][56-52], concat[2][56-31], concat[2][56-37], concat[2][56-47], concat[2][56-55],
+                  concat[2][56-30], concat[2][56-40], concat[2][56-51], concat[2][56-45], concat[2][56-33], concat[2][56-48],
+                  concat[2][56-44], concat[2][56-49], concat[2][56-39], concat[2][56-56], concat[2][56-34], concat[2][56-53],
+                  concat[2][56-46], concat[2][56-42], concat[2][56-50], concat[2][56-36], concat[2][56-29], concat[2][56-32]};
+						
+	permutes[3] = {concat[3][56-14], concat[3][56-17], concat[3][56-11], concat[3][56-24], concat[3][56-1],  concat[3][56-5],
+                  concat[3][56-3],  concat[3][56-28], concat[3][56-15], concat[3][56-6],  concat[3][56-21], concat[3][56-10],
+                  concat[3][56-23], concat[3][56-19], concat[3][56-12], concat[3][56-4],  concat[3][56-26], concat[3][56-8],
+                  concat[3][56-16], concat[3][56-7],  concat[3][56-27], concat[3][56-20], concat[3][56-13], concat[3][56-2],
+                  concat[3][56-41], concat[3][56-52], concat[3][56-31], concat[3][56-37], concat[3][56-47], concat[3][56-55],
+                  concat[3][56-30], concat[3][56-40], concat[3][56-51], concat[3][56-45], concat[3][56-33], concat[3][56-48],
+                  concat[3][56-44], concat[3][56-49], concat[3][56-39], concat[3][56-56], concat[3][56-34], concat[3][56-53],
+                  concat[3][56-46], concat[3][56-42], concat[3][56-50], concat[3][56-36], concat[3][56-29], concat[3][56-32]};
+						
+	permutes[4] = {concat[4][56-14], concat[4][56-17], concat[4][56-11], concat[4][56-24], concat[4][56-1],  concat[4][56-5],
+                  concat[4][56-3],  concat[4][56-28], concat[4][56-15], concat[4][56-6],  concat[4][56-21], concat[4][56-10],
+                  concat[4][56-23], concat[4][56-19], concat[4][56-12], concat[4][56-4],  concat[4][56-26], concat[4][56-8],
+                  concat[4][56-16], concat[4][56-7],  concat[4][56-27], concat[4][56-20], concat[4][56-13], concat[4][56-2],
+                  concat[4][56-41], concat[4][56-52], concat[4][56-31], concat[4][56-37], concat[4][56-47], concat[4][56-55],
+                  concat[4][56-30], concat[4][56-40], concat[4][56-51], concat[4][56-45], concat[4][56-33], concat[4][56-48],
+                  concat[4][56-44], concat[4][56-49], concat[4][56-39], concat[4][56-56], concat[4][56-34], concat[4][56-53],
+                  concat[4][56-46], concat[4][56-42], concat[4][56-50], concat[4][56-36], concat[4][56-29], concat[4][56-32]};
+						
+	permutes[5] = {concat[5][56-14], concat[5][56-17], concat[5][56-11], concat[5][56-24], concat[5][56-1],  concat[5][56-5],
+                  concat[5][56-3],  concat[5][56-28], concat[5][56-15], concat[5][56-6],  concat[5][56-21], concat[5][56-10],
+                  concat[5][56-23], concat[5][56-19], concat[5][56-12], concat[5][56-4],  concat[5][56-26], concat[5][56-8],
+                  concat[5][56-16], concat[5][56-7],  concat[5][56-27], concat[5][56-20], concat[5][56-13], concat[5][56-2],
+                  concat[5][56-41], concat[5][56-52], concat[5][56-31], concat[5][56-37], concat[5][56-47], concat[5][56-55],
+                  concat[5][56-30], concat[5][56-40], concat[5][56-51], concat[5][56-45], concat[5][56-33], concat[5][56-48],
+                  concat[5][56-44], concat[5][56-49], concat[5][56-39], concat[5][56-56], concat[5][56-34], concat[5][56-53],
+                  concat[5][56-46], concat[5][56-42], concat[5][56-50], concat[5][56-36], concat[5][56-29], concat[5][56-32]};
+						
+	permutes[6] = {concat[6][56-14], concat[6][56-17], concat[6][56-11], concat[6][56-24], concat[6][56-1],  concat[6][56-5],
+                  concat[6][56-3],  concat[6][56-28], concat[6][56-15], concat[6][56-6],  concat[6][56-21], concat[6][56-10],
+                  concat[6][56-23], concat[6][56-19], concat[6][56-12], concat[6][56-4],  concat[6][56-26], concat[6][56-8],
+                  concat[6][56-16], concat[6][56-7],  concat[6][56-27], concat[6][56-20], concat[6][56-13], concat[6][56-2],
+                  concat[6][56-41], concat[6][56-52], concat[6][56-31], concat[6][56-37], concat[6][56-47], concat[6][56-55],
+                  concat[6][56-30], concat[6][56-40], concat[6][56-51], concat[6][56-45], concat[6][56-33], concat[6][56-48],
+                  concat[6][56-44], concat[6][56-49], concat[6][56-39], concat[6][56-56], concat[6][56-34], concat[6][56-53],
+                  concat[6][56-46], concat[6][56-42], concat[6][56-50], concat[6][56-36], concat[6][56-29], concat[6][56-32]};
+						
+	permutes[7] = {concat[7][56-14], concat[7][56-17], concat[7][56-11], concat[7][56-24], concat[7][56-1],  concat[7][56-5],
+                  concat[7][56-3],  concat[7][56-28], concat[7][56-15], concat[7][56-6],  concat[7][56-21], concat[7][56-10],
+                  concat[7][56-23], concat[7][56-19], concat[7][56-12], concat[7][56-4],  concat[7][56-26], concat[7][56-8],
+                  concat[7][56-16], concat[7][56-7],  concat[7][56-27], concat[7][56-20], concat[7][56-13], concat[7][56-2],
+                  concat[7][56-41], concat[7][56-52], concat[7][56-31], concat[7][56-37], concat[7][56-47], concat[7][56-55],
+                  concat[7][56-30], concat[7][56-40], concat[7][56-51], concat[7][56-45], concat[7][56-33], concat[7][56-48],
+                  concat[7][56-44], concat[7][56-49], concat[7][56-39], concat[7][56-56], concat[7][56-34], concat[7][56-53],
+                  concat[7][56-46], concat[7][56-42], concat[7][56-50], concat[7][56-36], concat[7][56-29], concat[7][56-32]};
+						
+	permutes[8] = {concat[8][56-14], concat[8][56-17], concat[8][56-11], concat[8][56-24], concat[8][56-1],  concat[8][56-5],
+                  concat[8][56-3],  concat[8][56-28], concat[8][56-15], concat[8][56-6],  concat[8][56-21], concat[8][56-10],
+                  concat[8][56-23], concat[8][56-19], concat[8][56-12], concat[8][56-4],  concat[8][56-26], concat[8][56-8],
+                  concat[8][56-16], concat[8][56-7],  concat[8][56-27], concat[8][56-20], concat[8][56-13], concat[8][56-2],
+                  concat[8][56-41], concat[8][56-52], concat[8][56-31], concat[8][56-37], concat[8][56-47], concat[8][56-55],
+                  concat[8][56-30], concat[8][56-40], concat[8][56-51], concat[8][56-45], concat[8][56-33], concat[8][56-48],
+                  concat[8][56-44], concat[8][56-49], concat[8][56-39], concat[8][56-56], concat[8][56-34], concat[8][56-53],
+                  concat[8][56-46], concat[8][56-42], concat[8][56-50], concat[8][56-36], concat[8][56-29], concat[8][56-32]};
+						
+	permutes[9] = {concat[9][56-14], concat[9][56-17], concat[9][56-11], concat[9][56-24], concat[9][56-1],  concat[9][56-5],
+                  concat[9][56-3],  concat[9][56-28], concat[9][56-15], concat[9][56-6],  concat[9][56-21], concat[9][56-10],
+                  concat[9][56-23], concat[9][56-19], concat[9][56-12], concat[9][56-4],  concat[9][56-26], concat[9][56-8],
+                  concat[9][56-16], concat[9][56-7],  concat[9][56-27], concat[9][56-20], concat[9][56-13], concat[9][56-2],
+                  concat[9][56-41], concat[9][56-52], concat[9][56-31], concat[9][56-37], concat[9][56-47], concat[9][56-55],
+                  concat[9][56-30], concat[9][56-40], concat[9][56-51], concat[9][56-45], concat[9][56-33], concat[9][56-48],
+                  concat[9][56-44], concat[9][56-49], concat[9][56-39], concat[9][56-56], concat[9][56-34], concat[9][56-53],
+                  concat[9][56-46], concat[9][56-42], concat[9][56-50], concat[9][56-36], concat[9][56-29], concat[9][56-32]};
+						
+	permutes[10] = {concat[10][56-14], concat[10][56-17], concat[10][56-11], concat[10][56-24], concat[10][56-1],  concat[10][56-5],
+                   concat[10][56-3],  concat[10][56-28], concat[10][56-15], concat[10][56-6],  concat[10][56-21], concat[10][56-10],
+                   concat[10][56-23], concat[10][56-19], concat[10][56-12], concat[10][56-4],  concat[10][56-26], concat[10][56-8],
+                   concat[10][56-16], concat[10][56-7],  concat[10][56-27], concat[10][56-20], concat[10][56-13], concat[10][56-2],
+                   concat[10][56-41], concat[10][56-52], concat[10][56-31], concat[10][56-37], concat[10][56-47], concat[10][56-55],
+                   concat[10][56-30], concat[10][56-40], concat[10][56-51], concat[10][56-45], concat[10][56-33], concat[10][56-48],
+                   concat[10][56-44], concat[10][56-49], concat[10][56-39], concat[10][56-56], concat[10][56-34], concat[10][56-53],
+                   concat[10][56-46], concat[10][56-42], concat[10][56-50], concat[10][56-36], concat[10][56-29], concat[10][56-32]};
+						
+	permutes[11] = {concat[11][56-14], concat[11][56-17], concat[11][56-11], concat[11][56-24], concat[11][56-1],  concat[11][56-5],
+                   concat[11][56-3],  concat[11][56-28], concat[11][56-15], concat[11][56-6],  concat[11][56-21], concat[11][56-10],
+                   concat[11][56-23], concat[11][56-19], concat[11][56-12], concat[11][56-4],  concat[11][56-26], concat[11][56-8],
+                   concat[11][56-16], concat[11][56-7],  concat[11][56-27], concat[11][56-20], concat[11][56-13], concat[11][56-2],
+                   concat[11][56-41], concat[11][56-52], concat[11][56-31], concat[11][56-37], concat[11][56-47], concat[11][56-55],
+                   concat[11][56-30], concat[11][56-40], concat[11][56-51], concat[11][56-45], concat[11][56-33], concat[11][56-48],
+                   concat[11][56-44], concat[11][56-49], concat[11][56-39], concat[11][56-56], concat[11][56-34], concat[11][56-53],
+                   concat[11][56-46], concat[11][56-42], concat[11][56-50], concat[11][56-36], concat[11][56-29], concat[11][56-32]};
+						 
+	permutes[12] = {concat[12][56-14], concat[12][56-17], concat[12][56-11], concat[12][56-24], concat[12][56-1],  concat[12][56-5],
+                   concat[12][56-3],  concat[12][56-28], concat[12][56-15], concat[12][56-6],  concat[12][56-21], concat[12][56-10],
+                   concat[12][56-23], concat[12][56-19], concat[12][56-12], concat[12][56-4],  concat[12][56-26], concat[12][56-8],
+                   concat[12][56-16], concat[12][56-7],  concat[12][56-27], concat[12][56-20], concat[12][56-13], concat[12][56-2],
+                   concat[12][56-41], concat[12][56-52], concat[12][56-31], concat[12][56-37], concat[12][56-47], concat[12][56-55],
+                   concat[12][56-30], concat[12][56-40], concat[12][56-51], concat[12][56-45], concat[12][56-33], concat[12][56-48],
+                   concat[12][56-44], concat[12][56-49], concat[12][56-39], concat[12][56-56], concat[12][56-34], concat[12][56-53],
+                   concat[12][56-46], concat[12][56-42], concat[12][56-50], concat[12][56-36], concat[12][56-29], concat[12][56-32]};
+						 
+	permutes[13] = {concat[13][56-14], concat[13][56-17], concat[13][56-11], concat[13][56-24], concat[13][56-1],  concat[13][56-5],
+                   concat[13][56-3],  concat[13][56-28], concat[13][56-15], concat[13][56-6],  concat[13][56-21], concat[13][56-10],
+                   concat[13][56-23], concat[13][56-19], concat[13][56-12], concat[13][56-4],  concat[13][56-26], concat[13][56-8],
+                   concat[13][56-16], concat[13][56-7],  concat[13][56-27], concat[13][56-20], concat[13][56-13], concat[13][56-2],
+                   concat[13][56-41], concat[13][56-52], concat[13][56-31], concat[13][56-37], concat[13][56-47], concat[13][56-55],
+                   concat[13][56-30], concat[13][56-40], concat[13][56-51], concat[13][56-45], concat[13][56-33], concat[13][56-48],
+                   concat[13][56-44], concat[13][56-49], concat[13][56-39], concat[13][56-56], concat[13][56-34], concat[13][56-53],
+                   concat[13][56-46], concat[13][56-42], concat[13][56-50], concat[13][56-36], concat[13][56-29], concat[13][56-32]};
+						 
+	permutes[14] = {concat[14][56-14], concat[14][56-17], concat[14][56-11], concat[14][56-24], concat[14][56-1],  concat[14][56-5],
+                   concat[14][56-3],  concat[14][56-28], concat[14][56-15], concat[14][56-6],  concat[14][56-21], concat[14][56-10],
+                   concat[14][56-23], concat[14][56-19], concat[14][56-12], concat[14][56-4],  concat[14][56-26], concat[14][56-8],
+                   concat[14][56-16], concat[14][56-7],  concat[14][56-27], concat[14][56-20], concat[14][56-13], concat[14][56-2],
+                   concat[14][56-41], concat[14][56-52], concat[14][56-31], concat[14][56-37], concat[14][56-47], concat[14][56-55],
+                   concat[14][56-30], concat[14][56-40], concat[14][56-51], concat[14][56-45], concat[14][56-33], concat[14][56-48],
+                   concat[14][56-44], concat[14][56-49], concat[14][56-39], concat[14][56-56], concat[14][56-34], concat[14][56-53],
+                   concat[14][56-46], concat[14][56-42], concat[14][56-50], concat[14][56-36], concat[14][56-29], concat[14][56-32]};
+						 
+	permutes[15] = {concat[15][56-14], concat[15][56-17], concat[15][56-11], concat[15][56-24], concat[15][56-1],  concat[15][56-5],
+                   concat[15][56-3],  concat[15][56-28], concat[15][56-15], concat[15][56-6],  concat[15][56-21], concat[15][56-10],
+                   concat[15][56-23], concat[15][56-19], concat[15][56-12], concat[15][56-4],  concat[15][56-26], concat[15][56-8],
+                   concat[15][56-16], concat[15][56-7],  concat[15][56-27], concat[15][56-20], concat[15][56-13], concat[15][56-2],
+                   concat[15][56-41], concat[15][56-52], concat[15][56-31], concat[15][56-37], concat[15][56-47], concat[15][56-55],
+                   concat[15][56-30], concat[15][56-40], concat[15][56-51], concat[15][56-45], concat[15][56-33], concat[15][56-48],
+                   concat[15][56-44], concat[15][56-49], concat[15][56-39], concat[15][56-56], concat[15][56-34], concat[15][56-53],
+                   concat[15][56-46], concat[15][56-42], concat[15][56-50], concat[15][56-36], concat[15][56-29], concat[15][56-32]};
+						 
+	permutes[16] = {concat[16][56-14], concat[16][56-17], concat[16][56-11], concat[16][56-24], concat[16][56-1],  concat[16][56-5],
+                   concat[16][56-3],  concat[16][56-28], concat[16][56-15], concat[16][56-6],  concat[16][56-21], concat[16][56-10],
+                   concat[16][56-23], concat[16][56-19], concat[16][56-12], concat[16][56-4],  concat[16][56-26], concat[16][56-8],
+                   concat[16][56-16], concat[16][56-7],  concat[16][56-27], concat[16][56-20], concat[16][56-13], concat[16][56-2],
+                   concat[16][56-41], concat[16][56-52], concat[16][56-31], concat[16][56-37], concat[16][56-47], concat[16][56-55],
+                   concat[16][56-30], concat[16][56-40], concat[16][56-51], concat[16][56-45], concat[16][56-33], concat[16][56-48],
+                   concat[16][56-44], concat[16][56-49], concat[16][56-39], concat[16][56-56], concat[16][56-34], concat[16][56-53],
+                   concat[16][56-46], concat[16][56-42], concat[16][56-50], concat[16][56-36], concat[16][56-29], concat[16][56-32]};
+						 
+	// *********************************************************************************************************************************
+	// Creating the S boxes
 	 
 	 // S1:
 	 s_box[0][0] = {4'd14, 4'd4, 4'd13, 4'd1, 4'd2, 4'd15, 4'd11, 4'd8, 4'd3, 4'd10, 4'd6, 4'd12, 4'd5, 4'd9, 4'd0, 4'd7}; // S1 begin
@@ -179,8 +330,6 @@ begin
     s_box[7][1] = {4'd1, 4'd15, 4'd13, 4'd8, 4'd10, 4'd3, 4'd7, 4'd4, 4'd12, 4'd5, 4'd6, 4'd11, 4'd0, 4'd14, 4'd9, 4'd2};
     s_box[7][2] = {4'd7, 4'd11, 4'd4, 4'd1, 4'd9, 4'd12, 4'd14, 4'd2, 4'd0, 4'd6, 4'd10, 4'd13, 4'd15, 4'd3, 4'd5, 4'd8};
     s_box[7][3] = {4'd2, 4'd1, 4'd14, 4'd7, 4'd4, 4'd10, 4'd8, 4'd13, 4'd15, 4'd12, 4'd9, 4'd0, 4'd3, 4'd5, 4'd6, 4'd11}; // S8 end
-	 
-	 //s1_r0 = s_box[5][2]; // sbox 6, row 3
 
     // sixth state
     value_plus={value[64-58], value[64-50], value[64-42], value[64-34], value[64-26], value[64-18], value[64-10], value[64-2],
@@ -1272,89 +1421,7 @@ begin
 				
 	 right_boxed[16] = left_boxed[15]^f[16];
 
-	 // Temp output for testing:
-	 tempr = {right_boxed[16], left_boxed[16]};
-
-	 /*
-	for (i = 5'd1; i < 5'd17; i = i + 5'd1)
-   begin
-        left_boxed[i] = right_boxed[i - 1];
-		  
-        e_transform[i] = {right_boxed[i-1][32-32], right_boxed[i-1][32-1],  right_boxed[i-1][32-2],  right_boxed[i-1][32-3],  right_boxed[i-1][32-4],  right_boxed[i-1][32-5],
-                            right_boxed[i-1][32-4],  right_boxed[i-1][32-5],  right_boxed[i-1][32-6],  right_boxed[i-1][32-7],  right_boxed[i-1][32-8],  right_boxed[i-1][32-9],
-                            right_boxed[i-1][32-8],  right_boxed[i-1][32-9],  right_boxed[i-1][32-10], right_boxed[i-1][32-11], right_boxed[i-1][32-12], right_boxed[i-1][32-13],
-                            right_boxed[i-1][32-12], right_boxed[i-1][32-13], right_boxed[i-1][32-14], right_boxed[i-1][32-15], right_boxed[i-1][32-16], right_boxed[i-1][32-17],
-                            right_boxed[i-1][32-16], right_boxed[i-1][32-17], right_boxed[i-1][32-18], right_boxed[i-1][32-19], right_boxed[i-1][32-20], right_boxed[i-1][32-21],
-                            right_boxed[i-1][32-20], right_boxed[i-1][32-21], right_boxed[i-1][32-22], right_boxed[i-1][32-23], right_boxed[i-1][32-24], right_boxed[i-1][32-25],
-                            right_boxed[i-1][32-24], right_boxed[i-1][32-25], right_boxed[i-1][32-26], right_boxed[i-1][32-27], right_boxed[i-1][32-28], right_boxed[i-1][32-29],
-                            right_boxed[i-1][32-28], right_boxed[i-1][32-29], right_boxed[i-1][32-30], right_boxed[i-1][32-31], right_boxed[i-1][32-32], right_boxed[i-1][32-1]};
-
-        keyXetran[i] = e_transform[i]^permutes[i];
-		  
-		   // s-box-1
-			row[0] = {keyXetran[i][47], keyXetran[i][42]};
-			column[0] = keyXetran[i][46:43];
-			sbox_outs[i][31:28] = s_box[0][row[0]][8'd63 - column[0] * 4'd4 -: 4];
-			
-			// s-box-2
-			row[1] = {keyXetran[i][41], keyXetran[i][36]};
-			column[1] = keyXetran[i][40:37];
-			sbox_outs[i][27:24] = s_box[1][row[1]][63 - column[1] * 4 -: 4];
-			
-			// s-box-3
-			row[2] = {keyXetran[i][35], keyXetran[i][30]};
-			column[2] = keyXetran[i][34:31];
-			sbox_outs[i][23:20] = s_box[2][row[2]][63 - column[2] * 4 -: 4];
-			
-			// s-box-4
-			row[3] = {keyXetran[i][29], keyXetran[i][24]};
-			column[3] = keyXetran[i][28:25];
-			sbox_outs[i][19:16] = s_box[3][row[3]][63 - column[3] * 4 -: 4];
-			
-			// s-box-5
-			row[4] = {keyXetran[i][23], keyXetran[i][18]};
-			column[4] = keyXetran[i][21:19];
-			sbox_outs[i][15:12] = s_box[4][row[4]][63 - column[4] * 4 -: 4];
-			
-			// s-box-6
-			row[5] = {keyXetran[i][17], keyXetran[i][12]};
-			column[5] = keyXetran[i][16:13];
-			sbox_outs[i][11:8] = s_box[5][row[5]][63 - column[5] * 4 -: 4];
-			
-			// s-box-7
-			row[6] = {keyXetran[i][11], keyXetran[i][6]};
-			column[6] = keyXetran[i][10:7];
-			sbox_outs[i][7:4] = s_box[6][row[6]][63 - column[6] * 4 -: 4];
-			
-			// s-box-8
-			row[7] = {keyXetran[i][5], keyXetran[i][0]};
-			column[7] = keyXetran[i][4:1];
-			sbox_outs[i][3:0] = s_box[7][row[7]][63 - column[7] * 4 -: 4];
-			
-			// final calculations for function f:
-			f[i] = {sbox_outs[i][32-16], sbox_outs[i][32-7], sbox_outs[i][32-20], sbox_outs[i][32-21],
-					  sbox_outs[i][32-29], sbox_outs[i][32-12], sbox_outs[i][32-28], sbox_outs[i][32-17],
-					  sbox_outs[i][32-1], sbox_outs[i][32-15], sbox_outs[i][32-23], sbox_outs[i][32-26],
-					  sbox_outs[i][32-5], sbox_outs[i][32-18], sbox_outs[i][32-31], sbox_outs[i][32-10], //
-					  sbox_outs[i][32-2], sbox_outs[i][32-8], sbox_outs[i][32-24], sbox_outs[i][32-14], //
-					  sbox_outs[i][32-32], sbox_outs[i][32-27], sbox_outs[i][32-3], sbox_outs[i][32-9], //
-					  sbox_outs[i][32-19], sbox_outs[i][32-13], sbox_outs[i][32-30], sbox_outs[i][32-6], //
-					  sbox_outs[i][32-22], sbox_outs[i][32-11], sbox_outs[i][32-4], sbox_outs[i][32-25]}; //
-					  
-			right_boxed[i] = left_boxed[i - 1]^f[i];
-			
-			// reversal concatenation:
-			//reversal[i] = {right_boxed[i], left_boxed[i]};
-		  
-    end // end giant for loop
-	 
-	 */
-	 
-	 //00001010 01001100 11011001 10010101 01000011 01000010 00110010 00110100 --> EXPECTED
-	 //11101011 10101000 01000101 11001100 01110100 10111011 00001000 01100010 --> ACTUAL
-	 //EBA8					45CC					74BB					0862
-	 
-	 /*
+	 // concact R16 and L16
 	 reversal = {right_boxed[16], left_boxed[16]};
 	 
 	 msg = {reversal[64-40], reversal[64-8], reversal[64-48], reversal[64-16], reversal[64-56], reversal[64-24], reversal[64-64], reversal[64-32],
@@ -1365,10 +1432,6 @@ begin
 			  reversal[64-35], reversal[64-3], reversal[64-43], reversal[64-11], reversal[64-51], reversal[64-19], reversal[64-59], reversal[64-27],
 			  reversal[64-34], reversal[64-2], reversal[64-42], reversal[64-10], reversal[64-50], reversal[64-18], reversal[64-58], reversal[64-26],
 			  reversal[64-33], reversal[64-1], reversal[64-41], reversal[64-9], reversal[64-49], reversal[64-17], reversal[64-57], reversal[64-25]};
-	 
-	 //tempr = {32'd0, sbox_outs[1]};
-	 
-	 */
 
 end
 

@@ -128,6 +128,10 @@
 					"strict" : false
 				},
 				{
+					"name" : "done_led",
+					"strict" : false
+				},
+				{
 					"name" : "clk",
 					"strict" : false
 				},
@@ -208,15 +212,15 @@
 					"strict" : false
 				},
 				{
-					"name" : "change_state",
-					"strict" : false
-				},
-				{
 					"name" : "send_data",
 					"strict" : false
 				},
 				{
-					"name" : "encr_go",
+					"name" : "encr",
+					"strict" : false
+				},
+				{
+					"name" : "decr",
 					"strict" : false
 				}
 			]

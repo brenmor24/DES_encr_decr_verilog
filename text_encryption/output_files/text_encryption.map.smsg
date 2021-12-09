@@ -1,1 +1,1 @@
-Warning (10268): Verilog HDL information at lcd_driver.v(118): always construct contains both blocking and non-blocking assignments File: M:/text_encryption/lcd_driver.v Line: 118
+Warning (10268): Verilog HDL information at text_encryption.v(110): always construct contains both blocking and non-blocking assignments File: M:/text_encryption/text_encryption.v Line: 110

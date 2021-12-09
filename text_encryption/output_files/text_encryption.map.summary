@@ -1,13 +1,13 @@
-Analysis & Synthesis Status : Successful - Wed Dec 08 22:29:39 2021
+Analysis & Synthesis Status : Successful - Thu Dec 09 03:42:36 2021
 Quartus Prime Version : 16.1.0 Build 196 10/24/2016 SJ Lite Edition
 Revision Name : text_encryption
 Top-level Entity Name : text_encryption
 Family : Cyclone IV E
-Total logic elements : 4,275
-    Total combinational functions : 4,274
-    Dedicated logic registers : 233
-Total registers : 233
-Total pins : 54
+Total logic elements : 4,269
+    Total combinational functions : 4,269
+    Dedicated logic registers : 174
+Total registers : 174
+Total pins : 55
 Total virtual pins : 0
 Total memory bits : 0
 Embedded Multiplier 9-bit elements : 0

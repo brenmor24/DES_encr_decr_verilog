@@ -3,11 +3,11 @@ input clk,
 input rst,
 input send_data,						// to save data from switches in the key or value reg, depending on the current state
 input [15:0]user_input,				// user input from switches
-input encr_go,							// button for user to press which starts the encryption
+//input encr_go,							// button for user to press which starts the encryption
 input [1:0]select_disp,				// for users to select between viewing each group of 16 bits in the key/value on the 7-seg display		
 output reg temp,						// LEDR[0] turns on when DISP_KEY state is reached
 output reg temp1,						// LEDG[0] turns on when DISP_VALUE state is reached
-input change_state,					// to move to the next state from one of the DISP states
+//input change_state,					// to move to the next state from one of the DISP states
 
 // To update the 7-seg display:
 output [6:0]seg7_most,				
@@ -15,18 +15,12 @@ output [6:0]seg7_most_2,
 output [6:0]seg7_least_2,
 output [6:0]seg7_least,
 
-/*
-// To update the LCD:
-output check,
-output disp_rs,
-output disp_rw,
-output disp_en,
-output display_on,
-output [7:0]disp_data,
-*/
+// calling encr module
+input encr,
+input decr,
+output reg encr_led,
 
-// testing encr
-output reg encr_led
+output reg done_led
 );
 
 //lcd_driver show_text(clk, rst, send_data, change_state, encr_go, check, disp_rs, disp_rw, disp_en, display_on, disp_data);
@@ -69,54 +63,62 @@ Design:
 reg [15:0]disp;	// to store the 16-bit value to display on the 7-segment
 four_hex_vals my_disp(disp, seg7_most, seg7_most_2, seg7_least_2, seg7_least);	// displays a 16-bit value on the 7-segment display
 
-wire [63:0] tempr;
-temp_encr my_encr_value(clk, rst, key, value, msg, tempr);
+temp_encr my_encr_value(mode, key, value, msg);
 
-reg [63:0]temp_disp;
+//reg [63:0]temp_disp;
 
 // FSM State variables:
-reg [4:0]S;
-reg [4:0]NS;
+reg [5:0]S;
+reg [5:0]NS;
 
 // Defining FSM states:
-parameter START = 5'd0,
+parameter START = 6'd0,
 
-			 IN_KEY_1 = 5'd1,
-			 WAITING_1 = 5'd2,
-			 IN_KEY_2 = 5'd3,
-			 WAITING_2 = 5'd4,
-			 IN_KEY_3 = 5'd5,
-			 WAITING_3 = 5'd6,
-			 IN_KEY_4 = 5'd7,
-			 WAITING_4 = 5'd8,
+			 IN_KEY_1 = 6'd1,
+			 WAITING_1 = 6'd2,
+			 IN_KEY_2 = 6'd3,
+			 WAITING_2 = 6'd4,
+			 IN_KEY_3 = 6'd5,
+			 WAITING_3 = 6'd6,
+			 IN_KEY_4 = 6'd7,
+			 WAITING_4 = 6'd8,
 			 
-			 DISP_KEY = 5'd9,
+			 DISP_KEY = 6'd9,
+			 WAITING_5 = 6'd10,
 			 
-			 IN_VALUE_1 = 5'd10,
-			 WAITING_5 = 5'd11,
-			 IN_VALUE_2 = 5'd12,
-			 WAITING_6 = 5'd13,
-			 IN_VALUE_3 = 5'd14,
-			 WAITING_7 = 5'd15,
-			 IN_VALUE_4 = 5'd16,
-			 WAITING_8 = 5'd17,
+			 IN_VALUE_1 = 6'd11,
+			 WAITING_6 = 6'd12,
+			 IN_VALUE_2 = 5'd13,
+			 WAITING_7 = 6'd14,
+			 IN_VALUE_3 = 6'd15,
+			 WAITING_8 = 6'd16,
+			 IN_VALUE_4 = 6'd17,
+			 WAITING_9 = 6'd18,
 			 
-			 DISP_VALUE = 5'd18,
+			 DISP_VALUE = 6'd19,
+			 WAITING_10 = 6'd20,
 			 
-			 WAITING = 5'd19,
-			 ENCR = 5'd20,
-			 DONE = 5'd21,
+			 TO_ENCR = 6'd21,
+			 WAITING_11 = 6'd22,
+			 ENCR_DECR = 6'd23,
+			 DONE = 6'd24,
 			 
-			 ERROR = 5'b11111;
+			 ERROR = 6'b111111;
 
 // S --> NS transitions			 
 always @(*)
 begin
 	
 	case(S)
-		START: NS = IN_KEY_1;
+		START: 
+		begin
+			if (sel == 1'b1)
+				NS = IN_KEY_1;
+			else
+				NS = START;
+		end
 	
-		// Taking user-entered key for encryption:
+		// Taking user-entered key for encryption/decryption:
 		IN_KEY_1:
 		begin
 			if (send_data == 1'b0)
@@ -181,105 +183,129 @@ begin
 				NS = WAITING_4;
 		end
 		
-		// Displaying user-entered key for encryption:
+		// Displaying user-entered key for encryption/decryption:
 		DISP_KEY:
-		begin
-			if (change_state == 1'b0)
-				NS = IN_VALUE_1;
-			else
-				NS = DISP_KEY;
-		end
-		
-		// Taking user-entered value to be encrypted:
-		IN_VALUE_1:
 		begin
 			if (send_data == 1'b0)
 				NS = WAITING_5;
 			else
-				NS = IN_VALUE_1;
+				NS = DISP_KEY;
 		end
 		
 		WAITING_5:
 		begin
 			if (send_data == 1'b1)
-				NS = IN_VALUE_2;
+				NS = IN_VALUE_1;
 			else
 				NS = WAITING_5;
 		end
 		
-		IN_VALUE_2:
+		// Taking user-entered value to be encrypted/decrypted:
+		IN_VALUE_1:
 		begin
 			if (send_data == 1'b0)
 				NS = WAITING_6;
 			else
-				NS = IN_VALUE_2;
+				NS = IN_VALUE_1;
 		end
 		
 		WAITING_6:
 		begin
 			if (send_data == 1'b1)
-				NS = IN_VALUE_3;
+				NS = IN_VALUE_2;
 			else
 				NS = WAITING_6;
 		end
 		
-		IN_VALUE_3:
+		IN_VALUE_2:
 		begin
 			if (send_data == 1'b0)
 				NS = WAITING_7;
 			else
-				NS = IN_VALUE_3;
+				NS = IN_VALUE_2;
 		end
 		
 		WAITING_7:
 		begin
 			if (send_data == 1'b1)
-				NS = IN_VALUE_4;
+				NS = IN_VALUE_3;
 			else
 				NS = WAITING_7;
 		end
 		
-		IN_VALUE_4:
+		IN_VALUE_3:
 		begin
 			if (send_data == 1'b0)
 				NS = WAITING_8;
 			else
-				NS = IN_VALUE_4;
+				NS = IN_VALUE_3;
 		end
 		
 		WAITING_8:
 		begin
 			if (send_data == 1'b1)
-				NS = DISP_VALUE;
+				NS = IN_VALUE_4;
 			else
 				NS = WAITING_8;
 		end
 		
-		// Displaying user entered value:
+		IN_VALUE_4:
+		begin
+			if (send_data == 1'b0)
+				NS = WAITING_9;
+			else
+				NS = IN_VALUE_4;
+		end
+		
+		WAITING_9:
+		begin
+			if (send_data == 1'b1)
+				NS = DISP_VALUE;
+			else
+				NS = WAITING_9;
+		end
+		
+		// Displaying user-entered value:
 		DISP_VALUE:
 		begin
-			if (change_state == 1'b0)
-				NS = WAITING;
+			if (send_data == 1'b0)
+				NS = WAITING_10;
 			else
 				NS = DISP_VALUE;
 		end
-	
-		// Waiting for user to press button to encrypt:
-		WAITING:
+		
+		WAITING_10:
 		begin
-			if (encr_go == 1'b0)
-				NS = ENCR;
+			if (send_data == 1'b1)
+				NS = TO_ENCR;
 			else
-				NS = WAITING;
+				NS = WAITING_10;
 		end
 	
-		// Encrypting the text:
-		ENCR: 
+		// Waiting for user to press button to encrypt/decrypt:
+		TO_ENCR:
 		begin
-			if (change_state == 1'b0)
+			if (send_data == 1'b0)
+				NS = WAITING_11;
+			else
+				NS = TO_ENCR;
+		end
+		
+		WAITING_11:
+		begin
+			if (send_data == 1'b1)
+				NS = ENCR_DECR;
+			else
+				NS = WAITING_11;
+		end
+	
+		// Encrypting/decrypting the text:
+		ENCR_DECR: 
+		begin
+			if (send_data == 1'b0)
 				NS = DONE;
 			else
-				NS = ENCR;
+				NS = ENCR_DECR;
 		end
 		
 		// Spins in Done forever until rst:
@@ -291,8 +317,8 @@ begin
 	
 end
 
-//reg [2:0] tester[1:0];
-reg encr_en;
+reg mode;
+reg sel;
 
 // What happens in each state
 always @(posedge clk or negedge rst)
@@ -305,9 +331,9 @@ begin
 		temp <= 1'b0;
 		temp1 <= 1'b0;
 		encr_led <= 1'b0;
-		encr_en <= 1'b0;
-		//tester[0] = 3'b010;
-		//tester[1] = 3'b001;
+		mode <= 1'b0;
+		sel <= 1'b0;
+		done_led <= 1'b0;
 	end
 	
 	else begin
@@ -316,14 +342,21 @@ begin
 			// Start state - resetting everything:
 			START:
 			begin
+				if (encr == 1'b0) begin
+					mode <= 1'b1;
+					sel <= 1'b1;
+				end else if (decr == 1'b0) begin
+					mode <= 1'b0;
+					sel <= 1'b1;
+				end
+			
 				disp <= 16'd0;
 				key <= 64'd0;
 				value <= 64'd0;
 				temp <= 1'b0;
 				temp1 <= 1'b0;
 				encr_led <= 1'b0;
-				encr_en <= 1'b0;
-				// set EVERYTHING to 0 (key, value, msg, buttons and switches if needed, etc)
+				done_led <= 1'b0;
 			end
 			
 			// Taking user entered key:
@@ -401,24 +434,24 @@ begin
 				endcase
 			end
 		
-			WAITING: 
+			TO_ENCR: 
 			begin
 				disp <= 16'd0;
 				temp1 <= 1'b0;
 			end
 			
-			ENCR:
+			ENCR_DECR:
 			begin
 				encr_led <= 1'b1;
-				encr_en <= 1'b1;
-				temp_disp <= tempr; //{16'd0, tempr};
 				case(select_disp)
-					2'd0: disp <= temp_disp[15:0];
-					2'd1: disp <= temp_disp[31:16];
-					2'd2: disp <= temp_disp[47:32];
-					2'd3: disp <= temp_disp[63:48];
+					2'd0: disp <= msg[15:0];
+					2'd1: disp <= msg[31:16];
+					2'd2: disp <= msg[47:32];
+					2'd3: disp <= msg[63:48];
 				endcase
 			end
+			
+			DONE: done_led <= 1'b1;
 		
 		endcase
 	end
