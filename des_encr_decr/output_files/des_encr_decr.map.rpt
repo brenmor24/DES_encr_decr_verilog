@@ -1,0 +1,637 @@
+Analysis & Synthesis report for des_encr_decr
+Sat Dec 11 01:16:46 2021
+Quartus Prime Version 19.1.0 Build 670 09/22/2019 SJ Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. State Machine - |des_encr_decr|S
+  9. State Machine - |des_encr_decr|debouncer:deb_send_data|S
+ 10. Registers Removed During Synthesis
+ 11. General Register Statistics
+ 12. Inverted Register Statistics
+ 13. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 14. Parameter Settings for User Entity Instance: Top-level Entity: |des_encr_decr
+ 15. Parameter Settings for User Entity Instance: debouncer:deb_send_data
+ 16. Post-Synthesis Netlist Statistics for Top Partition
+ 17. Elapsed Time Per Partition
+ 18. Analysis & Synthesis Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2019  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
+
+
+
++----------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                     ;
++------------------------------------+---------------------------------------------+
+; Analysis & Synthesis Status        ; Successful - Sat Dec 11 01:16:43 2021       ;
+; Quartus Prime Version              ; 19.1.0 Build 670 09/22/2019 SJ Lite Edition ;
+; Revision Name                      ; des_encr_decr                               ;
+; Top-level Entity Name              ; des_encr_decr                               ;
+; Family                             ; Cyclone IV E                                ;
+; Total logic elements               ; 4,656                                       ;
+;     Total combinational functions  ; 4,655                                       ;
+;     Dedicated logic registers      ; 190                                         ;
+; Total registers                    ; 190                                         ;
+; Total pins                         ; 55                                          ;
+; Total virtual pins                 ; 0                                           ;
+; Total memory bits                  ; 0                                           ;
+; Embedded Multiplier 9-bit elements ; 0                                           ;
+; Total PLLs                         ; 0                                           ;
++------------------------------------+---------------------------------------------+
+
+
++------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                              ;
++------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                           ; Setting            ; Default Value      ;
++------------------------------------------------------------------+--------------------+--------------------+
+; Device                                                           ; EP4CE115F29C7      ;                    ;
+; Top-level entity name                                            ; des_encr_decr      ; des_encr_decr      ;
+; Family name                                                      ; Cyclone IV E       ; Cyclone V          ;
+; Use smart compilation                                            ; Off                ; Off                ;
+; Enable parallel Assembler and Timing Analyzer during compilation ; On                 ; On                 ;
+; Enable compact report table                                      ; Off                ; Off                ;
+; Restructure Multiplexers                                         ; Auto               ; Auto               ;
+; Create Debugging Nodes for IP Cores                              ; Off                ; Off                ;
+; Preserve fewer node names                                        ; On                 ; On                 ;
+; Intel FPGA IP Evaluation Mode                                    ; Enable             ; Enable             ;
+; Verilog Version                                                  ; Verilog_2001       ; Verilog_2001       ;
+; VHDL Version                                                     ; VHDL_1993          ; VHDL_1993          ;
+; State Machine Processing                                         ; Auto               ; Auto               ;
+; Safe State Machine                                               ; Off                ; Off                ;
+; Extract Verilog State Machines                                   ; On                 ; On                 ;
+; Extract VHDL State Machines                                      ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                       ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                   ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                          ; On                 ; On                 ;
+; Infer RAMs from Raw Logic                                        ; On                 ; On                 ;
+; Parallel Synthesis                                               ; On                 ; On                 ;
+; DSP Block Balancing                                              ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                               ; On                 ; On                 ;
+; Power-Up Don't Care                                              ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                     ; Off                ; Off                ;
+; Remove Duplicate Registers                                       ; On                 ; On                 ;
+; Ignore CARRY Buffers                                             ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                           ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                            ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                        ; Off                ; Off                ;
+; Ignore LCELL Buffers                                             ; Off                ; Off                ;
+; Ignore SOFT Buffers                                              ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                   ; Off                ; Off                ;
+; Optimization Technique                                           ; Balanced           ; Balanced           ;
+; Carry Chain Length                                               ; 70                 ; 70                 ;
+; Auto Carry Chains                                                ; On                 ; On                 ;
+; Auto Open-Drain Pins                                             ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                            ; Off                ; Off                ;
+; Auto ROM Replacement                                             ; On                 ; On                 ;
+; Auto RAM Replacement                                             ; On                 ; On                 ;
+; Auto DSP Block Replacement                                       ; On                 ; On                 ;
+; Auto Shift Register Replacement                                  ; Auto               ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                  ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                    ; On                 ; On                 ;
+; Strict RAM Replacement                                           ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                           ; Off                ; Off                ;
+; Auto RAM Block Balancing                                         ; On                 ; On                 ;
+; Auto RAM to Logic Cell Conversion                                ; Off                ; Off                ;
+; Auto Resource Sharing                                            ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                               ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                               ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                    ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing              ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                ; Off                ; Off                ;
+; Timing-Driven Synthesis                                          ; On                 ; On                 ;
+; Report Parameter Settings                                        ; On                 ; On                 ;
+; Report Source Assignments                                        ; On                 ; On                 ;
+; Report Connectivity Checks                                       ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                               ; Off                ; Off                ;
+; Synchronization Register Chain Length                            ; 2                  ; 2                  ;
+; Power Optimization During Synthesis                              ; Normal compilation ; Normal compilation ;
+; HDL message level                                                ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                  ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report         ; 5000               ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report               ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report        ; 100                ; 100                ;
+; Clock MUX Protection                                             ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                      ; Off                ; Off                ;
+; Block Design Naming                                              ; Auto               ; Auto               ;
+; SDC constraint protection                                        ; Off                ; Off                ;
+; Synthesis Effort                                                 ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal     ; On                 ; On                 ;
+; Pre-Mapping Resynthesis Optimization                             ; Off                ; Off                ;
+; Analysis & Synthesis Message Level                               ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                      ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                           ; On                 ; On                 ;
++------------------------------------------------------------------+--------------------+--------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 8           ;
+; Maximum allowed            ; 4           ;
+;                            ;             ;
+; Average used               ; 1.00        ;
+; Maximum used               ; 4           ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
+;     Processor 2            ;   0.0%      ;
+;     Processor 3            ;   0.0%      ;
+;     Processor 4            ;   0.0%      ;
++----------------------------+-------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                    ;
++----------------------------------+-----------------+------------------------+---------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type              ; File Name with Absolute Path                      ; Library ;
++----------------------------------+-----------------+------------------------+---------------------------------------------------+---------+
+; des_encr_decr.v                  ; yes             ; User Verilog HDL File  ; Z:/MyFiles/B/birlad/des_encr_decr/des_encr_decr.v ;         ;
+; des_alg.v                        ; yes             ; User Verilog HDL File  ; Z:/MyFiles/B/birlad/des_encr_decr/des_alg.v       ;         ;
+; seven_segment.v                  ; yes             ; User Verilog HDL File  ; Z:/MyFiles/B/birlad/des_encr_decr/seven_segment.v ;         ;
+; four_hex_vals.v                  ; yes             ; User Verilog HDL File  ; Z:/MyFiles/B/birlad/des_encr_decr/four_hex_vals.v ;         ;
+; debouncer.v                      ; yes             ; User Verilog HDL File  ; Z:/MyFiles/B/birlad/des_encr_decr/debouncer.v     ;         ;
++----------------------------------+-----------------+------------------------+---------------------------------------------------+---------+
+
+
++-----------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary         ;
++---------------------------------------------+-------+
+; Resource                                    ; Usage ;
++---------------------------------------------+-------+
+; Estimated Total logic elements              ; 4,656 ;
+;                                             ;       ;
+; Total combinational functions               ; 4655  ;
+; Logic element usage by number of LUT inputs ;       ;
+;     -- 4 input functions                    ; 3904  ;
+;     -- 3 input functions                    ; 487   ;
+;     -- <=2 input functions                  ; 264   ;
+;                                             ;       ;
+; Logic elements by mode                      ;       ;
+;     -- normal mode                          ; 4646  ;
+;     -- arithmetic mode                      ; 9     ;
+;                                             ;       ;
+; Total registers                             ; 190   ;
+;     -- Dedicated logic registers            ; 190   ;
+;     -- I/O registers                        ; 0     ;
+;                                             ;       ;
+; I/O pins                                    ; 55    ;
+;                                             ;       ;
+; Embedded Multiplier 9-bit elements          ; 0     ;
+;                                             ;       ;
+; Maximum fan-out node                        ; mode  ;
+; Maximum fan-out                             ; 344   ;
+; Total fan-out                               ; 18298 ;
+; Average fan-out                             ; 3.69  ;
++---------------------------------------------+-------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                      ;
++---------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------+---------------+--------------+
+; Compilation Hierarchy Node      ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                          ; Entity Name   ; Library Name ;
++---------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------+---------------+--------------+
+; |des_encr_decr                  ; 4655 (338)          ; 190 (175)                 ; 0           ; 0            ; 0       ; 0         ; 55   ; 0            ; |des_encr_decr                                               ; des_encr_decr ; work         ;
+;    |debouncer:deb_send_data|    ; 20 (20)             ; 15 (15)                   ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |des_encr_decr|debouncer:deb_send_data                       ; debouncer     ; work         ;
+;    |des_alg:my_encr_value|      ; 4269 (4269)         ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |des_encr_decr|des_alg:my_encr_value                         ; des_alg       ; work         ;
+;    |four_hex_vals:my_disp|      ; 28 (0)              ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |des_encr_decr|four_hex_vals:my_disp                         ; four_hex_vals ; work         ;
+;       |seven_segment:left_2|    ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |des_encr_decr|four_hex_vals:my_disp|seven_segment:left_2    ; seven_segment ; work         ;
+;       |seven_segment:leftmost|  ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |des_encr_decr|four_hex_vals:my_disp|seven_segment:leftmost  ; seven_segment ; work         ;
+;       |seven_segment:right_2|   ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |des_encr_decr|four_hex_vals:my_disp|seven_segment:right_2   ; seven_segment ; work         ;
+;       |seven_segment:rightmost| ; 7 (7)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |des_encr_decr|four_hex_vals:my_disp|seven_segment:rightmost ; seven_segment ; work         ;
++---------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------+---------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
+Encoding Type:  One-Hot
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; State Machine - |des_encr_decr|S                                                                                                                                                                                                                                                                                                                                            ;
++--------------+--------+-------------+--------------+-----------+--------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+------------+-------------+------------+-------------+------------+-------------+------------+-------------+------------+---------+---------+
+; Name         ; S.DONE ; S.ENCR_DECR ; S.WAITING_11 ; S.TO_ENCR ; S.WAITING_10 ; S.DISP_VALUE ; S.WAITING_9 ; S.IN_VALUE_4 ; S.WAITING_8 ; S.IN_VALUE_3 ; S.WAITING_7 ; S.IN_VALUE_2 ; S.WAITING_6 ; S.IN_VALUE_1 ; S.WAITING_5 ; S.DISP_KEY ; S.WAITING_4 ; S.IN_KEY_4 ; S.WAITING_3 ; S.IN_KEY_3 ; S.WAITING_2 ; S.IN_KEY_2 ; S.WAITING_1 ; S.IN_KEY_1 ; S.START ; S.ERROR ;
++--------------+--------+-------------+--------------+-----------+--------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+------------+-------------+------------+-------------+------------+-------------+------------+-------------+------------+---------+---------+
+; S.START      ; 0      ; 0           ; 0            ; 0         ; 0            ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0       ; 0       ;
+; S.IN_KEY_1   ; 0      ; 0           ; 0            ; 0         ; 0            ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 1          ; 1       ; 0       ;
+; S.WAITING_1  ; 0      ; 0           ; 0            ; 0         ; 0            ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1           ; 0          ; 1       ; 0       ;
+; S.IN_KEY_2   ; 0      ; 0           ; 0            ; 0         ; 0            ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 1          ; 0           ; 0          ; 1       ; 0       ;
+; S.WAITING_2  ; 0      ; 0           ; 0            ; 0         ; 0            ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1           ; 0          ; 0           ; 0          ; 1       ; 0       ;
+; S.IN_KEY_3   ; 0      ; 0           ; 0            ; 0         ; 0            ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0          ; 0           ; 0          ; 0           ; 1          ; 0           ; 0          ; 0           ; 0          ; 1       ; 0       ;
+; S.WAITING_3  ; 0      ; 0           ; 0            ; 0         ; 0            ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0          ; 0           ; 0          ; 1           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ; 0       ;
+; S.IN_KEY_4   ; 0      ; 0           ; 0            ; 0         ; 0            ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0          ; 0           ; 1          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ; 0       ;
+; S.WAITING_4  ; 0      ; 0           ; 0            ; 0         ; 0            ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0          ; 1           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ; 0       ;
+; S.DISP_KEY   ; 0      ; 0           ; 0            ; 0         ; 0            ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 1          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ; 0       ;
+; S.WAITING_5  ; 0      ; 0           ; 0            ; 0         ; 0            ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 1           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ; 0       ;
+; S.IN_VALUE_1 ; 0      ; 0           ; 0            ; 0         ; 0            ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 1            ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ; 0       ;
+; S.WAITING_6  ; 0      ; 0           ; 0            ; 0         ; 0            ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 1           ; 0            ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ; 0       ;
+; S.IN_VALUE_2 ; 0      ; 0           ; 0            ; 0         ; 0            ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 1            ; 0           ; 0            ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ; 0       ;
+; S.WAITING_7  ; 0      ; 0           ; 0            ; 0         ; 0            ; 0            ; 0           ; 0            ; 0           ; 0            ; 1           ; 0            ; 0           ; 0            ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ; 0       ;
+; S.IN_VALUE_3 ; 0      ; 0           ; 0            ; 0         ; 0            ; 0            ; 0           ; 0            ; 0           ; 1            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ; 0       ;
+; S.WAITING_8  ; 0      ; 0           ; 0            ; 0         ; 0            ; 0            ; 0           ; 0            ; 1           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ; 0       ;
+; S.IN_VALUE_4 ; 0      ; 0           ; 0            ; 0         ; 0            ; 0            ; 0           ; 1            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ; 0       ;
+; S.WAITING_9  ; 0      ; 0           ; 0            ; 0         ; 0            ; 0            ; 1           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ; 0       ;
+; S.DISP_VALUE ; 0      ; 0           ; 0            ; 0         ; 0            ; 1            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ; 0       ;
+; S.WAITING_10 ; 0      ; 0           ; 0            ; 0         ; 1            ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ; 0       ;
+; S.TO_ENCR    ; 0      ; 0           ; 0            ; 1         ; 0            ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ; 0       ;
+; S.WAITING_11 ; 0      ; 0           ; 1            ; 0         ; 0            ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ; 0       ;
+; S.ENCR_DECR  ; 0      ; 1           ; 0            ; 0         ; 0            ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ; 0       ;
+; S.DONE       ; 1      ; 0           ; 0            ; 0         ; 0            ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ; 0       ;
+; S.ERROR      ; 0      ; 0           ; 0            ; 0         ; 0            ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0            ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 0           ; 0          ; 1       ; 1       ;
++--------------+--------+-------------+--------------+-----------+--------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+--------------+-------------+------------+-------------+------------+-------------+------------+-------------+------------+-------------+------------+---------+---------+
+
+
+Encoding Type:  One-Hot
++---------------------------------------------------------------+
+; State Machine - |des_encr_decr|debouncer:deb_send_data|S      ;
++-----------+-----------+-----------+--------+--------+---------+
+; Name      ; S.GOING_0 ; S.GOING_1 ; S.IS_0 ; S.IS_1 ; S.ERROR ;
++-----------+-----------+-----------+--------+--------+---------+
+; S.IS_1    ; 0         ; 0         ; 0      ; 0      ; 0       ;
+; S.IS_0    ; 0         ; 0         ; 1      ; 1      ; 0       ;
+; S.GOING_1 ; 0         ; 1         ; 0      ; 1      ; 0       ;
+; S.GOING_0 ; 1         ; 0         ; 0      ; 1      ; 0       ;
+; S.ERROR   ; 0         ; 0         ; 0      ; 1      ; 1       ;
++-----------+-----------+-----------+--------+--------+---------+
+
+
++--------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                             ;
++---------------------------------------+----------------------------------------+
+; Register name                         ; Reason for Removal                     ;
++---------------------------------------+----------------------------------------+
+; S~4                                   ; Lost fanout                            ;
+; S~5                                   ; Lost fanout                            ;
+; S~6                                   ; Lost fanout                            ;
+; S~7                                   ; Lost fanout                            ;
+; S~8                                   ; Lost fanout                            ;
+; debouncer:deb_send_data|S~4           ; Lost fanout                            ;
+; debouncer:deb_send_data|S~5           ; Lost fanout                            ;
+; debouncer:deb_send_data|S.ERROR       ; Merged with S.ERROR                    ;
+; S.ERROR                               ; Stuck at GND due to stuck port data_in ;
+; Total Number of Removed Registers = 9 ;                                        ;
++---------------------------------------+----------------------------------------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 190   ;
+; Number of registers using Synchronous Clear  ; 21    ;
+; Number of registers using Synchronous Load   ; 0     ;
+; Number of registers using Asynchronous Clear ; 190   ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 18    ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++--------------------------------------------------+
+; Inverted Register Statistics                     ;
++----------------------------------------+---------+
+; Inverted Register                      ; Fan out ;
++----------------------------------------+---------+
+; debouncer:deb_send_data|now_debounced  ; 25      ;
+; Total number of inverted registers = 1 ;         ;
++----------------------------------------+---------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                      ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                            ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------------------+
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |des_encr_decr|sel                                    ;
+; 4:1                ; 10 bits   ; 20 LEs        ; 10 LEs               ; 10 LEs                 ; Yes        ; |des_encr_decr|debouncer:deb_send_data|ticks_going[3] ;
+; 15:1               ; 16 bits   ; 160 LEs       ; 144 LEs              ; 16 LEs                 ; Yes        ; |des_encr_decr|disp[5]                                ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux19            ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux11            ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux28            ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux7             ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux25            ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux44            ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux46            ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux3             ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux15            ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux14            ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux55            ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux23            ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux39            ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux34            ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux41            ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux63            ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux81            ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux56            ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux48            ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux74            ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux92            ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux69            ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux88            ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux111           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux109           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux65            ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux79            ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux78            ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux119           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux86            ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux100           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux97            ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux105           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux127           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux144           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux120           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux112           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux137           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux156           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux135           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux154           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux175           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux173           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux130           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux140           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux141           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux182           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux148           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux166           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux163           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux170           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux191           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux210           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux184           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux176           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux203           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux220           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux199           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux216           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux236           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux238           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux192           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux204           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux205           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux247           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux214           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux231           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux227           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux234           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux255           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux272           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux250           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux243           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux265           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux285           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux263           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux280           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux303           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux301           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux259           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux268           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux270           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux308           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux277           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux293           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux289           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux296           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux316           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux339           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux312           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux304           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux331           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux348           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux325           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux344           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux367           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux365           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux320           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux335           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux334           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux375           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux340           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux359           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux353           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux360           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux381           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux401           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux379           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux370           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux393           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux415           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux389           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux410           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux431           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux429           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux386           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux399           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux398           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux437           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux405           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux421           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux416           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux425           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux446           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux464           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux442           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux434           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux456           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux470           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux455           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux460           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux461           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux450           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux476           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux497           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux474           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux491           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux500           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux484           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux504           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux495           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux494           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux510           ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |des_encr_decr|des_alg:my_encr_value|Mux483           ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------------------+
+
+
++-------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: Top-level Entity: |des_encr_decr ;
++----------------+--------+-----------------------------------------------------+
+; Parameter Name ; Value  ; Type                                                ;
++----------------+--------+-----------------------------------------------------+
+; START          ; 000000 ; Unsigned Binary                                     ;
+; IN_KEY_1       ; 000001 ; Unsigned Binary                                     ;
+; WAITING_1      ; 000010 ; Unsigned Binary                                     ;
+; IN_KEY_2       ; 000011 ; Unsigned Binary                                     ;
+; WAITING_2      ; 000100 ; Unsigned Binary                                     ;
+; IN_KEY_3       ; 000101 ; Unsigned Binary                                     ;
+; WAITING_3      ; 000110 ; Unsigned Binary                                     ;
+; IN_KEY_4       ; 000111 ; Unsigned Binary                                     ;
+; WAITING_4      ; 001000 ; Unsigned Binary                                     ;
+; DISP_KEY       ; 001001 ; Unsigned Binary                                     ;
+; WAITING_5      ; 001010 ; Unsigned Binary                                     ;
+; IN_VALUE_1     ; 001011 ; Unsigned Binary                                     ;
+; WAITING_6      ; 001100 ; Unsigned Binary                                     ;
+; IN_VALUE_2     ; 01101  ; Unsigned Binary                                     ;
+; WAITING_7      ; 001110 ; Unsigned Binary                                     ;
+; IN_VALUE_3     ; 001111 ; Unsigned Binary                                     ;
+; WAITING_8      ; 010000 ; Unsigned Binary                                     ;
+; IN_VALUE_4     ; 010001 ; Unsigned Binary                                     ;
+; WAITING_9      ; 010010 ; Unsigned Binary                                     ;
+; DISP_VALUE     ; 010011 ; Unsigned Binary                                     ;
+; WAITING_10     ; 010100 ; Unsigned Binary                                     ;
+; TO_ENCR        ; 010101 ; Unsigned Binary                                     ;
+; WAITING_11     ; 010110 ; Unsigned Binary                                     ;
+; ENCR_DECR      ; 010111 ; Unsigned Binary                                     ;
+; DONE           ; 011000 ; Unsigned Binary                                     ;
+; ERROR          ; 111111 ; Unsigned Binary                                     ;
++----------------+--------+-----------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: debouncer:deb_send_data ;
++-----------------------+-------+--------------------------------------+
+; Parameter Name        ; Value ; Type                                 ;
++-----------------------+-------+--------------------------------------+
+; IS_1                  ; 000   ; Unsigned Binary                      ;
+; IS_0                  ; 001   ; Unsigned Binary                      ;
+; GOING_1               ; 010   ; Unsigned Binary                      ;
+; GOING_0               ; 011   ; Unsigned Binary                      ;
+; ERROR                 ; 111   ; Unsigned Binary                      ;
+; TICKS_TILL_STABILIZED ; 1000  ; Signed Integer                       ;
++-----------------------+-------+--------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------+
+; Post-Synthesis Netlist Statistics for Top Partition ;
++-----------------------+-----------------------------+
+; Type                  ; Count                       ;
++-----------------------+-----------------------------+
+; boundary_port         ; 55                          ;
+; cycloneiii_ff         ; 190                         ;
+;     CLR               ; 151                         ;
+;     CLR SCLR          ; 21                          ;
+;     ENA CLR           ; 18                          ;
+; cycloneiii_lcell_comb ; 4659                        ;
+;     arith             ; 9                           ;
+;         2 data inputs ; 9                           ;
+;     normal            ; 4650                        ;
+;         1 data inputs ; 6                           ;
+;         2 data inputs ; 253                         ;
+;         3 data inputs ; 487                         ;
+;         4 data inputs ; 3904                        ;
+;                       ;                             ;
+; Max LUT depth         ; 70.00                       ;
+; Average LUT depth     ; 61.95                       ;
++-----------------------+-----------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:02:17     ;
++----------------+--------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Analysis & Synthesis
+    Info: Version 19.1.0 Build 670 09/22/2019 SJ Lite Edition
+    Info: Processing started: Sat Dec 11 01:13:26 2021
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off des_encr_decr -c des_encr_decr
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
+Info (12021): Found 1 design units, including 1 entities, in source file des_encr_decr.v
+    Info (12023): Found entity 1: des_encr_decr File: Z:/MyFiles/B/birlad/des_encr_decr/des_encr_decr.v Line: 3
+Info (12021): Found 1 design units, including 1 entities, in source file des_alg.v
+    Info (12023): Found entity 1: des_alg File: Z:/MyFiles/B/birlad/des_encr_decr/des_alg.v Line: 3
+Info (12021): Found 1 design units, including 1 entities, in source file seven_segment.v
+    Info (12023): Found entity 1: seven_segment File: Z:/MyFiles/B/birlad/des_encr_decr/seven_segment.v Line: 3
+Info (12021): Found 1 design units, including 1 entities, in source file four_hex_vals.v
+    Info (12023): Found entity 1: four_hex_vals File: Z:/MyFiles/B/birlad/des_encr_decr/four_hex_vals.v Line: 3
+Info (12021): Found 1 design units, including 1 entities, in source file debouncer.v
+    Info (12023): Found entity 1: debouncer File: Z:/MyFiles/B/birlad/des_encr_decr/debouncer.v Line: 3
+Info (12127): Elaborating entity "des_encr_decr" for the top level hierarchy
+Info (10264): Verilog HDL Case Statement information at des_encr_decr.v(111): all case item expressions in this case statement are onehot File: Z:/MyFiles/B/birlad/des_encr_decr/des_encr_decr.v Line: 111
+Info (10264): Verilog HDL Case Statement information at des_encr_decr.v(339): all case item expressions in this case statement are onehot File: Z:/MyFiles/B/birlad/des_encr_decr/des_encr_decr.v Line: 339
+Info (12128): Elaborating entity "four_hex_vals" for hierarchy "four_hex_vals:my_disp" File: Z:/MyFiles/B/birlad/des_encr_decr/des_encr_decr.v Line: 58
+Info (12128): Elaborating entity "seven_segment" for hierarchy "four_hex_vals:my_disp|seven_segment:leftmost" File: Z:/MyFiles/B/birlad/des_encr_decr/four_hex_vals.v Line: 11
+Info (12128): Elaborating entity "des_alg" for hierarchy "des_alg:my_encr_value" File: Z:/MyFiles/B/birlad/des_encr_decr/des_encr_decr.v Line: 60
+Info (10008): Verilog HDL or VHDL information: EDA Netlist Writer cannot regroup multidimensional array "s_box" into its bus
+Info (12128): Elaborating entity "debouncer" for hierarchy "debouncer:deb_send_data" File: Z:/MyFiles/B/birlad/des_encr_decr/des_encr_decr.v Line: 63
+Info (10264): Verilog HDL Case Statement information at debouncer.v(71): all case item expressions in this case statement are onehot File: Z:/MyFiles/B/birlad/des_encr_decr/debouncer.v Line: 71
+Info (13000): Registers with preset signals will power-up high File: Z:/MyFiles/B/birlad/des_encr_decr/debouncer.v Line: 8
+Info (13003): DEV_CLRn pin will set, and not reset, register with preset signal due to NOT Gate Push-Back
+Info (286030): Timing-Driven Synthesis is running
+Info (17049): 7 registers lost all their fanouts during netlist optimizations.
+Warning (20013): Ignored 24 assignments for entity "text_encryption" -- entity does not exist in design
+    Warning (20014): Assignment for entity set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -entity text_encryption -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -entity text_encryption -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -entity text_encryption -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_PRESERVE_HIGH_SPEED_TILES ON -entity text_encryption -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_IGNORE_SOURCE_FILE_CHANGES OFF -entity text_encryption -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_ALWAYS_USE_QXP_NETLIST OFF -entity text_encryption -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_COLOR 16764057 -entity text_encryption -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_IMPORT_ASSIGNMENTS ON -entity text_encryption -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_IMPORT_EXISTING_ASSIGNMENTS REPLACE_CONFLICTING -entity text_encryption -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_IMPORT_EXISTING_LOGICLOCK_REGIONS UPDATE_CONFLICTING -entity text_encryption -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_IMPORT_PIN_ASSIGNMENTS ON -entity text_encryption -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_IMPORT_PROMOTE_ASSIGNMENTS ON -entity text_encryption -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_TYPE STANDARD_PARTITION -entity text_encryption -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name ALLOW_MULTIPLE_PERSONAS OFF -entity text_encryption -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_ASD_REGION_ID 1 -entity text_encryption -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name CROSS_BOUNDARY_OPTIMIZATIONS OFF -entity text_encryption -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PROPAGATE_CONSTANTS_ON_INPUTS ON -entity text_encryption -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PROPAGATE_INVERSIONS_ON_INPUTS ON -entity text_encryption -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name REMOVE_LOGIC_ON_UNCONNECTED_OUTPUTS ON -entity text_encryption -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name MERGE_EQUIVALENT_INPUTS ON -entity text_encryption -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name MERGE_EQUIVALENT_BIDIRS ON -entity text_encryption -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name ABSORB_PATHS_FROM_OUTPUTS_TO_INPUTS ON -entity text_encryption -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_EXTRACT_HARD_BLOCK_NODES ON -entity text_encryption -section_id Top was ignored
+    Warning (20014): Assignment for entity set_global_assignment -name PARTITION_ENABLE_STRICT_PRESERVATION OFF -entity text_encryption -section_id Top was ignored
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Info (21057): Implemented 4711 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 23 input pins
+    Info (21059): Implemented 32 output pins
+    Info (21061): Implemented 4656 logic cells
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 26 warnings
+    Info: Peak virtual memory: 4776 megabytes
+    Info: Processing ended: Sat Dec 11 01:16:48 2021
+    Info: Elapsed time: 00:03:22
+    Info: Total CPU time (on all processors): 00:02:57
+
+
