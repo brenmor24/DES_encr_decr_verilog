@@ -24,9 +24,9 @@ Each group of six bits is replaced with a four-bit element from the correspondin
 The last step is to take the 16th pair of 32-bit sequences, concatenate them (with the right half coming before the left half) and apply a final 64-bit permutation to this concatenation to produce the output message.
 
 ### Design
-Our program has 25 states. The first is START which is entered on reset. When the user selects one of two buttons indicating encryption or decryption, the mode is determined and the first key state is entered. There are four key states that let the user enter 16 bits of the 64-bit key at a time and view their selection on the seven segment decoder as a hex value. Between each of these key states is a waiting state that is entered and exited on a button press and release. When a waiting state is entered, the current key segment is stored. The last waiting state follows into a display key state which lets the user view the four segments of their key using two switches. 
+The user selects one of two buttons indicating encryption or decryption. This determines the mode and the first key state is entered. There are four key states that let the user enter 16 bits of the 64-bit key at a time and view their selection on the seven segment decoder as a hex value. Between each of these key states is a waiting state that is entered and exited on a button press and release. When a waiting state is entered, the current key segment is stored. The last waiting state follows into a display key state which lets the user view the four segments of their key using two switches. 
 
-This same process is repeated to allow the user to enter a 64-bit value to encrypt or decrypt. After another button press and release, the final 64-bit output is displayed on the seven-segment display, which can be viewed in its entirety using two switches.
+This same process (minus the mode selection) is repeated to allow the user to enter a 64-bit value to encrypt or decrypt. After another button press and release, the final 64-bit output is displayed on the seven-segment display, which can be viewed in its entirety using two switches.
 
 ### Videos
 Please check the description below each video for a detailed overview of the video demonstrations.\
