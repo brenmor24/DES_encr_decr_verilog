@@ -1,7 +1,7 @@
 # DES Encryption and Decryption in 64 bits
 
-**Brendan Moran and Dhruv Birla**
-**Fall 2021**
+**Brendan Moran and Dhruv Birla**\
+**Fall 2021**\
 **ECE 287 B w/ Dr. Peter Jamieson**
 
 ### High-Level Description
