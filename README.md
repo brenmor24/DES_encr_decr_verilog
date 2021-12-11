@@ -30,7 +30,7 @@ This same process is repeated to allow the user to enter a 64-bit value to encry
 
 ### Videos
 Please check the description below each video for a detailed overview of the video demonstrations.\
-Encryption demo: (https://youtu.be/j46l1pLIQGU) \
+Encryption demo: https://youtu.be/j46l1pLIQGU \
 Decryption demo: 
 
 ### Conclusion
