@@ -1,6 +1,6 @@
 # DES Encryption and Decryption in 64 bits
 
-**Brendan Moran and [Dhruv Birla](https://www.google.com)**\
+**[Brendan Moran](https://github.com/brenmor24) and [Dhruv Birla](https://github.com/birlad)**\
 **Fall 2021**\
 **ECE 287 B w/ Dr. Peter Jamieson**
 
