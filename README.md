@@ -2,7 +2,7 @@
 
 **[Brendan Moran](https://github.com/brenmor24) and [Dhruv Birla](https://github.com/birlad)**\
 **Fall 2021**\
-**ECE 287 B w/ Dr. Peter Jamieson**
+**ECE 287 B with Dr. Peter Jamieson**
 
 ### High-Level Description
 At a high level, our project lets the user enter a 64-bit key followed by a 64-bit message and allows them to choose to either encrypt or decrypt the input text with the key they entered. This is done using the on-board switches for inputing values, buttons to send the data entered using the switches and switch through different states, and a seven-segment decoder for displaying the current input as well as the output at the end.
