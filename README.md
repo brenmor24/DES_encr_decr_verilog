@@ -32,5 +32,5 @@ This same process is repeated to allow the user to enter a 64-bit value to encry
 Overall, the project is a simple but fully functional device for encrypting and decrypting 64-bit chunks of information using hardware. The most challenging part of development was designing a physical system to replicate steps of an algorithm as well as debugging tiny errors among thousands of bit manipulations that produce wildly different results.
 
 ### Citations
-*Grabbe, O. (n.d.). The DES Algorithm Illustrated. Retrieved December 11, 2021, from https://page.math.tu-berlin.de/~kant/teaching/hess/krypto-ws2006/des.htm.*\
+*Grabbe, O. (n.d.). The DES Algorithm Illustrated. Retrieved December 11, 2021, from https://page.math.tu-berlin.de/~kant/teaching/hess/krypto-ws2006/des.htm.* \
 *Dr. Peter Jamieson: Debouncer.v file to debounce input button*
