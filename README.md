@@ -1,6 +1,6 @@
 # DES Encryption and Decryption in 64 bits
 
-**Brendan Moran and Dhruv Birla**\
+**Brendan Moran and Dhruv Birla(https://www.google.com)**\
 **Fall 2021**\
 **ECE 287 B w/ Dr. Peter Jamieson**
 
@@ -10,7 +10,7 @@ At a high level, our project lets the user enter a 64-bit key followed by a 64-b
 ### Background Information
 DES was the most popular encryption algorithm for almost two decades and its usage spanned across several industries such as banking, communication, and data storage. It has laid the foundation for other methods of encryption as DES alone doesn’t stand up against modern computing power. We chose to implement this algorithm on an FPGA due to our interest surrounding the inner workings of encryption and decryption at the bit-level.
 
-### Description
+### Technical Description of Design
 The actual module used for encryption and decryption is just a large combinational circuit. It takes in a 64-bit key, 64-bit value, and a one bit encryption/decryption indicator and outputs a 64-bit message. A series of registers hold the message bits at each stage of the process, and they are connected using combinational logic to transform these bits. 
 
 The initial step of the process is to create 16 sub-keys of 48 bits from the 64-bit key. This is done by first taking a 56-bit permutation of the original key, splitting the new key into equal left and right halves, and applying a series of one or two left shifts 16 times to the left and right halves individually. Each new pair of shifted left and right halves are concatenated and a final 48-bit permutation is applied to each 56-bit concatenation to produce 16 keys of 48 bits each.
