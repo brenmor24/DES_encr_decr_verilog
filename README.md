@@ -29,8 +29,9 @@ Our program has 24 states. The first is START which is entered on reset. When th
 This same process is repeated to allow the user to enter a 64-bit value to encrypt or decrypt. After another button press and release, the final 64-bit output is displayed on the seven-segment display, which can be viewed in its entirety using two switches.
 
 ### Videos
-Please check the description below each video for a detailed overview of the video demonstrations.
-Encryption demo: https://youtu.be/j46l1pLIQGU \
+Please check the description below each video for a detailed overview of the video demonstrations.\
+Encryption demo: (https://youtu.be/j46l1pLIQGU) \
+Decryption demo: 
 
 ### Conclusion
 Overall, the project is a simple but fully functional device for encrypting and decrypting 64-bit chunks of information using hardware. The most challenging part of development was designing a physical system to replicate steps of an algorithm as well as debugging tiny errors among thousands of bit manipulations that produce wildly different results.
